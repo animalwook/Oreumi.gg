@@ -181,5 +181,6 @@ score
 
 # 이그노어
 env
+ggvenv
 local_secrets.json
 secrets.json

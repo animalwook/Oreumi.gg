@@ -43,7 +43,7 @@ def get_secret(setting, secrets=secrets):
 #시크릿 파일 열기 끝
 
 SECRET_KEY = get_secret("DB_SECRET")
-
+api_key = get_secret("lol_api")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
