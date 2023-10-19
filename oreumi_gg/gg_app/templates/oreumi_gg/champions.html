@@ -10,11 +10,30 @@
         <link rel="stylesheet" href="{% static 'css/nav.css' %}" />
         <link rel="stylesheet" href="{% static 'css/champions.css' %}" />
         <link rel="stylesheet" href="{% static 'css/footer.css' %}" />
-        <link rel="icon" href="{%static 'img\oreumi_gg\favicon.ico'%}" />
+        <link rel="icon" href="{% static 'img\oreumi_gg\favicon.ico' %}" />
         <title>Oreumi.gg/champions</title>
     </head>
     <body>
         {% include 'oreumi_gg/header.html' %} {% include 'oreumi_gg/nav.html' %}
-        <div>test div</div>
+
+        <section>
+            <article class="champions_article">
+                <div class="position_btn">
+                    <input class="champions_search" type="text" name="champions_search" id="championsSearch" onkeydown="searchOnEnter(event)" />
+                    <button class="champions_top" onclick="showChampions('top')">탑</button>
+                    <button class="champions_jg" onclick="showChampions('jg')">정글</button>
+                    <button class="champions_mid" onclick="showChampions('mid')">미드</button>
+                    <button class="champions_adc" onclick="showChampions('adc')">바텀</button>
+                    <button class="champions_spt" onclick="showChampions('spt')">서포터</button>
+                </div>
+                <div class="champions_portrait" id="championsPortait">
+                    <!--챔피언 초상화, 검색한 챔피언 표시-->
+                </div>
+                <div class="champions_tier" id="championsTier">
+                    <!--챔피언 티어별 정렬, 버튼 클릭으로 해당 포지션만 표시-->
+                </div>
+            </article>
+        </section>
     </body>
+    <script src="{% static 'js/champions.js' %}"></script>
 </html>
