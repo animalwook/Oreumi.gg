@@ -7,5 +7,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Oreumi.gg/login</title>
     </head>
-    <body></body>
+    <body>
+        <div class="container">
+            <div class="login_container">
+                <form method="post" class="login_form">
+                    {% csrf_token %}
+                    <label for="username">아이디</label>
+                    <input type="text" class="login_input" id="userName" name="username" required placeholder="아이디" />
+                    <label for="password">비밀번호</label>
+                    <input type="password" class="login_input" id="passWord" name="password" required placeholder="비밀번호" />
+                    <button type="submit" class="login_button">로그인</button>
+                </form>
+                <p class="register_reco">
+                    Oreumi.gg에 합류하세요.
+                    <a href="{% url 'gg_app:register' %}">회원가입</a>
+                </p>
+    </body>
 </html>
