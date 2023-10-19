@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+        <link rel="stylesheet" href="{% static 'css/header.css' %}">
+        <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+        <link rel="stylesheet" href="{% static 'css/index.css' %}">
+        <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+        <link rel="icon" href="{%static 'img\oreumi_gg\favicon.ico'%}">
+        <title>Oreumi.gg</title>
+    </head>
+    <body>
+        {% include 'oreumi_gg/header.html' %}
+        {% include 'oreumi_gg/nav.html' %}
+
+        <section>
+            <article>
+            <div class="index_banner"><img class="banner_img" src="static\img\oreumi_banner.png" alt="oreumi.gg banner" /></div>
+            <form class="search_form">
+                <input type="text" class="summoner_search" />
+                <button class="search_button"><img src="" alt="" /></button>
+            </form>
+            </article>
+            <article>
+                <div class="community_container">
+                    <p class="">Oreumi 최신 게시글</p>
+                    <div class="community_new_posts">
+                        <ul>
+                            {% for post in posts|slice:":5" %}
+                              <li>
+                                <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+                              </li>
+                            {% endfor %}
+                          </ul>
+                    </div>
+                </div>
+            </article>
+            </div>
+        </section>
+        {% include 'oreumi_gg/footer.html' %}
+
+    </body>
+</html>
