@@ -5,5 +5,5 @@ app_name = 'gg_app'    #score 어플리케이션의 url 호출시 앞의 구분�
  
 urlpatterns = [
     path('', views.index, name='index'),
-    path('/summoners/<str:country>/<str:summonername>/', views.search, name='search'),
+    path('summoners/<str:country>/<str:summonername>/', views.search, name='search'),
 ]

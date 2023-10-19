@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load getvalue %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% for match in matches %}
+        <p> 게임 시간 : {{ match.game_playtime }}</p>
+        <p>{{ match.game_type }} </p>
+        <p>{{ match.win_or_not }} </p>
+        <p> {{ match.search_player_kill }} / {{ match.search_player_death }} / {{ match.search_player_assist }}</p>
+        <p>kda {{ match.search_player_kda }}</p>
+        <p>킬관여율 {{ match.search_player_killpart }}</p>
+        <p> {{ match.game_time }} </p>
+        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{ match.search_player_champ }}.png" alt="">
+        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{ match.search_player_summonerspell1 }}.png" alt="">
+        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{ match.search_player_summonerspell2 }}.png" alt="">
+        {% for item in match.search_player_item %}
+            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/{{ item }}.png" alt="">
+        {% endfor %}
+        <img src="https://ddragon.canisback.com/img/perk-images/Styles/{{ match.search_player_main_rune }}.png" alt="">
+        <img src="https://ddragon.canisback.com/img/perk-images/Styles/{{ match.search_player_sub_rune }}.png" alt="">
+        {% for player in match.items %}
+            {{ player }}
+            
+        {% endfor %}
+        
+    {% endfor %}
+</body>
+</html>
