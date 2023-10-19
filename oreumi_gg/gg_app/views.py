@@ -170,8 +170,8 @@ def match(country, puuid, summonername):
                            "killparticipation" : round(player_info["challenges"]["killParticipation"], 2), "totalDamageDealtToChampions": player_info["totalDamageDealtToChampions"],
                            "totalDamageTaken" : player_info["totalDamageTaken"], "champlevel" : player_info["champLevel"], 
                            "main_rune" : main_rune, "sub_rune" : sub_rune}]
-            result.update({"participant":player_dict}) 
-            
+            result[num] = player_dict
+            num += 1
         result.update({"game_playtime" : game_playtime, "game_type" : game_type, "win_or_not" : win_or_not, "search_player_kill" : search_player_kill, 
                        "search_player_death" : search_player_death, 
                        "search_player_assist" : search_player_assist, 
@@ -183,7 +183,8 @@ def match(country, puuid, summonername):
                        "search_player_sub_rune" : search_player_sub_rune,
                        "search_player_summonerspell1" : search_player_summonerspell1, 
                        "search_player_summonerspell2" : search_player_summonerspell2,
-                       "search_player_item" : search_player_item}) 
+                       "search_player_item" : search_player_item,
+}) 
         result_match.append(result)
     return result_match
         
