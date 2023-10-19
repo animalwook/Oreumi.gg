@@ -1,4 +1,7 @@
-.home_btn,
-.search_container {
-    display: inline;
+.search_form {
+    display: flex;
+}
+
+.search_input {
+    display: flex;
 }

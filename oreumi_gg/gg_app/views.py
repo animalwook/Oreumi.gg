@@ -13,10 +13,10 @@ def community(request):
     return render(request,"oreumi_gg/community.html",{"posts":blog_post})
 
 def login(request):
-    return render(request, "oreumi_gg/login.html")
+    return render(request, "registration/login.html")
 
 def register(request):
-    return render(request, "oreumi_gg/register.html")
+    return render(request, "registration/register.html")
 
 
 

@@ -1,6 +1,14 @@
 {% load static %}
 <header>
     <a href="">OREUMI.GG</a>
-    <input type="text" name="" id="" />
-    <a href="">SEARCH</a>
+
+    {% if request.path == '/champions/' %}
+    <form class="search_form">
+        <div class="search_input">
+            <input type="text" class="summoner_search" />
+            <button class="search_button"><img src="" alt="" /></button>
+        </div>
+    </form>
+    {% endif %}
+    <a href="{% url 'gg_app:login' %}">로그인</a>
 </header>
