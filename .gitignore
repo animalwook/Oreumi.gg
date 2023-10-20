@@ -178,9 +178,9 @@ cython_debug/
 metabus_app
 score
 
-
 # 이그노어
 env
+django_env
 ggvenv
 local_secrets.json
 secrets.json
