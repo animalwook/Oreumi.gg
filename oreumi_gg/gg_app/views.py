@@ -5,6 +5,7 @@ from django.conf import settings
 from riotwatcher import LolWatcher, ApiError
 from datetime import datetime, timedelta
 from dateutil import relativedelta
+from .forms import PostForm
 
 from .lol_match import match
 # Create your views here.
@@ -21,13 +22,25 @@ def login(request):
 def register(request):
     return render(request, "registration/register.html")
 
- 
+
 def community(request):
     blog_post = BlogPost.objects.all()
     return render(request,"community/community.html",{"posts":blog_post})
 
+def write(request):
+    if request.method == 'POST':
+    
+        form = PostForm(request.POST) 
+        if form.is_valid(): # 유효성 검사(필수과정)
+            form.save()
+            print(111111111)
+            return redirect('gg_app:community')
+    else:
+        form = PostForm()
+        print(222222222222)
+    return render(request,"community/post_write.html", {'form': form})
 
-  
+
 def summoners_info_form(request):
     if request.method == "POST":
         # 소환사명을 검색결과로 받아온다

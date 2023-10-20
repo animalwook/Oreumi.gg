@@ -11,6 +11,7 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'), # 장고 auth에서 logout 매서드 사용
     path('register/', views.register, name='register'),
+    path('write/', views.write, name='write'), 
 
     # 전적 검색
     path('summoners_form', views.summoners_info_form, name='summoners_info_form'),
