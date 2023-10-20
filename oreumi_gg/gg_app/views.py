@@ -1,10 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import BlogPost
-from django.conf import settings
-from riotwatcher import LolWatcher, ApiError
-from datetime import datetime, timedelta
-from dateutil import relativedelta
 
 from .lol_match import match
 # Create your views here.
