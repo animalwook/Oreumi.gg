@@ -43,7 +43,7 @@ def get_secret(setting, secrets=secrets):
 #시크릿 파일 열기 끝
 
 SECRET_KEY = get_secret("DB_SECRET")
-
+API_KEY = get_secret("lol_api")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -130,7 +130,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'ko'
+LANGUAGE_CODE = 'ko-kr'
 
 TIME_ZONE = 'Asia/Seoul'
 
