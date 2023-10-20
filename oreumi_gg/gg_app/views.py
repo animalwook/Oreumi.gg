@@ -4,6 +4,8 @@ from django.conf import settings
 from riotwatcher import LolWatcher, ApiError
 from datetime import datetime, timedelta
 from dateutil import relativedelta
+import requests
+import math
 # Create your views here.
 api_key = getattr(settings, 'API_KEY')
 watcher = LolWatcher(api_key)
@@ -23,8 +25,8 @@ def search(request, country, summonername):
     my_region = country
     myinfo = watcher.summoner.by_name(my_region, summonername)
     puuid = myinfo['puuid']
-    matches = match(country, puuid, summonername)
-    return render(request, "search.html", {"matches" : matches})
+    matches, total_calculate = match(country, puuid, summonername)
+    return render(request, "search.html", {"matches" : matches, "total_calculate": total_calculate})
 
 
 def timecalculate(time):
@@ -59,10 +61,21 @@ def match(country, puuid, summonername):
                   31 : "SummonerPoroThrow", 11 : "SummonerSmite", 39 : "SummonerSnowURFSnowball_Mark", 32: "SummonerSnowball",
                   12 : "SummonerTeleport"}
     rune = {8000 : "7201_Precision", 8100 : "7200_Domination", 8200 : "7202_Sorcery", 8300 : "7203_Whimsy", 8400 : "7204_Resolve"}
+    url = "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perks.json"
+    response = requests.get(url)
+    rune_data = response.json()
     # 이미지 가져오는 주소
     # https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/Yone.png
     match_20 = watcher.match.matchlist_by_puuid(country, puuid)
     result_match = []
+    win_count = 0
+    lose_count = 0
+    total_kill = 0
+    total_death = 0
+    total_assist = 0
+    win_rate = 0 # round(win_count / (win_count + lose_count), 2) * 100
+    total_calculate = [win_count, lose_count, win_rate, total_kill, total_death, total_assist]
+    
     for onematch in match_20:
         num = 1
         match_detail = watcher.match.by_id("asia", onematch)
@@ -119,8 +132,10 @@ def match(country, puuid, summonername):
             if player_info["summonerName"] == summonername:
                 if player_info["win"] == True:
                     win_or_not = "승리"
+                    win_count += 1
                 else:
                     win_or_not = "패배"
+                    lose_count += 1
 
                 search_player_kill = player_info["kills"]
                 search_player_assist = player_info["assists"]
@@ -128,11 +143,18 @@ def match(country, puuid, summonername):
                 search_player_champ = player_info["championName"]
                 search_player_kda =  round(player_info["challenges"]["kda"], 2)
                 search_player_killpart =  (round(player_info["challenges"]["killParticipation"], 2)) * 100
-                search_player_firstrune = player_info["perks"]["styles"][0]["style"]
+                search_player_champlevel = player_info["champLevel"]
+                search_player_firstrune = player_info["perks"]["styles"][0]["selections"][0]["perk"]
                 search_player_secondrune = player_info["perks"]["styles"][1]["style"]
+                search_player_totalminions_kill = player_info["totalMinionsKilled"] + player_info["neutralMinionsKilled"]
+                search_player_visionWardsBoughtInGame = player_info["visionWardsBoughtInGame"]
+                search_player_minperminions = math.floor(search_player_totalminions_kill / game_playtime_min * 10) / 10
+                for item in rune_data:
+                    if item.get("id") == search_player_firstrune:
+                        search_player_main_rune = item.get("iconPath").split("v1/")[1]
+                        break
+                
                 for key, value in rune.items():
-                    if key == search_player_firstrune:
-                        search_player_main_rune = value
                     if key == search_player_secondrune:
                         search_player_sub_rune = value
                 for key, value in summonerSpells.items():
@@ -144,14 +166,23 @@ def match(country, puuid, summonername):
                 for i in range(7):
                     search_player_item.append(player_info[f"item{i}"])
                 
+                total_kill += search_player_kill
+                total_death += search_player_death
+                total_assist += search_player_assist
+                
             totalminions_kill = player_info["totalMinionsKilled"] + player_info["neutralMinionsKilled"]
-            first_rune = player_info["perks"]["styles"][0]["style"]
+            first_rune = player_info["perks"]["styles"][0]["selections"][0]["perk"]
             second_rune = player_info["perks"]["styles"][1]["style"]
+            
+            for item in rune_data:
+                    if item.get("id") == first_rune:
+                        main_rune = item.get("iconPath").split("v1/")[1]
+                        break
+            
             for key, value in rune.items():
-                if key == first_rune:
-                    main_rune = value
                 if key == second_rune:
                     sub_rune = value
+                    
             for key, value in summonerSpells.items():
                 if key == player_info["summoner1Id"]:
                     summonerspell1 = value
@@ -178,15 +209,20 @@ def match(country, puuid, summonername):
                        "game_time" : game_time,
                        "search_player_champ" : search_player_champ,
                        "search_player_kda" : search_player_kda, 
-                       "search_player_killpart" : search_player_killpart,
+                       "search_player_killpart" : int(search_player_killpart),
                        "search_player_main_rune" : search_player_main_rune,
                        "search_player_sub_rune" : search_player_sub_rune,
                        "search_player_summonerspell1" : search_player_summonerspell1, 
                        "search_player_summonerspell2" : search_player_summonerspell2,
                        "search_player_item" : search_player_item,
+                       "search_player_champlevel" : search_player_champlevel,
+                       "search_player_totalminions_kill" : search_player_totalminions_kill,
+                       "search_player_visionWardsBoughtInGame" : search_player_visionWardsBoughtInGame,
+                       "search_player_minperminions" : search_player_minperminions
 }) 
         result_match.append(result)
-    return result_match
+        
+    return result_match, total_calculate
         
        
         
