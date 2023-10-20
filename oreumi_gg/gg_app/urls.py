@@ -9,4 +9,8 @@ urlpatterns = [
     path('champions/', views.champions, name='champions'),
     path('login/', views.login, name='login'),
     path('register/', views.register, name='register'),
+
+    # 전적 검색
+    path('summoners_form', views.summoners_info_form, name='summoners_info_form'),
+    path('summoners/<str:country>/<str:summoner_name>', views.summoners_info, name='summoners_info'),   #검색결과를 보여줄 화면
 ]

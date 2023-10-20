@@ -20,16 +20,24 @@
         <section>
             <article>
             <div class="index_banner"><img class="banner_img" src="static\img\oreumi_banner.png" alt="oreumi.gg banner" /></div>
-            <form class="search_form">
-                <input type="text" class="summoner_search" />
-                <button class="search_button"><img src="" alt="" /></button>
+            <!-- 소환사 검색 -->
+            <form method="POST" name="search_form" action="{% url 'gg_app:summoners_info_form' %}">
+                {% csrf_token %}
+                <div class="input_group">
+                    <input type="text" class="summoner_search" placeholder="소환사명" name="search_text">
+                    <span class="input_group_button">
+                        <button class="search_button" type="submit">Oreumi.GG</button>
+                    </span>
+                </div>
             </form>
+
             </article>
             <article>
                 <div class="community_container">
                     <p class="">Oreumi 최신 게시글</p>
                     <div class="community_new_posts">
                         <ul>
+                            <!-- 최신 게시물부터 5개 불러오기 -->
                             {% for post in posts|slice:":5" %}
                               <li>
                                 <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
