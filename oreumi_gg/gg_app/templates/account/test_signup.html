@@ -1,0 +1,14 @@
+# templates/account/signup.html
+{% extends "signup.html" %}
+{% block content %}
+
+<div class="jumbotron">
+    <h2>Sign Up</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Sign Up</button>
+    </form>
+</div>
+
+{% endblock %}
