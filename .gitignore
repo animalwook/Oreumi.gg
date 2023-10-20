@@ -183,3 +183,5 @@ score
 env
 local_secrets.json
 secrets.json
+django_env
+cspell.json
