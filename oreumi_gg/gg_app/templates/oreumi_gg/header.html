@@ -1,0 +1,27 @@
+{% load static %}
+<header>
+    <a href="">OREUMI.GG</a>
+
+    {% comment %} 챔피언 페이지에서만 검색창 표시 {% endcomment %} 
+    
+    {% if request.path == '/champions/' %}
+    <form class="search_form">
+        <div class="search_input">
+            <input type="text" class="summoner_search" onkeydown="searchOnEnter(event)" />
+            <button class="search_button"><img src="" alt="" /></button>
+        </div>
+    </form>
+    {% endif %} 
+    
+    {% comment %} 유저 로그인 여부 확인 {% endcomment %}
+    
+    {% if user.is_authenticated %}
+    <form action="{%url 'gg_app:logout' %}" method="post">
+        {% csrf_token %}
+        <a href="{% url 'gg_app:logout'%}">로그아웃</a>
+    </form>
+
+    {% else %}
+    <a href="{% url 'gg_app:login' %}">로그인</a>
+    {% endif %}
+</header>

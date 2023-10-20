@@ -1,0 +1,23 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/header.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/nav.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/community.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/footer.css' %}" />
+        <link rel="icon" href="{%static 'img\oreumi_gg\favicon.ico'%}" />
+        <title>Oreumi.gg/community</title>
+    </head>
+    <body>
+        <ul>
+            {% comment %} {% for post in posts %}
+            <li><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></li>
+            {% endfor %} {% endcomment %}
+        </ul>
+    </body>
+</html>

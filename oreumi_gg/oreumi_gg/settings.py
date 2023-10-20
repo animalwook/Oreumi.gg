@@ -73,11 +73,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'oreumi_gg.urls'
+BASE_DIR_TEMPLATES = Path(__file__).resolve().parent.parent
+
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [os.path.join(BASE_DIR_TEMPLATES, "gg_app/templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -146,3 +148,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# 로그인 auth사용시 링크
+# LOGIN_URL = "user_app:login"

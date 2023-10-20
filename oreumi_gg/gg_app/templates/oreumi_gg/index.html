@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+        <link rel="stylesheet" href="{% static 'css/header.css' %}">
+        <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+        <link rel="stylesheet" href="{% static 'css/index.css' %}">
+        <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+        <link rel="icon" href="{%static 'img\oreumi_gg\favicon.ico'%}">
+        <title>Oreumi.gg</title>
+    </head>
+    <body>
+        {% include 'oreumi_gg/header.html' %}
+        {% include 'oreumi_gg/nav.html' %}
+
+        <section>
+            <article>
+            <div class="index_banner"><img class="banner_img" src="static\img\oreumi_banner.png" alt="oreumi.gg banner" /></div>
+            <!-- 소환사 검색 -->
+            <form method="POST" name="search_form" action="{% url 'gg_app:summoners_info_form' %}">
+                {% csrf_token %}
+                <div class="input_group">
+                    <input type="text" class="summoner_search" placeholder="소환사명" name="search_text">
+                    <span class="input_group_button">
+                        <button class="search_button" type="submit">Oreumi.GG</button>
+                    </span>
+                </div>
+            </form>
+
+            </article>
+            <article>
+                <div class="community_container">
+                    <p class="">Oreumi 최신 게시글</p>
+                    <div class="community_new_posts">
+                        <ul>
+                            <!-- 최신 게시물부터 5개 불러오기 -->
+                            {% for post in posts|slice:":5" %}
+                              <li>
+                                <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+                              </li>
+                            {% endfor %}
+                          </ul>
+                    </div>
+                </div>
+            </article>
+            </div>
+        </section>
+        {% include 'oreumi_gg/footer.html' %}
+
+    </body>
+</html>
