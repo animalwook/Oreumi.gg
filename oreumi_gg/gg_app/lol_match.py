@@ -278,7 +278,7 @@ def match(country, summonername, start):
                     "win_rate" : win_rate, "total_kill" : total_kill, 
                     "total_death" : total_death, "total_assist" : total_assist,
                     "total_kda" : total_kda, "total_kill_part" : total_kill_part}    
-    return result_match, total_calculate
+    return result_match, total_calculate #, match_count
         
         
 # 티어 가져오는 부분 보류(api문제)
