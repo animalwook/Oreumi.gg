@@ -7,19 +7,7 @@ from datetime import datetime, timedelta
 from dateutil import relativedelta
 
 from .lol_match import match
-import requests
-import math
 # Create your views here.
-
-api_key = getattr(settings, 'API_KEY')
-watcher = LolWatcher(api_key)
-request_header = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36",
-    "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
-    "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
-    "Origin": "https://developer.riotgames.com",
-    "X-Riot-Token": api_key
-}
 
 def index(request):
     return render(request, "oreumi_gg/index.html")
@@ -58,11 +46,7 @@ def summoners_info_form(request):
 
 
 def summoners_info(request, country, summoner_name):
-    my_region = country
-    myinfo = watcher.summoner.by_name(my_region, summoner_name)
-    puuid = myinfo['puuid']
-    matches, total_calculate = match(country, puuid, summoner_name)
-
+    matches, total_calculate = match(country, summoner_name)
     context = {
         "matches" : matches, 
         "total_calculate": total_calculate

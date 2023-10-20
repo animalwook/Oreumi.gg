@@ -25,12 +25,24 @@ def timecalculate(time):
         count = int(seconds / 2592000)
         return f"{count}달 전"
 
-# 티어 가져오는 부분 보류(api문제)
-# def findtier(country, id):
-#     searchplayerinfo = watcher.league.by_summoner(country, id)
-#     return searchplayerinfo
 
-def match(country, puuid, summonername):
+
+api_key = getattr(settings, 'API_KEY')
+watcher = LolWatcher(api_key)
+request_header = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36",
+    "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
+    "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
+    "Origin": "https://developer.riotgames.com",
+    "X-Riot-Token": api_key
+}
+
+
+
+def match(country, summonername):
+    my_region = country
+    myinfo = watcher.summoner.by_name(my_region, summonername)
+    puuid = myinfo['puuid']
     summonerSpells = {21 : "SummonerBarrier", 1 : "SummonerBoost", 14 : "SummonerDot", 3 : "SummonerExhaust", 4 : "SummonerFlash",
                   6 : "SummonerHaste", 7 : "SummonerHeal", 13 : "SummonerMana", 30 : "SummonerPoroRecall",
                   31 : "SummonerPoroThrow", 11 : "SummonerSmite", 39 : "SummonerSnowURFSnowball_Mark", 32: "SummonerSnowball",
@@ -199,3 +211,8 @@ def match(country, puuid, summonername):
         
     return result_match, total_calculate
         
+        
+# 티어 가져오는 부분 보류(api문제)
+# def findtier(country, id):
+#     searchplayerinfo = watcher.league.by_summoner(country, id)
+#     return searchplayerinfo        
