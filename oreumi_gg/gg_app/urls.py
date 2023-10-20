@@ -9,6 +9,7 @@ urlpatterns = [
     path('champions/', views.champions, name='champions'),
     path('login/', views.login, name='login'),
     path('register/', views.register, name='register'),
+    path('leaderboards/', views.leaderboards, name='leaderboards'),
 
     # 전적 검색
     path('summoners_form', views.summoners_info_form, name='summoners_info_form'),

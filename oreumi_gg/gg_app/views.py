@@ -9,6 +9,21 @@ def index(request):
 def champions(request):
     return render(request, "oreumi_gg/champions.html")
 
+def leaderboards(request):
+    return render(request, "oreumi_gg/leaderboards/leaderboards.html")
+
+def type_champions(request):
+    return render(request, "oreumi_gg/leaderboards/type_champions.html")
+
+def type_ladder_flex (request):
+    return render(request, "oreumi_gg/leaderboards/type_ladder_flex.html")
+
+def type_ladder(request):
+    return render(request, "oreumi_gg/leaderboards/type_ladder.html")
+
+def type_level(request):
+    return render(request, "oreumi_gg/leaderboards/type_level.html")
+
 def community(request):
     blog_post = BlogPost.objects.all()
     return render(request,"community/community.html",{"posts":blog_post})
