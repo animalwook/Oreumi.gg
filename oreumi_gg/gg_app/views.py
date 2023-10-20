@@ -24,8 +24,9 @@ def register(request):
  
 def community(request):
     blog_post = BlogPost.objects.all()
-    return render(request,"community.html",{"posts":blog_post})
-  
+    return render(request,"community/community.html",{"posts":blog_post})
+
+
   
 def summoners_info_form(request):
     if request.method == "POST":
