@@ -1,7 +1,6 @@
 from django.conf import settings
 from riotwatcher import LolWatcher, ApiError
-from datetime import datetime, timedelta
-from dateutil import relativedelta
+from datetime import datetime
 import requests
 import math
 
