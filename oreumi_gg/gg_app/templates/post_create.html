@@ -1,6 +1,6 @@
 {% block content %}
 <h3>게시글 작성</h3>
-<form method="post">
+<form method="post"> <!-- form 형식 -->
     {% csrf_token %}
 
     {{ form.label_tag }} 제목:

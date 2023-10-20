@@ -15,6 +15,7 @@ class BlogPost(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     up = models.IntegerField(default=0)
     down = models.IntegerField(default=0)
+    # image = models.ImageField(upload_to='images/')  # 이미지 필드 추가
 
 
 # class Comment(models.Model):
