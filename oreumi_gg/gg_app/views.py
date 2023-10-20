@@ -43,7 +43,7 @@ def summoners_info_form(request):
 
 
 def summoners_info(request, country, summoner_name):
-    matches, total_calculate = match(country, summoner_name)
+    matches, total_calculate = match(country, summoner_name, 0)
     context = {
         "matches" : matches, 
         "total_calculate": total_calculate
