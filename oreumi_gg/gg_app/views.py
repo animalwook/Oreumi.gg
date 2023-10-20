@@ -11,7 +11,7 @@ def champions(request):
 
 def community(request):
     blog_post = BlogPost.objects.all()
-    return render(request,"oreumi_gg/community.html",{"posts":blog_post})
+    return render(request,"community/community.html",{"posts":blog_post})
 
 def login(request):
     return render(request, "registration/login.html")
