@@ -17,10 +17,8 @@ class BlogPost(models.Model):
     down = models.IntegerField(default=0)
     # image = models.ImageField(upload_to='images/')  # 이미지 필드 추가
 
-
-# class Comment(models.Model):
-#     comment = models.TextField()
-#     date = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#       return self.comment
+class Comment(models.Model):
+    post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
+    author = models.CharField(max_length=255, default="User")  # 기본값을 "User"로 설정
+    text = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)

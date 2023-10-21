@@ -43,7 +43,7 @@ def get_secret(setting, secrets=secrets):
 #시크릿 파일 열기 끝
 
 SECRET_KEY = get_secret("DB_SECRET")
-
+API_KEY = get_secret("LOL_API")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -59,8 +59,53 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'gg_app'
+    'django.contrib.sites',
+
+    # 사용 앱
+    'gg_app',
+    'user_app',
+
+    # social api
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.kakao',
+
+
 ]
+
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = [
+    # allauth와 상관없는 관리자 로그인
+    'django.contrib.auth.backends.ModelBackend',
+    # 일반유저 allauth 인증
+    'allauth.account.auth_backends.AuthenticationBackend',]
+
+# uer 정보를 수정
+ACCOUNT_AUTHENTICATION_METHOD = 'email'  # 로그인시 username 이 아니라 email을 사용하게 하는 설정
+ACCOUNT_EMAIL_REQUIRED = True  # 회원가입시 필수 이메일을 필수항목으로 만들기
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory' # 'mandatory' 전송하고 인증까지, 'optional' 전송만, 'none' 전송없음있다
+ACCOUNT_USERNAME_REQUIRED = False  # USERNAME 을 필수항목에서 제거
+
+ACCOUNT_UNIQUE_EMAIL = True # 중복을  허용하지 않음
+ACCOUNT_LOGOUT_ON_GET = True # 로그아웃 확인 묻지 않고 즉시 로그아웃
+SOCIALACCOUNT_LOGIN_ON_GET = True # 바로 소셜로그인페이지로 넘어가도록
+ACCOUNT_SIGNUP_FORM_CLASS = 'user_app.forms.SignupForm'
+AUTH_USER_MODEL = 'user_app.User'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.naver.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = get_secret("EMAIL_HOST_USER") # 내 이메일주소
+EMAIL_HOST_PASSWORD = get_secret("EMAIL_HOST_PASSWORD") #발급한 앱비밀번호
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+ACCOUNT_EMAIL_SUBJECT_PREFIX = '[이메일 인증]' #이메일 제목앞에 붙일내용
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -70,14 +115,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware'
 ]
 
 ROOT_URLCONF = 'oreumi_gg.urls'
+BASE_DIR_TEMPLATES = Path(__file__).resolve().parent.parent
+
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [os.path.join(BASE_DIR_TEMPLATES, "gg_app/templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -128,13 +176,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'ko'
+LANGUAGE_CODE = 'ko-kr'
 
 TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -147,8 +195,18 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# 미디어파일 링크 pip install Pillow
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-# 이미지 파일을 서빙
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# 로그인 auth사용시 링크 
+LOGIN_REDIRECT_URL = 'gg_app:index'
+LOGOUT_REDIRECT_URL = 'gg_app:index'
+
+# LOGIN_URL = "user_app:login"
+
+ACCOUNT_SESSION_REMEMBER = True  # 브라우저를 닫아도 세션기록 유
+SESSION_COOKIE_AGE = 3600  # 쿠키를 한시간만 저장  
+# 지우는 명령어  python manage.py clearsessions
+
