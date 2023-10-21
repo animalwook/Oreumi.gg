@@ -146,7 +146,7 @@ def match(country, summonername, start):
             # 티어부분 보류(api문제)
             
             # 검색한 사용자의 정보를 가져옴
-            if player_info["summonerName"] == summonername:
+            if player_info["summonerName"].lower().replace(' ', '') == summonername.lower().replace(' ', ''):
                 if player_info["win"] == True:
                     win_or_not = "승리"
                     win_count += 1
