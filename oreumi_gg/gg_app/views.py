@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import JsonResponse
 from .models import BlogPost
-from .forms import BlogPostForm
+from .forms import PostForm, BlogPostForm
 
 # Create your views here.
 
@@ -26,6 +26,18 @@ def post(request):
     context = {"posts": blog_post}      
     return render(request, 'community/post_list.html', context)
 
+def write(request):
+    if request.method == 'POST':
+    
+        form = PostForm(request.POST) 
+        if form.is_valid(): # 유효성 검사(필수과정)
+            form.save()
+
+            return redirect('gg_app:community')
+    else:
+        form = PostForm()
+
+    return render(request,"community/post_write_1.html", {'form': form})
 
 # 게시글 작정
 def post_create(request):
@@ -37,7 +49,7 @@ def post_create(request):
     else:
         form = BlogPostForm()  # GET 요청인 경우 빈 폼 생성
 
-    return render(request, 'community/post_write.html', {'form': form})
+    return render(request, 'community/post_write_2.html', {'form': form})
 
 
 # 게시글 수정
@@ -52,7 +64,7 @@ def post_edit(request, post_id):
     else:
         form = BlogPostForm(instance=post)
 
-    return render(request, 'community/post_edit.html', {'form': form, 'post': post})
+    return render(request, 'community/post_write_2.html', {'form': form, 'post': post})
 
 
 # 상세 페이지
