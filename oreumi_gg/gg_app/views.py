@@ -1,10 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.http import JsonResponse
 from .models import BlogPost
-from django.conf import settings
-from riotwatcher import LolWatcher, ApiError
-from datetime import datetime, timedelta
-from dateutil import relativedelta
 
 from .lol_match import match
 # Create your views here.
@@ -47,7 +44,7 @@ def summoners_info_form(request):
 
 
 def summoners_info(request, country, summoner_name):
-    matches, total_calculate = match(country, summoner_name)
+    matches, total_calculate = match(country, summoner_name, 0)
     context = {
         "matches" : matches, 
         "total_calculate": total_calculate
@@ -55,7 +52,17 @@ def summoners_info(request, country, summoner_name):
     return render(request, "oreumi_gg/summoners.html", context)
 
 
-
+# 더보기 를 위한 함수
+# def summoners_info_api(request, country, summoner_name, start):
+#     temp_matches, temp_total_calculate, temp_match_count = match(country, summoner_name, 0)
+#     match_count = temp_match_count
+#     matches, total_calculate, match_count = match(country, summoner_name, match_count)
+#     response_data = {
+#         "matches": matches,
+#         "total_calculate": total_calculate,
+#         "match_count" : match_count
+#     }
+#     return JsonResponse(response_data)
        
         
 
