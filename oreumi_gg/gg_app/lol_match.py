@@ -5,10 +5,12 @@ import requests
 import math
 import decimal
 
-summonerSpells = {21 : "SummonerBarrier", 1 : "SummonerBoost", 14 : "SummonerDot", 3 : "SummonerExhaust", 4 : "SummonerFlash",
-                6 : "SummonerHaste", 7 : "SummonerHeal", 13 : "SummonerMana", 30 : "SummonerPoroRecall",
-                31 : "SummonerPoroThrow", 11 : "SummonerSmite", 39 : "SummonerSnowURFSnowball_Mark", 32: "SummonerSnowball",
-                12 : "SummonerTeleport"}
+summonerSpells = {21 : "SummonerBarrier", 1 : "SummonerBoost", 14 : "SummonerDot", 
+                  3 : "SummonerExhaust", 4 : "SummonerFlash",6 : "SummonerHaste", 
+                  7 : "SummonerHeal", 13 : "SummonerMana", 30 : "SummonerPoroRecall",
+                31 : "SummonerPoroThrow", 11 : "SummonerSmite", 39 : "SummonerSnowURFSnowball_Mark", 
+                32: "SummonerSnowball", 12 : "SummonerTeleport", 2202 : "SummonerCherryFlash", 
+                2201 : "SummonerCherryHold", 54 : "Summoner_UltBookPlaceholder", 55 : "Summoner_UltBookSmitePlaceholder", 0 : "arena"}
 rune = {8000 : "7201_Precision", 8100 : "7200_Domination", 8200 : "7202_Sorcery", 8300 : "7203_Whimsy", 8400 : "7204_Resolve"}
 # 룬 정보를 담고 있는 url
 url = "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perks.json"
@@ -36,8 +38,27 @@ def roundup2(num):
         return math.ceil(num * 100) / 100
     else:
         return float('{:.2f}'.format(num))
+    
+def capitalize_first_letter(input_string):
+    """ 
+    첫 글자만 대문자로 하고 나머지 글자는 소문자로 바꾸는 함수
+    """
+    # 문자열이 비어 있는지 확인
+    if not input_string:
+        return input_string
+
+    # 문자열의 첫 글자를 대문자로, 나머지를 소문자로 변환
+    if input_string == "FiddleSticks":
+        result_string = input_string[0].upper() + input_string[1:].lower()
+    else:
+        result_string = input_string
+    
+    return result_string
 
 def calculateminperminion(sec, kill, min):
+    """ 
+    분당 cs(미니언) 계산
+    """
     result = 0
     if sec >= 45:
         result = roundup(kill / (min + 1))
@@ -80,7 +101,7 @@ def match(country, summonername, start):
     myinfo = watcher.summoner.by_name(my_region, lower_summoner_name)
     puuid = myinfo['puuid']
     # 사용자 puuid와 country를 이용하여 최근 20경기 정보를 가져옴
-    match_20 = watcher.match.matchlist_by_puuid(country, puuid)
+    match_20 = watcher.match.matchlist_by_puuid(country, puuid, start)
     result_match = []
     win_count = 0
     lose_count = 0
@@ -136,7 +157,7 @@ def match(country, summonername, start):
                 search_player_kill = player_info["kills"]
                 search_player_assist = player_info["assists"]
                 search_player_death = player_info["deaths"]
-                search_player_champ = player_info["championName"]
+                search_player_champ = capitalize_first_letter(player_info["championName"])
                     
                 try:
                     search_value = player_info["challenges"]["killParticipation"]
@@ -155,7 +176,8 @@ def match(country, summonername, start):
                 search_player_totalminions_kill = player_info["totalMinionsKilled"] + player_info["neutralMinionsKilled"]
                 search_player_visionWardsBoughtInGame = player_info["visionWardsBoughtInGame"]
                 search_player_minperminions = calculateminperminion(game_playtime_sec, search_player_totalminions_kill, game_playtime_min)
-                
+                search_player_main_rune = ''
+                search_player_sub_rune = ''
                 for item in rune_data:
                     if item.get("id") == search_player_firstrune:
                         search_player_main_rune = item.get("iconPath").split("v1/")[1]
@@ -186,11 +208,12 @@ def match(country, summonername, start):
             # 메인 룬의 경우 정복자, 치속 등으로 나오지만 서브룬은 룬의 카테고리로나옴
             first_rune = player_info["perks"]["styles"][0]["selections"][0]["perk"]
             second_rune = player_info["perks"]["styles"][1]["style"]
-            
+            main_rune = 'none'
+            sub_rune = 'none'
             for item in rune_data:
-                    if item.get("id") == first_rune:
-                        main_rune = item.get("iconPath").split("v1/")[1]
-                        break
+                if item.get("id") == first_rune:
+                    main_rune = item.get("iconPath").split("v1/")[1]
+                    break
             
             for key, value in rune.items():
                 if key == second_rune:
@@ -215,7 +238,7 @@ def match(country, summonername, start):
             # 각 플레이어마다 해당 정보 저장
             player_dict = [{"kills" : player_info["kills"], "assists" : player_info["assists"], 
                             "deaths" : player_info["deaths"], "summonername" : player_info["summonerName"], 
-                            "championname" : player_info["championName"], "teamposition" : player_info["teamPosition"], 
+                            "championname" : capitalize_first_letter(player_info["championName"]), "teamposition" : player_info["teamPosition"], 
                             "teamid" : player_info["teamId"], "item0" : player_info["item0"],
                         "item1" : player_info["item1"], "item2" : player_info["item2"], 
                         "item3" : player_info["item3"], "item4" : player_info["item4"],

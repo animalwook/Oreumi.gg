@@ -19,5 +19,5 @@ urlpatterns = [
     # 전적 검색
     path('summoners_form', views.summoners_info_form, name='summoners_info_form'),
     path('summoners/<str:country>/<str:summoner_name>', views.summoners_info, name='summoners_info'),   #검색결과를 보여줄 화면
-    # path('api/summoners_info/<str:country>/<str:summoner_name>/<int:count>/', views.summoners_info_api, name='summoners_info_api'),
+    path('api/summoners_info/<str:country>/<str:summoner_name>/<int:count>/', views.summoners_info_api, name='summoners_info_api'),
 ]

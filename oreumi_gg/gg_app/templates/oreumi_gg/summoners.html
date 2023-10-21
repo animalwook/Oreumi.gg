@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -6,9 +7,13 @@
         <title>Document</title>
     </head>
     <body>
-        <div>
-            20경기 통계
-            20전 {{ total_calculate.win_count }}승 {{ total_calculate.lose_count }}패
+        <div id="match_statics">
+            <div id="win_lose">
+                <span id = "total_matchcount">20전</span>
+                <span id = "total_wincount">{{ total_calculate.win_count }}승</span>
+                <span id = "total_losecount">{{ total_calculate.lose_count }}패</span>
+            </div>
+            
             {{ total_calculate.win_rate }}%
             {{ total_calculate.total_kill }} / {{ total_calculate.total_death }} / {{ total_calculate.total_assist }}
             {{ total_calculate.total_kda }}:1
@@ -46,7 +51,11 @@
             
             
             {% for item in match.search_player_item %}
-                <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/{{ item }}.png" style="width: 100px; height: 100px;">
+                <li style="list-style-type: none;">
+                    {% if item %}
+                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/{{ item }}.png" style="width: 100px; height: 100px;">
+                    {% endif %}
+                </li>
             {% endfor %}
 
             {% for key, value in match.items %}
@@ -67,6 +76,11 @@
             {% endfor %}
         </div>
     {% endfor %}
-    <button>더보기</button>
+    <div id="addmatch">
+
+    </div>
+
+    <button id="addmatch_btn">더보기</button>
     </body>
+    <script src="{% static "js/matches.js" %}"></script>
 </html>
