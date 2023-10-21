@@ -78,7 +78,7 @@ def timecalculate(time):
 api_key = getattr(settings, 'API_KEY')
 watcher = LolWatcher(api_key)
 
-def sommoner_info(country, myinfo):
+def summoner_info(country, myinfo):
     
     # 크로링에서 db로 전향 필요
     my_league_info = watcher.league.by_summoner(country, myinfo['id'])
@@ -188,7 +188,7 @@ def match(country, summonername, start):
     myinfo = watcher.summoner.by_name(my_region, lower_summoner_name)
 
     # 최상단에 들어가는 소환사 정보
-    search_player_info_dict = sommoner_info(country,myinfo)
+    search_player_info_dict = summoner_info(country,myinfo)
 
     puuid = myinfo['puuid']
     # 사용자 puuid와 country를 이용하여 최근 20경기 정보를 가져옴
