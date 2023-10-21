@@ -15,24 +15,16 @@ def index(request):
   
 def champions(request):
     return render(request, "oreumi_gg/champions.html")
-
-def login(request):
-    return render(request, "registration/login.html")
-
-def register(request):
-    return render(request, "registration/register.html")
-
  
 def community(request):
     blog_post = BlogPost.objects.all()
     return render(request,"community/community.html",{"posts":blog_post})
 
-
 # 게시판 목록
 def post(request):
     blog_post = BlogPost.objects.all().order_by('-created_at')  # 가장 최근에 생성된 게시글 먼저 나타남
     context = {"posts": blog_post}      
-    return render(request, 'post.html', context)
+    return render(request, 'community/post_list.html', context)
 
 
 # 게시글 작정
@@ -41,11 +33,11 @@ def post_create(request):
         form = BlogPostForm(request.POST)
         if form.is_valid():
             form.save()  # 폼이 유효하면 데이터베이스에 저장
-            return redirect('gg_app:post')  # 게시글 목록 페이지로 리다이렉트
+            return redirect('gg_app:community')  # 게시글 목록 페이지로 리다이렉트
     else:
         form = BlogPostForm()  # GET 요청인 경우 빈 폼 생성
 
-    return render(request, 'post_create.html', {'form': form})
+    return render(request, 'community/post_write.html', {'form': form})
 
 
 # 게시글 수정
@@ -60,13 +52,13 @@ def post_edit(request, post_id):
     else:
         form = BlogPostForm(instance=post)
 
-    return render(request, 'post_edit.html', {'form': form, 'post': post})
+    return render(request, 'community/post_edit.html', {'form': form, 'post': post})
 
 
 # 상세 페이지
 def post_detail(request, post_id):
     post = get_object_or_404(BlogPost, pk=post_id)  # 게시물 가져오기, 없으면 404 에러 발생
-    return render(request, 'post_detail.html', {'post': post})
+    return render(request, 'community/post_detail.html', {'post': post})
 
   
 def summoners_info_form(request):
