@@ -90,10 +90,11 @@ def summoners_info_form(request):
 
 
 def summoners_info(request, country, summoner_name):
-    matches, total_calculate = match(country, summoner_name, 0)
+    matches, total_calculate, search_player_info_dict = match(country, summoner_name, 0)
     context = {
         "matches" : matches, 
-        "total_calculate": total_calculate
+        "total_calculate": total_calculate,
+        "search_player_info_dict" : search_player_info_dict
     }
     return render(request, "oreumi_gg/summoners.html", context)
 

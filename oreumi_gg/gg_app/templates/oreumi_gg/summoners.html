@@ -1,11 +1,18 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <link rel="stylesheet" href="{% static 'css/sommoners.css' %}">
+        <title>소환사 정보</title>
     </head>
     <body>
+        {% include 'oreumi_gg/header.html' %}
+        {% include 'oreumi_gg/summoners/summoners_article_1.html' %}
+        {% include 'oreumi_gg/summoners/summoners_rank.html' %}
+
+        <div class="node3">
         <div>
             20경기 통계
             20전 {{ total_calculate.win_count }}승 {{ total_calculate.lose_count }}패
@@ -68,5 +75,6 @@
         </div>
     {% endfor %}
     <button>더보기</button>
+        </div>
     </body>
 </html>

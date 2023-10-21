@@ -5,6 +5,11 @@ import requests
 import math
 import decimal
 
+'''
+최신 아이콘
+https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/
+'''
+
 summonerSpells = {21 : "SummonerBarrier", 1 : "SummonerBoost", 14 : "SummonerDot", 3 : "SummonerExhaust", 4 : "SummonerFlash",
                 6 : "SummonerHaste", 7 : "SummonerHeal", 13 : "SummonerMana", 30 : "SummonerPoroRecall",
                 31 : "SummonerPoroThrow", 11 : "SummonerSmite", 39 : "SummonerSnowURFSnowball_Mark", 32: "SummonerSnowball",
@@ -73,11 +78,118 @@ def timecalculate(time):
 api_key = getattr(settings, 'API_KEY')
 watcher = LolWatcher(api_key)
 
+def sommoner_info(country, myinfo):
+    
+    # 크로링에서 db로 전향 필요
+    my_league_info = watcher.league.by_summoner(country, myinfo['id'])
+    """
+    [
+    {
+        "leagueId": "548cecb1-3868-4916-96c2-3625202e8e05",
+        "queueType": "RANKED_SOLO_5x5",
+        "tier": "SILVER",
+        "rank": "II",
+        "summonerId": "EE2eARX3pTxgPB8AV1jbfjR8N0IrTRRrULzJxKDwX0rPeNo",
+        "summonerName": "거니라구",
+        "leaguePoints": 51,
+        "wins": 4,
+        "losses": 5,
+        "veteran": false,
+        "inactive": false,
+        "freshBlood": false,
+        "hotStreak": false
+    }
+    ]
+    """
+    # 크롤링에서 db로 전향 필요
+    search_player_tear_by_season = "크롤링필요"
+    my_summoner_ranking = "크롤링필요",
+    
+    # 랭크 여부 확인
+    if len(my_league_info) == 0 : # 랭크를 하지 않음
+            search_player_solo_tear = None
+            search_player_solo_rank = None
+            search_player_solo_points = None
+            search_player_solo_wins = None
+            search_player_solo_losses = None
+            search_player_flex_tear = None
+            search_player_flex_rank = None
+            search_player_flex_points = None
+            search_player_flex_wins = None
+            search_player_flex_losses = None
+    elif len(my_league_info) == 1 : # 솔로인지 자유랭인지 확인
+
+        if my_league_info[0].get('queueType') == "RANKED_SOLO_5x5":
+            search_player_solo_tear = my_league_info[0].get('tier')
+            search_player_solo_rank = my_league_info[0].get('rank')
+            search_player_solo_points = my_league_info[0].get('leaguePoints')
+            search_player_solo_wins = my_league_info[0].get('wins')
+            search_player_solo_losses = my_league_info[0].get('losses')
+            search_player_flex_tear = None
+            search_player_flex_rank = None
+            search_player_flex_points = None
+            search_player_flex_wins = None
+            search_player_flex_losses = None
+        else :
+            search_player_solo_tear = None
+            search_player_solo_rank = None
+            search_player_solo_points = None
+            search_player_solo_wins = None
+            search_player_solo_losses = None
+            search_player_flex_tear = my_league_info[0].get('tier')
+            search_player_flex_rank = my_league_info[0].get('rank')
+            search_player_flex_points = my_league_info[0].get('leaguePoints')
+            search_player_flex_wins = my_league_info[0].get('wins')
+            search_player_flex_losses = my_league_info[0].get('losses')
+
+    elif len(my_league_info) == 2 : # 솔랭/자유랭크 있음
+        search_player_solo_tear = my_league_info[0].get('tier')
+        search_player_solo_rank = my_league_info[0].get('rank')
+        search_player_solo_points = my_league_info[0].get('leaguePoints')
+        search_player_solo_wins = my_league_info[0].get('wins')
+        search_player_solo_losses = my_league_info[0].get('losses')
+        search_player_flex_tear = my_league_info[1].get('tier')
+        search_player_flex_rank = my_league_info[1].get('rank')
+        search_player_flex_points = my_league_info[1].get('leaguePoints')
+        search_player_flex_wins = my_league_info[1].get('wins')
+        search_player_flex_losses = my_league_info[1].get('losses')
+
+    search_player_solo = {
+        'search_player_solo_tear' : search_player_solo_tear,
+        'search_player_solo_rank' : search_player_solo_rank,
+        'search_player_solo_points' : search_player_solo_points,
+        'search_player_solo_wins': search_player_solo_wins,
+        'search_player_solo_losses': search_player_solo_losses,
+    }
+    search_player_flex = {
+        'search_player_flex_tear' : search_player_flex_tear,
+        'search_player_flex_rank' : search_player_flex_rank,
+        'search_player_flex_points' : search_player_flex_points,
+        'search_player_flex_wins': search_player_flex_wins,
+        'search_player_flex_losses': search_player_flex_losses,
+    }
+
+    search_player_info_dict = {
+        'search_player_tear_by_season' : search_player_tear_by_season ,
+        'search_player_ranking' : my_summoner_ranking,
+        'search_player_name' :  myinfo['name'],
+        'search_player_icon' :  myinfo['profileIconId'],
+        'search_player_level' :  myinfo['summonerLevel'],
+    }
+    search_player_info_dict.update(search_player_solo)
+    search_player_info_dict.update(search_player_flex)
+
+    return search_player_info_dict
+
 
 def match(country, summonername, start):
     my_region = country
     lower_summoner_name = summonername.lower().replace(' ', '')
     myinfo = watcher.summoner.by_name(my_region, lower_summoner_name)
+
+    # 최상단에 들어가는 소환사 정보
+    search_player_info_dict = sommoner_info(country,myinfo)
+
     puuid = myinfo['puuid']
     # 사용자 puuid와 country를 이용하여 최근 20경기 정보를 가져옴
     match_20 = watcher.match.matchlist_by_puuid(country, puuid)
@@ -256,10 +368,13 @@ def match(country, summonername, start):
                     "win_rate" : win_rate, "total_kill" : total_kill, 
                     "total_death" : total_death, "total_assist" : total_assist,
                     "total_kda" : total_kda, "total_kill_part" : total_kill_part}    
-    return result_match, total_calculate #, match_count
+    return result_match, total_calculate, search_player_info_dict #, match_count
         
         
 # 티어 가져오는 부분 보류(api문제)
 # def findtier(country, id):
 #     searchplayerinfo = watcher.league.by_summoner(country, id)
 #     return searchplayerinfo        
+
+
+
