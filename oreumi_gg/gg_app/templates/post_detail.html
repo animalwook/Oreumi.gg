@@ -1,0 +1,9 @@
+{% block content %}
+<h1>{{ post.title }}</h1>
+<p>작성자: {{ post.author }}</p>
+<p>게시일: {{ post.created_at }}</p>
+<p>내용: {{ post.content }}</p>
+<a href="{% url 'gg_app:post' %}">뒤로 가기</a>
+<!-- <a href="{% url 'gg_app:post_edit' post.id %}">수정</a> --> <!-- 로그인 이후 수정 권한 -->
+
+{% endblock %}

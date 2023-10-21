@@ -188,8 +188,8 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -209,3 +209,4 @@ LOGOUT_REDIRECT_URL = 'gg_app:index'
 ACCOUNT_SESSION_REMEMBER = True  # 브라우저를 닫아도 세션기록 유
 SESSION_COOKIE_AGE = 3600  # 쿠키를 한시간만 저장  
 # 지우는 명령어  python manage.py clearsessions
+

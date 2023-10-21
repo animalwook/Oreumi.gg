@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전체 게시판 - 리그오브레전드</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <main>
+        <div class="board_wrap">
+            <div class="board_title">
+                <strong>전체</strong>
+                <!-- <p>리그오브레전드</p> -->
+                <div class="posting_write">
+                    <a href="{% url 'gg_app:post_create' %}" class="write_button">글쓰기</a> <!-- 글쓰기 누르면 로그인 후 글 작성 -->
+                </div>
+            </div>
+            <div class="board_list_wrap">
+                {% for post in posts %} <!-- views 에서 넘겨 받은 변수 -->
+                <ul>
+                    <span>{{post.up}}</span>
+                    <span><a href="{% url 'gg_app:post_detail' post.id %}">{{post.title}}</a></span>
+                    <!-- 임시 버튼 누르면 상세 페이지(post_content.html) 이동하기, 상세페이지 안에서 up, down 기능 -->
+                    <span>{{post.author}}</span>
+                    <span>{{post.updated_at}}</span>
+                </ul>
+                {% endfor %}
+            </div>
+        </div>
+
+    </main>
+
+</body>
+
+</html>
