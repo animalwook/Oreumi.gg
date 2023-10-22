@@ -25,7 +25,15 @@ function addmatch(count) {
 
 function display(data) {
     const matchDataContainer = document.getElementById("addmatch");
-    const total_matchcount = document.getElementById("total_matchcount")
+    const total_matchcount = document.getElementById("total_matchcount");
+    const total_wincount = document.getElementById("total_wincount");
+    const total_losecount = document.getElementById("total_losecount");
+    const total_winrate = document.getElementById("total_winrate")
+    const total_kill = document.getElementById("total_kill")
+    const total_death = document.getElementById("total_death")
+    const total_assist = document.getElementById("total_assist")
+    const total_kda = document.getElementById("total_kda")
+    const total_killpart = document.getElementById("total_killpart")
     const matches = data.matches;
 
     let html = '';
@@ -99,10 +107,27 @@ function display(data) {
     
     matchDataContainer.innerHTML += html;
     total_matchcount.innerHTML = `${count}전`
+    let winCount = parseInt(total_wincount.textContent) + data.total_calculate.win_count;
+    let loseCount = parseInt(total_losecount.textContent) + data.total_calculate.lose_count;
+    let winRate = (winCount / (winCount + loseCount)).toFixed(2) * 100;
+    let killCount = parseFloat(total_kill.textContent) + data.total_calculate.total_kill;
+    let assistCount = parseFloat(total_assist.textContent) + data.total_calculate.total_assist;
+    let deathCount = parseFloat(total_death.textContent) + data.total_calculate.total_death;
+    let kda = parseFloat(total_kda.textContent.split(":")[0]) + data.total_calculate.total_kda;
+    let killPart = parseInt(total_killpart.textContent) + data.total_calculate.total_kill_part;
+
+    total_wincount.textContent = winCount + "승";
+    total_losecount.textContent = loseCount + "패";
+    total_winrate.textContent = winRate + "%";
+    total_kill.textContent = (killCount / 2).toFixed(1);
+    total_death.textContent = (deathCount / 2).toFixed(1);
+    total_assist.textContent = (assistCount / 2).toFixed(1);
+    total_kda.textContent = (kda / 2).toFixed(2) + ":1";
+    total_killpart.textContent = (killPart / 2).toFixed(0) + "%";
 }
 let count = 20;
 const fetchButton = document.getElementById('addmatch_btn');
 fetchButton.addEventListener('click', function() {
-    count += 20;
     addmatch(count)
+    count += 20;
 });

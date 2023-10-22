@@ -148,11 +148,17 @@ def match(country, summonername, start):
             # 검색한 사용자의 정보를 가져옴
             if player_info["summonerName"].lower().replace(' ', '') == summonername.lower().replace(' ', ''):
                 if player_info["win"] == True:
-                    win_or_not = "승리"
-                    win_count += 1
+                    if game_playtime_min <= 3:
+                        win_or_not = "다시하기"
+                    else:
+                        win_or_not = "승리"
+                        win_count += 1
                 else:
-                    win_or_not = "패배"
-                    lose_count += 1
+                    if game_playtime_min <= 3:
+                        win_or_not = "다시하기"
+                    else:
+                        win_or_not = "패배"
+                        lose_count += 1
                 # search_player로 시작하는 것은 검색한 사용자의 정보를 저장하는 변수들
                 search_player_kill = player_info["kills"]
                 search_player_assist = player_info["assists"]
@@ -278,7 +284,7 @@ def match(country, summonername, start):
     total_calculate = {"win_count" : win_count, "lose_count" : lose_count, 
                     "win_rate" : win_rate, "total_kill" : total_kill, 
                     "total_death" : total_death, "total_assist" : total_assist,
-                    "total_kda" : total_kda, "total_kill_part" : total_kill_part}    
+                    "total_kda" : total_kda, "total_kill_part" : total_kill_part // 20}    
     return result_match, total_calculate #, match_count
         
         

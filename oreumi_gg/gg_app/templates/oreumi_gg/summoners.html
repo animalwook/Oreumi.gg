@@ -9,15 +9,20 @@
     <body>
         <div id="match_statics">
             <div id="win_lose">
-                <span id = "total_matchcount">20전</span>
-                <span id = "total_wincount">{{ total_calculate.win_count }}승</span>
-                <span id = "total_losecount">{{ total_calculate.lose_count }}패</span>
+                <span id="total_matchcount">20전</span>
+                <span id="total_wincount">{{ total_calculate.win_count }}승</span>
+                <span id="total_losecount">{{ total_calculate.lose_count }}패</span>
             </div>
             
-            {{ total_calculate.win_rate }}%
-            {{ total_calculate.total_kill }} / {{ total_calculate.total_death }} / {{ total_calculate.total_assist }}
-            {{ total_calculate.total_kda }}:1
-            {{ total_calculate.total_kill_part }}
+            <span id="total_winrate">{{ total_calculate.win_rate }}%</span>
+            <span id="total_kill">{{ total_calculate.total_kill }}</span>
+            <span> / </span>
+            <span id="total_death">{{ total_calculate.total_death }}</span>
+            <span> / </span>
+            <span id="total_assist">{{ total_calculate.total_assist }}</span>
+            <span id="total_kda">{{ total_calculate.total_kda }}:1</span>
+            <span id="total_killpart">{{ total_calculate.total_kill_part }}%</span>
+            
         </div>
         {% for match in matches %}
         <div style="border: 2px solid #333; display: flex;">
