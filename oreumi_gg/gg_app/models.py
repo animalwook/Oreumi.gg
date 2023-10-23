@@ -15,4 +15,10 @@ class BlogPost(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     up = models.IntegerField(default=0)
     down = models.IntegerField(default=0)
+    # image = models.ImageField(upload_to='images/')  # 이미지 필드 추가
 
+class Comment(models.Model):
+    post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
+    author = models.CharField(max_length=255, default="User")  # 기본값을 "User"로 설정
+    text = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)

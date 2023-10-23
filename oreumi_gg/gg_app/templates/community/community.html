@@ -14,10 +14,7 @@
         <title>Oreumi.gg/community</title>
     </head>
     <body>
-        <ul>
-            {% comment %} {% for post in posts %}
-            <li><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></li>
-            {% endfor %} {% endcomment %}
-        </ul>
+        {% include 'oreumi_gg/header.html' %}
+        {% include 'community/post_list.html' %}
     </body>
 </html>

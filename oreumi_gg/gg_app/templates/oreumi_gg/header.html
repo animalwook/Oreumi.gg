@@ -16,12 +16,12 @@
     {% comment %} 유저 로그인 여부 확인 {% endcomment %}
     
     {% if user.is_authenticated %}
-    <form action="{%url 'gg_app:logout' %}" method="post">
+    <form action="{%url 'account_login' %}" method="post">
         {% csrf_token %}
-        <a href="{% url 'gg_app:logout'%}">로그아웃</a>
+        <a href="{% url 'account_logout'%}">로그아웃</a>
     </form>
 
     {% else %}
-    <a href="{% url 'gg_app:login' %}">로그인</a>
+    <a href="{% url 'account_login' %}">로그인</a>
     {% endif %}
 </header>
