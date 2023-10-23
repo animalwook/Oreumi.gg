@@ -2,15 +2,17 @@
 
 function showChampions(position) {
     // 챔피언 목록 초기화
-    document.getElementById("championsList").innerHTML = "";
-
+    // document.getElementById("championsList").innerHTML = "";
+    var newUrl = 'champions_tier/' + position + '/';
+    window.location.href = newUrl;
     // 선택한 포지션에 따라 챔피언을 표시
-    if (position === "top") {
-    } else if (position === "jungle") {
-    } else if (position === "mid") {
-    } else if (position === "adc") {
-    } else if (position === "spt") {
-    }
+    // if (position === "top") {
+
+    // } else if (position === "jungle") {
+    // } else if (position === "mid") {
+    // } else if (position === "adc") {
+    // } else if (position === "spt") {
+    // }
 }
 
 // 데이터의 일부만 작성해도 해당 데이터가 포함 된 모든 요소 표시
