@@ -1,7 +1,38 @@
-.search_form {
+header {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 100px 0 0;
+    height: 50px;
+    background-color: #28344e;
 }
 
-.search_input {
+.main_link {
     display: flex;
+    width: 250px;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background-color: #5383e8;
+}
+
+.main_link img {
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+    height: 25px;
+}
+
+.auth_link {
+    width: 100px;
+    height: 40px;
+    background-color: #5383e8;
+    border-radius: 5px;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    line-height: 40px;
+    vertical-align: middle;
+    display: inline-block;
 }
