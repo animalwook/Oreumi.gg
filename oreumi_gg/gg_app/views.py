@@ -2,9 +2,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import JsonResponse
-from .models import BlogPost
-
-from .forms import PostForm, BlogPostForm
+from .models import BlogPost, Comment
+from .forms import PostForm, BlogPostForm, CommentForm
 
 from .lol_match import match
 from selenium import webdriver
@@ -172,3 +171,17 @@ def champion_tier_list(request, position, region, tier):
 #         "match_count" : match_count
 #     }
 #     return JsonResponse(response_data)
+
+
+def add_comment(request, post_id):
+    post = get_object_or_404(BlogPost, pk=post_id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect('gg_app:post_detail', post_id=post_id)
+
+    return redirect('gg_app:post_detail', post_id=post_id)  # 실패 시 동일한 페이지로 리디렉션
