@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'gg_app',
     'user_app',
 
+
     # social api
     'allauth',
     'allauth.account',
@@ -93,6 +94,7 @@ ACCOUNT_USERNAME_REQUIRED = False  # USERNAME 을 필수항목에서 제거
 ACCOUNT_UNIQUE_EMAIL = True # 중복을  허용하지 않음
 ACCOUNT_LOGOUT_ON_GET = True # 로그아웃 확인 묻지 않고 즉시 로그아웃
 SOCIALACCOUNT_LOGIN_ON_GET = True # 바로 소셜로그인페이지로 넘어가도록
+
 ACCOUNT_SIGNUP_FORM_CLASS = 'user_app.forms.SignupForm'
 AUTH_USER_MODEL = 'user_app.User'
 
