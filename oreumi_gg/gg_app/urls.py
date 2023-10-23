@@ -11,7 +11,9 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'), # 장고 auth에서 logout 매서드 사용
     path('register/', views.register, name='register'),
-
+    #챔피언 티어
+    path('champions/champions_tier/<str:position>/', views.champion_tier_list, name='champion_tier'),
+    
     # 전적 검색
     path('summoners_form', views.summoners_info_form, name='summoners_info_form'),
     path('summoners/<str:country>/<str:summoner_name>', views.summoners_info, name='summoners_info'),   #검색결과를 보여줄 화면
