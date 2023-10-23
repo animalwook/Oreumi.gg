@@ -104,7 +104,7 @@ def summoners_info(request, country, summoner_name):
 
 
 def summoners_info_api(request, country, summoner_name, count):
-    matches, total_calculate = match(country, summoner_name, count)
+    matches, total_calculate, search_player_info_dict = match(country, summoner_name, count)
     response_data = {
         "matches": matches,
         "total_calculate": total_calculate,
