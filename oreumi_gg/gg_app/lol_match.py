@@ -228,6 +228,7 @@ def match(country, summonername, start):
         time = match_detail["info"]["gameEndTimestamp"] // 1000
         game_type = ''
         win_or_not = ''
+        win_or_not_eng = ''
         search_player_kill = 0
         search_player_assist = 0
         search_player_death = 0
@@ -259,15 +260,19 @@ def match(country, summonername, start):
                 if player_info["win"] == True:
                     if game_playtime_min <= 3:
                         win_or_not = "다시하기"
+                        win_or_not_eng = "repeat"
                     else:
                         win_or_not = "승리"
                         win_count += 1
+                        win_or_not_eng = "victory"
                 else:
                     if game_playtime_min <= 3:
                         win_or_not = "다시하기"
+                        win_or_not_eng = "repeat"
                     else:
                         win_or_not = "패배"
                         lose_count += 1
+                        win_or_not_eng = "defeat"
                 # search_player로 시작하는 것은 검색한 사용자의 정보를 저장하는 변수들
                 search_player_kill = player_info["kills"]
                 search_player_assist = player_info["assists"]
@@ -366,7 +371,8 @@ def match(country, summonername, start):
                         "main_rune" : main_rune, "sub_rune" : sub_rune, "minperminions" : minperminions}]
             result[num] = player_dict
             num += 1
-        result.update({"game_playtime" : game_playtime, "game_type" : game_type, "win_or_not" : win_or_not, "search_player_kill" : search_player_kill, 
+        result.update({"game_playtime" : game_playtime, "game_type" : game_type, "win_or_not" : win_or_not, "win_or_not_eng" : win_or_not_eng,
+                    "search_player_kill" : search_player_kill, 
                     "search_player_death" : search_player_death, 
                     "search_player_assist" : search_player_assist, 
                     "game_time" : game_time,
