@@ -1,27 +1,30 @@
 {% load static %}
 <header>
-    <a href="">OREUMI.GG</a>
+    <a class="main_link" href=""><img class="main_logo" src="static\img\oreumi_gg\main_logo.png" alt="logo_button" /></a>
 
-    {% comment %} 챔피언 페이지에서만 검색창 표시 {% endcomment %} 
-    
+    <!-- 챔피언 페이지에서만 검색창 표시 -->
+
     {% if request.path == '/champions/' %}
-    <form class="search_form">
-        <div class="search_input">
-            <input type="text" class="summoner_search" onkeydown="searchOnEnter(event)" />
-            <button class="search_button"><img src="" alt="" /></button>
+    <form method="POST" name="search_form" action="{% url 'gg_app:summoners_info_form' %}">
+        {% csrf_token %}
+        <div class="input_group">
+            <input type="text" class="summoner_search" placeholder="소환사명" name="search_text" />
+            <span class="input_group_button">
+                <a class="search_button" type="submit"> <img class="main_logo" src="static\img\oreumi_gg\main_logo.png" alt="logo_button" /> </a
+            ></span>
         </div>
     </form>
-    {% endif %} 
-    
-    {% comment %} 유저 로그인 여부 확인 {% endcomment %}
-    
+    {% endif %}
+
+    <!-- 유저 로그인 여부 확인 -->
+
     {% if user.is_authenticated %}
     <form action="{%url 'account_login' %}" method="post">
         {% csrf_token %}
-        <a href="{% url 'account_logout'%}">로그아웃</a>
+        <a class="auth_link" href="{% url 'account_logout'%}">로그아웃</a>
     </form>
 
     {% else %}
-    <a href="{% url 'account_login' %}">로그인</a>
+    <a class="auth_link" href="{% url 'account_login' %}">로그인</a>
     {% endif %}
 </header>

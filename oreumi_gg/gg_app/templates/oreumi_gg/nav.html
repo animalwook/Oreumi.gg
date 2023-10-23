@@ -1,16 +1,20 @@
 {% load static %}
 
 <nav>
-    <a href="{% url 'gg_app:index' %}">홈</a>
-    <a href="{% url 'gg_app:champions' %}">챔피언 분석</a>
-    <a href="#">게임 모드</a>
-    <a href="#">통계</a>
-    <a href="#">랭킹</a>
+    <ul>
+        <li><a href="{% url 'gg_app:index' %}">홈</a></li>
+        <li><a href="{% url 'gg_app:champions' %}">챔피언 분석</a></li>
+        <li><a class="game_mode" href="#">게임 모드</a></li>
+        <li><a href="#">통계</a></li>
+        <li><a href="#">랭킹</a></li>
+        <li><a href="#">멀티서치</a></li>
+        <li><a href="{% url 'gg_app:community' %}">커뮤니티</a></li>
+        <!-- 로그인 시에 표시, 자신의 전적으로 관전 가능 -->
+        <!-- <a href="#">내 게임</a> -->
+    </ul>
 
-     <!-- 로그인 시에 표시, 자신의 전적으로 관전 가능 -->
+    <a class="patch_note" href="#"><img src="static\img\lol_logo.png" alt="patch logo" />패치노트 보기</a>
+
+    <!-- 로그인 시에 표시, 자신의 전적으로 관전 가능 -->
     <!-- <a href="#">내 게임</a> -->
-
-    <a href="#">멀티서치</a>
-    <a href="{% url 'gg_app:community' %}">커뮤니티</a>
-
 </nav>
