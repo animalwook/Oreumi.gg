@@ -5,10 +5,14 @@ import requests
 import math
 import decimal
 
-summonerSpells = {21 : "SummonerBarrier", 1 : "SummonerBoost", 14 : "SummonerDot", 3 : "SummonerExhaust", 4 : "SummonerFlash",
-                6 : "SummonerHaste", 7 : "SummonerHeal", 13 : "SummonerMana", 30 : "SummonerPoroRecall",
-                31 : "SummonerPoroThrow", 11 : "SummonerSmite", 39 : "SummonerSnowURFSnowball_Mark", 32: "SummonerSnowball",
-                12 : "SummonerTeleport"}
+
+summonerSpells = {21 : "SummonerBarrier", 1 : "SummonerBoost", 14 : "SummonerDot", 
+                  3 : "SummonerExhaust", 4 : "SummonerFlash",6 : "SummonerHaste", 
+                  7 : "SummonerHeal", 13 : "SummonerMana", 30 : "SummonerPoroRecall",
+                31 : "SummonerPoroThrow", 11 : "SummonerSmite", 39 : "SummonerSnowURFSnowball_Mark", 
+                32: "SummonerSnowball", 12 : "SummonerTeleport", 2202 : "SummonerCherryFlash", 
+                2201 : "SummonerCherryHold", 54 : "Summoner_UltBookPlaceholder", 55 : "Summoner_UltBookSmitePlaceholder", 0 : "arena"}
+
 rune = {8000 : "7201_Precision", 8100 : "7200_Domination", 8200 : "7202_Sorcery", 8300 : "7203_Whimsy", 8400 : "7204_Resolve"}
 # 룬 정보를 담고 있는 url
 url = "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perks.json"
@@ -36,8 +40,27 @@ def roundup2(num):
         return math.ceil(num * 100) / 100
     else:
         return float('{:.2f}'.format(num))
+    
+def capitalize_first_letter(input_string):
+    """ 
+    첫 글자만 대문자로 하고 나머지 글자는 소문자로 바꾸는 함수
+    """
+    # 문자열이 비어 있는지 확인
+    if not input_string:
+        return input_string
+
+    # 문자열의 첫 글자를 대문자로, 나머지를 소문자로 변환
+    if input_string == "FiddleSticks":
+        result_string = input_string[0].upper() + input_string[1:].lower()
+    else:
+        result_string = input_string
+    
+    return result_string
 
 def calculateminperminion(sec, kill, min):
+    """ 
+    분당 cs(미니언) 계산
+    """
     result = 0
     if sec >= 45:
         result = roundup(kill / (min + 1))
@@ -73,14 +96,121 @@ def timecalculate(time):
 api_key = getattr(settings, 'API_KEY')
 watcher = LolWatcher(api_key)
 
+def summoner_info(country, myinfo):
+    
+    # 크로링에서 db로 전향 필요
+    my_league_info = watcher.league.by_summoner(country, myinfo['id'])
+    """
+    [
+    {
+        "leagueId": "548cecb1-3868-4916-96c2-3625202e8e05",
+        "queueType": "RANKED_SOLO_5x5",
+        "tier": "SILVER",
+        "rank": "II",
+        "summonerId": "EE2eARX3pTxgPB8AV1jbfjR8N0IrTRRrULzJxKDwX0rPeNo",
+        "summonerName": "거니라구",
+        "leaguePoints": 51,
+        "wins": 4,
+        "losses": 5,
+        "veteran": false,
+        "inactive": false,
+        "freshBlood": false,
+        "hotStreak": false
+    }
+    ]
+    """
+    # 크롤링에서 db로 전향 필요
+    search_player_tear_by_season = "크롤링필요"
+    my_summoner_ranking = "크롤링필요",
+    
+    # 랭크 여부 확인
+    if len(my_league_info) == 0 : # 랭크를 하지 않음
+            search_player_solo_tear = None
+            search_player_solo_rank = None
+            search_player_solo_points = None
+            search_player_solo_wins = None
+            search_player_solo_losses = None
+            search_player_flex_tear = None
+            search_player_flex_rank = None
+            search_player_flex_points = None
+            search_player_flex_wins = None
+            search_player_flex_losses = None
+    elif len(my_league_info) == 1 : # 솔로인지 자유랭인지 확인
+
+        if my_league_info[0].get('queueType') == "RANKED_SOLO_5x5":
+            search_player_solo_tear = my_league_info[0].get('tier')
+            search_player_solo_rank = my_league_info[0].get('rank')
+            search_player_solo_points = my_league_info[0].get('leaguePoints')
+            search_player_solo_wins = my_league_info[0].get('wins')
+            search_player_solo_losses = my_league_info[0].get('losses')
+            search_player_flex_tear = None
+            search_player_flex_rank = None
+            search_player_flex_points = None
+            search_player_flex_wins = None
+            search_player_flex_losses = None
+        else :
+            search_player_solo_tear = None
+            search_player_solo_rank = None
+            search_player_solo_points = None
+            search_player_solo_wins = None
+            search_player_solo_losses = None
+            search_player_flex_tear = my_league_info[0].get('tier')
+            search_player_flex_rank = my_league_info[0].get('rank')
+            search_player_flex_points = my_league_info[0].get('leaguePoints')
+            search_player_flex_wins = my_league_info[0].get('wins')
+            search_player_flex_losses = my_league_info[0].get('losses')
+
+    elif len(my_league_info) == 2 : # 솔랭/자유랭크 있음
+        search_player_solo_tear = my_league_info[0].get('tier')
+        search_player_solo_rank = my_league_info[0].get('rank')
+        search_player_solo_points = my_league_info[0].get('leaguePoints')
+        search_player_solo_wins = my_league_info[0].get('wins')
+        search_player_solo_losses = my_league_info[0].get('losses')
+        search_player_flex_tear = my_league_info[1].get('tier')
+        search_player_flex_rank = my_league_info[1].get('rank')
+        search_player_flex_points = my_league_info[1].get('leaguePoints')
+        search_player_flex_wins = my_league_info[1].get('wins')
+        search_player_flex_losses = my_league_info[1].get('losses')
+
+    search_player_solo = {
+        'search_player_solo_tear' : search_player_solo_tear,
+        'search_player_solo_rank' : search_player_solo_rank,
+        'search_player_solo_points' : search_player_solo_points,
+        'search_player_solo_wins': search_player_solo_wins,
+        'search_player_solo_losses': search_player_solo_losses,
+    }
+    search_player_flex = {
+        'search_player_flex_tear' : search_player_flex_tear,
+        'search_player_flex_rank' : search_player_flex_rank,
+        'search_player_flex_points' : search_player_flex_points,
+        'search_player_flex_wins': search_player_flex_wins,
+        'search_player_flex_losses': search_player_flex_losses,
+    }
+
+    search_player_info_dict = {
+        'search_player_tear_by_season' : search_player_tear_by_season ,
+        'search_player_ranking' : my_summoner_ranking,
+        'search_player_name' :  myinfo['name'],
+        'search_player_icon' :  myinfo['profileIconId'],
+        'search_player_level' :  myinfo['summonerLevel'],
+    }
+    search_player_info_dict.update(search_player_solo)
+    search_player_info_dict.update(search_player_flex)
+
+    return search_player_info_dict
+
 
 def match(country, summonername, start):
     my_region = country
     lower_summoner_name = summonername.lower().replace(' ', '')
     myinfo = watcher.summoner.by_name(my_region, lower_summoner_name)
+
+    # 최상단에 들어가는 소환사 정보
+    search_player_info_dict = summoner_info(country,myinfo)
+
     puuid = myinfo['puuid']
     # 사용자 puuid와 country를 이용하여 최근 20경기 정보를 가져옴
-    match_20 = watcher.match.matchlist_by_puuid(country, puuid)
+    match_20 = watcher.match.matchlist_by_puuid(country, puuid, start)
     result_match = []
     win_count = 0
     lose_count = 0
@@ -125,18 +255,24 @@ def match(country, summonername, start):
             # 티어부분 보류(api문제)
             
             # 검색한 사용자의 정보를 가져옴
-            if player_info["summonerName"] == summonername:
+            if player_info["summonerName"].lower().replace(' ', '') == summonername.lower().replace(' ', ''):
                 if player_info["win"] == True:
-                    win_or_not = "승리"
-                    win_count += 1
+                    if game_playtime_min <= 3:
+                        win_or_not = "다시하기"
+                    else:
+                        win_or_not = "승리"
+                        win_count += 1
                 else:
-                    win_or_not = "패배"
-                    lose_count += 1
+                    if game_playtime_min <= 3:
+                        win_or_not = "다시하기"
+                    else:
+                        win_or_not = "패배"
+                        lose_count += 1
                 # search_player로 시작하는 것은 검색한 사용자의 정보를 저장하는 변수들
                 search_player_kill = player_info["kills"]
                 search_player_assist = player_info["assists"]
                 search_player_death = player_info["deaths"]
-                search_player_champ = player_info["championName"]
+                search_player_champ = capitalize_first_letter(player_info["championName"])
                     
                 try:
                     search_value = player_info["challenges"]["killParticipation"]
@@ -155,7 +291,8 @@ def match(country, summonername, start):
                 search_player_totalminions_kill = player_info["totalMinionsKilled"] + player_info["neutralMinionsKilled"]
                 search_player_visionWardsBoughtInGame = player_info["visionWardsBoughtInGame"]
                 search_player_minperminions = calculateminperminion(game_playtime_sec, search_player_totalminions_kill, game_playtime_min)
-                
+                search_player_main_rune = ''
+                search_player_sub_rune = ''
                 for item in rune_data:
                     if item.get("id") == search_player_firstrune:
                         search_player_main_rune = item.get("iconPath").split("v1/")[1]
@@ -186,11 +323,12 @@ def match(country, summonername, start):
             # 메인 룬의 경우 정복자, 치속 등으로 나오지만 서브룬은 룬의 카테고리로나옴
             first_rune = player_info["perks"]["styles"][0]["selections"][0]["perk"]
             second_rune = player_info["perks"]["styles"][1]["style"]
-            
+            main_rune = 'none'
+            sub_rune = 'none'
             for item in rune_data:
-                    if item.get("id") == first_rune:
-                        main_rune = item.get("iconPath").split("v1/")[1]
-                        break
+                if item.get("id") == first_rune:
+                    main_rune = item.get("iconPath").split("v1/")[1]
+                    break
             
             for key, value in rune.items():
                 if key == second_rune:
@@ -215,7 +353,7 @@ def match(country, summonername, start):
             # 각 플레이어마다 해당 정보 저장
             player_dict = [{"kills" : player_info["kills"], "assists" : player_info["assists"], 
                             "deaths" : player_info["deaths"], "summonername" : player_info["summonerName"], 
-                            "championname" : player_info["championName"], "teamposition" : player_info["teamPosition"], 
+                            "championname" : capitalize_first_letter(player_info["championName"]), "teamposition" : player_info["teamPosition"], 
                             "teamid" : player_info["teamId"], "item0" : player_info["item0"],
                         "item1" : player_info["item1"], "item2" : player_info["item2"], 
                         "item3" : player_info["item3"], "item4" : player_info["item4"],
@@ -255,11 +393,16 @@ def match(country, summonername, start):
     total_calculate = {"win_count" : win_count, "lose_count" : lose_count, 
                     "win_rate" : win_rate, "total_kill" : total_kill, 
                     "total_death" : total_death, "total_assist" : total_assist,
-                    "total_kda" : total_kda, "total_kill_part" : total_kill_part}    
-    return result_match, total_calculate #, match_count
+
+                    "total_kda" : total_kda, "total_kill_part" : total_kill_part // 20}    
+    return result_match, total_calculate, search_player_info_dict
+
         
         
 # 티어 가져오는 부분 보류(api문제)
 # def findtier(country, id):
 #     searchplayerinfo = watcher.league.by_summoner(country, id)
 #     return searchplayerinfo        
+
+
+
