@@ -33,40 +33,42 @@ def write(request):
     
         form = PostForm(request.POST) 
         if form.is_valid(): # 유효성 검사(필수과정)
-            form.save()
-
-            return redirect('gg_app:community')
+            post = form.save()
+            post_id = post.id
+            return redirect('gg_app:post_detail', post_id=post_id)
     else:
         form = PostForm()
 
     return render(request,"community/post_write_1.html", {'form': form})
 
-# 게시글 작정
-def post_create(request):
-    if request.method == 'POST':
-        form = BlogPostForm(request.POST)
-        if form.is_valid():
-            form.save()  # 폼이 유효하면 데이터베이스에 저장
-            return redirect('gg_app:community')  # 게시글 목록 페이지로 리다이렉트
-    else:
-        form = BlogPostForm()  # GET 요청인 경우 빈 폼 생성
+# # 게시글 작정
+# def post_create(request):
+#     if request.method == 'POST':
+#         form = BlogPostForm(request.POST)
+#         if form.is_valid():
+#             form.save()  # 폼이 유효하면 데이터베이스에 저장
+#             return redirect('gg_app:community')  # 게시글 목록 페이지로 리다이렉트
+#     else:
+#         form = BlogPostForm()  # GET 요청인 경우 빈 폼 생성
 
-    return render(request, 'community/post_write_2.html', {'form': form})
+#     return render(request, 'community/post_write_2.html', {'form': form})
 
 
 # 게시글 수정
 def post_edit(request, post_id):        
-    post = BlogPost.objects.get(pk=post_id)
+    post = get_object_or_404(BlogPost, pk=post_id)
 
     if request.method == 'POST':
-        form = BlogPostForm(request.POST, instance=post)
+        post.delete()
+
+        form = BlogPostForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('gg_app:post')  # 수정 후 게시물 목록 페이지로 리디렉션
+            new_post = form.save()
+            return redirect('gg_app:post_detail', post_id=new_post.id)  # 수정 후 게시물 목록 페이지로 리디렉션
     else:
         form = BlogPostForm(instance=post)
 
-    return render(request, 'community/post_write_2.html', {'form': form, 'post': post})
+    return render(request, 'community/post_write_1.html', {'form': form, 'post_id': post_id})
 
 
 # 상세 페이지
