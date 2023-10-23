@@ -6,7 +6,7 @@ app_name = 'gg_app'
  
 urlpatterns = [
     path('', views.index, name='index'),
-  
+    
     path('community/', views.community, name='community'),
     path('post/', views.post, name='post'),
 
