@@ -102,6 +102,15 @@ def summoners_info(request, country, summoner_name):
 
 
 
+def summoners_info_api(request, country, summoner_name, count):
+    matches, total_calculate = match(country, summoner_name, count)
+    response_data = {
+        "matches": matches,
+        "total_calculate": total_calculate,
+    }
+    return JsonResponse(response_data)
+  
+  
 def champion_tier_list(request, position):
 # Op.gg URL 생성
     opgg_url = "https://www.op.gg/champions?region=kr&tier=emerald_plus&position="+position
