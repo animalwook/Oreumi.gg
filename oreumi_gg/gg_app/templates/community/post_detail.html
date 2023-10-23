@@ -4,6 +4,6 @@
 <p>게시일: {{ post.created_at }}</p>
 <p>내용: {{ post.content }}</p>
 <a href="{% url 'gg_app:post' %}">뒤로 가기</a>
-{% comment %}  <a href="{% url 'gg_app:post_edit' post.id %}">수정</a> {% endcomment %}
+<a href="{% url 'gg_app:post_edit' post.id %}">수정</a>
 
 {% endblock %}
