@@ -3,7 +3,35 @@
 <p>작성자: {{ post.author }}</p>
 <p>게시일: {{ post.created_at }}</p>
 <p>내용: {{ post.content }}</p>
+
+
 <a href="{% url 'gg_app:post' %}">뒤로 가기</a>
 <!-- <a href="{% url 'gg_app:post_edit' post.id %}">수정</a> --> <!-- 로그인 이후 수정 권한 -->
+
+<!-- 댓글 목록 -->
+<div id="comments">
+    <h3>댓글 목록</h3>
+    <ul>
+        {% for comment in post.comment_set.all %}
+        <li>
+            <strong>{{ comment.author }}</strong>
+            {{ comment.text }}
+        </li>
+        {% empty %}
+        <li>댓글이 없습니다.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- 댓글 작성 폼 -->
+<div id="comment-form">
+    <h3>댓글</h3>
+    <form method="post" action="{% url 'gg_app:add_comment' post.id %}">
+        {% csrf_token %}
+        <label for="comment_text">댓글:</label>
+        <textarea name="text" id="comment_text" rows="4" cols="50"></textarea>
+        <input type="submit" value="작성">
+    </form>
+</div>
 
 {% endblock %}

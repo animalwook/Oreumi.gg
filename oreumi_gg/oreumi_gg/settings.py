@@ -73,6 +73,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.kakao',
 
+    # 댓글
+    
+    
 
 ]
 
@@ -209,4 +212,6 @@ LOGOUT_REDIRECT_URL = 'gg_app:index'
 ACCOUNT_SESSION_REMEMBER = True  # 브라우저를 닫아도 세션기록 유
 SESSION_COOKIE_AGE = 3600  # 쿠키를 한시간만 저장  
 # 지우는 명령어  python manage.py clearsessions
+
+
 
