@@ -112,9 +112,9 @@ def summoners_info_api(request, country, summoner_name, count):
     return JsonResponse(response_data)
   
   
-def champion_tier_list(request, position):
+def champion_tier_list(request, position, region, tier):
 # Op.gg URL 생성
-    opgg_url = "https://www.op.gg/champions?region=kr&tier=emerald_plus&position="+position
+    opgg_url = "https://www.op.gg/champions?region="+region+"&tier="+tier+"&position="+position
     print(opgg_url)
     # HTTP 요청을 보내서 페이지 내용을 가져옵니다.
     response = requests.get(opgg_url,headers={'User-Agent': 'Mozilla/5.0'})
@@ -155,7 +155,7 @@ def champion_tier_list(request, position):
                 'ban_rate': ban_rate,
                 'weak_against_champions': weak_against_champions,
             })
-
+        print(champion_tiers[0].items())
         return render(request, 'oreumi_gg/champions.html', {'champion_tiers': champion_tiers})
     else:
         return render(request, 'oreumi_gg/champions.html', {'error': '페이지를 불러올 수 없습니다.'})

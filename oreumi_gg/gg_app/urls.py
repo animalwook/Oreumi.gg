@@ -15,7 +15,7 @@ urlpatterns = [
     path('post_edit/<int:post_id>/', views.post_edit, name='post_edit'),     # post_edit 수정 부분
     
     path('champions/', views.champions, name='champions'),
-    path('champions/champions_tier/<str:position>/', views.champion_tier_list, name='champion_tier'),
+    path('champions/champions_tier/<str:position>/<str:region>/<str:tier>', views.champion_tier_list, name='champion_tier'),
 
     # 전적 검색
     path('summoners_form', views.summoners_info_form, name='summoners_info_form'),
