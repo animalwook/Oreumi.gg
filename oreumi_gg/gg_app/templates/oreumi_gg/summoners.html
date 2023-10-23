@@ -4,88 +4,160 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="{% static "css/reset.css" %}?{% now 'U' %}">
+        <link rel="stylesheet" type="text/css" href="{% static "css/matches.css" %}?{% now 'U' %}">
         <title>Document</title>
     </head>
     <body>
-        <div id="match_statics">
-            <div id="win_lose">
-                <span id="total_matchcount">20전</span>
-                <span id="total_wincount">{{ total_calculate.win_count }}승</span>
-                <span id="total_losecount">{{ total_calculate.lose_count }}패</span>
+        <div class="section">
+            <div id="match_statics">
+                <div id="win_lose">
+                    <span id="total_matchcount">20전</span>
+                    <span id="total_wincount">{{ total_calculate.win_count }}승</span>
+                    <span id="total_losecount">{{ total_calculate.lose_count }}패</span>
+                </div>
+                
+                <span id="total_winrate">{{ total_calculate.win_rate }}%</span>
+                <span id="total_kill">{{ total_calculate.total_kill }}</span>
+                <span> / </span>
+                <span id="total_death">{{ total_calculate.total_death }}</span>
+                <span> / </span>
+                <span id="total_assist">{{ total_calculate.total_assist }}</span>
+                <span id="total_kda">{{ total_calculate.total_kda }}:1</span>
+                <span id="total_killpart">{{ total_calculate.total_kill_part }}%</span>
+                
             </div>
-            
-            <span id="total_winrate">{{ total_calculate.win_rate }}%</span>
-            <span id="total_kill">{{ total_calculate.total_kill }}</span>
-            <span> / </span>
-            <span id="total_death">{{ total_calculate.total_death }}</span>
-            <span> / </span>
-            <span id="total_assist">{{ total_calculate.total_assist }}</span>
-            <span id="total_kda">{{ total_calculate.total_kda }}:1</span>
-            <span id="total_killpart">{{ total_calculate.total_kill_part }}%</span>
-            
-        </div>
-        {% for match in matches %}
-        <div style="border: 2px solid #333; display: flex;">
-            <div class="match_info">
-                <li style="list-style-type: none;"> {{ match.win_or_not }} </li>
-                <li style="list-style-type: none;"> {{ match.game_type }} </li>
-                <li style="list-style-type: none;"> {{ match.game_playtime }}</li>
-                <li style="list-style-type: none;"> {{ match.game_time }}</li>
-            </div>
-            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{ match.search_player_champ }}.png" style="width:160px; height:160px;">
-            <p>{{ match.search_player_champlevel }}</p>
-            <div class="champ_spell">
-                <li style="list-style-type: none;"><img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{ match.search_player_summonerspell1 }}.png"></li>
-                <li style="list-style-type: none;"><img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{ match.search_player_summonerspell2 }}.png"></li>
-            </div>
-            <div class="rune">
-                <li style="list-style-type: none;"><img src="https://ddragon.canisback.com/img/{{ match.search_player_main_rune }}" style="width: 80px; height: 80px;"></li>
-                <li style="list-style-type: none;"><img src="https://ddragon.canisback.com/img/perk-images/Styles/{{ match.search_player_sub_rune }}.png"></li>
-            </div>
-            <div class="kill">
-                <li style="list-style-type: none;"><p> {{ match.search_player_kill }} / {{ match.search_player_death }} / {{ match.search_player_assist }}</p></li>
-                <li style="list-style-type: none;"><p>kda {{ match.search_player_kda }}</p></li>
-            </div>
-            <div class="total">
-                <li style="list-style-type: none;">
-                    <p>킬관여율 {{ match.search_player_killpart }}% </p>
-                    <p>CS {{ match.search_player_totalminions_kill }} ({{ match.search_player_minperminions}})</p>
-                    <p>제어 와드 {{ match.search_player_visionWardsBoughtInGame }}</p>
-                </li>
-            </div>
-            
-            
-            {% for item in match.search_player_item %}
-                <li style="list-style-type: none;">
-                    {% if item %}
-                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/{{ item }}.png" style="width: 100px; height: 100px;">
-                    {% endif %}
-                </li>
-            {% endfor %}
-
-            {% for key, value in match.items %}
-                {% if forloop.counter <= 5 %}
-                    <li style="list-style-type: none;">
-                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{ value.0.championname }}.png">
-                        {{ value.0.summonername }}
+            <div class="match_20">
+                {% for match in matches %}
+                    <li class="game-item">
+                        <div result="{{ match.win_or_not }}" class="game-match">
+                            <div class="content">
+                                <div class="game-content">
+                                    <div class="game">
+                                        <div class="type">{{ match.game_type }}</div>
+                                        <div class="time-stamp">
+                                            <div class style="position: relative;">{{ match.game_time }}</div>
+                                        </div>
+                                        <div class="result">{{ match.win_or_not }}</div>
+                                        <div class="length">{{ match.game_playtime }}</div>
+                                    </div>
+                                    <div class="info">
+                                        <div>
+                                            <div class="champion">
+                                                <div class="icon">
+                                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{ match.search_player_champ }}.png" width="48" height="48">
+                                                    <span class="champion-level">{{ match.search_player_champlevel }}</span>
+                                                </div>
+                                                <div class="spells">
+                                                    <div class="spell">
+                                                        <div class style="position: relative;">
+                                                            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{ match.search_player_summonerspell1 }}.png" width="22" height="22">
+                                                        </div>
+                                                    </div>
+                                                    <div class="spell">
+                                                        <div class style="position: relative;">
+                                                            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{ match.search_player_summonerspell2 }}.png" width="22" height="22">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="runes">
+                                                    <div class="rune">
+                                                        <div class style="position: relative;">
+                                                            <img src="https://ddragon.canisback.com/img/{{ match.search_player_main_rune }}" width="22" height="22">
+                                                        </div>
+                                                    </div>
+                                                    <div class="rune">
+                                                        <div class style="position: relative;">
+                                                            <img src="https://ddragon.canisback.com/img/perk-images/Styles/{{ match.search_player_sub_rune }}.png" width="22" height="22">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="kill_death_assist">
+                                                <div class="k-d-a">
+                                                    <span>{{ match.search_player_kill }}</span>
+                                                    <span> / </span>
+                                                    <span class="d">{{ match.search_player_death }}</span>
+                                                    <span> / </span>
+                                                    <span>{{ match.search_player_assist }}</span>
+                                                </div>
+                                                <div class="ratio">
+                                                    <span>{{ match.search_player_kda }}:1</span>
+                                                </div>
+                                            </div>   
+                                            <div class="stats">
+                                                <div class="p-kill">
+                                                    <div class style="position: relative;">
+                                                        킬관여 {{ match.search_player_killpart }}%
+                                                    </div>
+                                                </div>
+                                                <div class="controlward">제어 와드 {{ match.search_player_visionWardsBoughtInGame }}</div>
+                                                <div class="cs">
+                                                    <div class style="position: relative;">
+                                                        CS {{ match.search_player_totalminions_kill }} ({{ match.search_player_minperminions}})
+                                                    </div>
+                                                </div>
+                                                <div class="average-tier"><div class style="position: relative;"></div></div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="items">
+                                                <ul>
+                                                    {% for item in match.search_player_item %}
+                                                        <li style="list-style-type: none;">
+                                                            <div class style="position: relative;">
+                                                                {% if item %}
+                                                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/{{ item }}.png" width="22" height="22">
+                                                                {% endif %}
+                                                            </div>
+                                                            
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="participants">
+                                        
+                                        <ul>
+                                            {% for key, value in match.items %}
+                                                {% if forloop.counter <= 5 %}
+                                                    <li class="team" style="list-style-type: none;">
+                                                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{ value.0.championname }}.png" width="16" height="16">
+                                                        <span class="name">{{ value.0.summonername }}</span>
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                        <ul>
+                                            {% for key, value in match.items %}
+                                                {% if forloop.counter <= 10 %}
+                                                    {% if value.0.championname %}
+                                                        <li class="team" style="list-style-type: none;">
+                                                            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{ value.0.championname }}.png" width="16" height="16">
+                                                            <span class="name">{{ value.0.summonername }}</span>         
+                                                        </li>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="action">
+                                <button class="detail">
+                                    <img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down-red.svg?v=1697786050877" width="24" alt="More" height="24">
+                                </button>
+                            </div>
+                        </div>
+                        
                     </li>
-                {% elif forloop.counter <= 10 %}
-                    {% if value.0.championname %}
-                        <li style="list-style-type: none;">
-                            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{ value.0.championname }}.png">
-                            {{ value.0.summonername }}           
-                        </li>
-                    {% endif %}
-                    
-                {% endif %}
-            {% endfor %}
+                {% endfor %}
+            </div>
+            <div id="addmatch">
+            </div>
+            <button id="addmatch_btn">더보기</button>
         </div>
-    {% endfor %}
-    <div id="addmatch">
-
-    </div>
-
-    <button id="addmatch_btn">더보기</button>
     </body>
     <script src="{% static "js/matches.js" %}"></script>
 </html>

@@ -1,0 +1,255 @@
+img {
+    overflow-clip-margin: content-box;
+    overflow: clip;
+}
+
+.section {
+    display: inline-block;
+    font-size: 12px;
+    width: 740px;
+    margin-top: 8px;
+    margin-left: 8px;
+    vertical-align: top;
+}
+
+.match_20 div {
+    display: block;
+}
+.match_20{
+    margin-top: 8px;
+}
+
+.game-item{
+    position: relative;
+    margin-bottom: 8px;
+    list-style: none;
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+.game-match {
+    display: flex;
+    height: 96px;
+    border-radius: 4px;
+    border-left-width: 6px;
+    border-left-style: solid;
+    border-color: #E84057;
+    background-color: #FFF1F3;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+}
+
+.game-content {
+    display: flex;
+    height: 96px;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0px 8px 0px 12px;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.game {
+    width: 108px;
+    color: #758592;
+    line-height: 16px;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+
+.type {
+    font-weight: bold;
+    color: #d31a45;
+}
+
+.result {
+    font-weight: bold;
+}
+
+.game-match .info > div:nth-of-type(1) {
+    display: flex;
+}
+
+.game-match .info > div:nth-of-type(1) .champion{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.game-match .info > div:nth-of-type(1) .champion .icon img{
+    display: block;
+    border-radius: 50%;
+}
+
+.game-match .info > div:nth-of-type(1) .champion .icon .champion-level {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+    border-radius: 50%;
+    color: rgb(255, 255, 255);
+    background: rgb(32, 45, 55);
+    font-family: Roboto, sans-serif;
+}
+
+.game-match .info > div:nth-of-type(1) .champion .spells {
+    margin-left: 4px;
+}
+
+.game-match .info > div:nth-of-type(1) .champion .spells .spell:nth-of-type(1) {
+    width: 22px;
+    height: 22px;
+    margin-bottom: 2px;
+}
+
+.game-match .info > div:nth-of-type(1) .champion .spells .spell img {
+    display: block;
+    border-radius: 4px;
+}
+
+.game-match .info > div:nth-of-type(1) .champion .runes {
+    margin-left: 2px;
+}
+
+.game-match .info > div:nth-of-type(1) .champion .runes .rune:nth-of-type(1) {
+    margin-bottom: 2px;
+    background-color: rgb(0, 0, 0);
+    border-radius: 50%;
+}
+
+.game-match .info > div:nth-of-type(1) .champion .runes .rune img {
+    border-radius: 50%;
+    display: block;
+}
+
+.game-match .info > div:nth-of-type(1) .kill_death_assist {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 107px;
+    padding-right: 12px;
+    margin-left: 12px;
+}
+
+.game-match .info > div:nth-of-type(1) .kill_death_assist .k-d-a {
+    line-height: 22px;
+    font-size: 15px;
+    color: #9aa4af;
+    font-family: Roboto, sans-serif;
+}
+
+.game-match .info > div:nth-of-type(1) .kill_death_assist .k-d-a span {
+    font-weight: bold;
+    color: #202d37;
+}
+
+.game-match .info > div:nth-of-type(1) .kill_death_assist .k-d-a .d {
+    color: #d31a45
+}
+
+.game-match .info > div:nth-of-type(1) .kill_death_assist .ratio {
+    line-height: 16px;
+    color: #758592;
+}
+
+.game-match .info > div:nth-of-type(1) .stats {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 140px;
+    color: #758592;
+    padding-left: 8px;
+    font-size: 11px;
+}
+
+.game-match .info > div:nth-of-type(1) .stats::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1px;
+    height: 100%;
+    background-color: #ffd8d9;
+}
+
+.game-match .info > div:nth-of-type(1) .stats .p-kill {
+    color: #d31a45;
+}
+
+.game-match .info > div:nth-of-type(1) .stats .average-tier {
+    font-weight: bold;
+    text-transform: capitalize;
+    font-family: Roboto, sans-serif;
+}
+
+.game-match .info > div:nth-of-type(2) {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.game-match .info > div:nth-of-type(2) .items {
+    display: flex;
+}
+
+.game-match .info > div:nth-of-type(2) .items ul {
+    display: flex;
+    list-style: none;
+}
+
+.game-match .info > div:nth-of-type(2) .items ul li img {
+    border-radius: 4px;
+    border: 0;
+    vertical-align: middle;
+    max-width: 100%;
+}
+
+.game-match .participants {
+    display: flex;
+}
+
+.game-match .participants ul:nth-of-type(1) {
+    margin-right: 8px;
+}
+
+.team {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 88px;
+    height: 18px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.team img {
+    display: block;
+    border-radius: 4px;
+}
+
+.team .name {
+    display: inline-block;
+    max-width: 60px;
+    vertical-align: middle;
+    color: #758592;
+}
