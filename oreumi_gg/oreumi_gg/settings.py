@@ -189,8 +189,8 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'gg_app\static')]
-
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'oreumi_gg/gg_app/static')]
+"gg_app/templates"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

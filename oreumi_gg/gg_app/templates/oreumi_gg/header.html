@@ -1,4 +1,15 @@
 {% load static %}
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="{% static 'css/login.css' %}?{% now 'U' %}">
+
+
 <header>
     <a href="">OREUMI.GG</a>
 
@@ -22,6 +33,17 @@
     </form>
 
     {% else %}
-    <a href="{% url 'account_login' %}">로그인</a>
+    <li class="nav-item">
+        <a class="nav-link" href="#" data-toggle="modal" data-target="#login">
+            로그인          
+      </a>
+      <div class="modal" id="login">
+        <div class="modal-dialog-xl">
+            <div class="modal-body">
+                {% include 'account/login.html' %}
+            </div>
+        </div>
+      </div>
+    </li>
     {% endif %}
 </header>

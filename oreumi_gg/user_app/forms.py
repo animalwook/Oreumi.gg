@@ -2,6 +2,11 @@ from django import forms
 from .models import User
 
 
+
+class loginForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = []
 class SignupForm(forms.ModelForm):
     class Meta:  # 메타 클래스에 사용할 모델과 필드를 설정
         model = User
