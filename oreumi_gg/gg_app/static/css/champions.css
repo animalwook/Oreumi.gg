@@ -1,0 +1,13 @@
+.champions_tab {
+    /* 일반적인 탭 스타일 */
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .champions_tab.active {
+    /* 활성화된 탭 스타일 */
+    background-color: #007bff;
+    color: #fff;
+  }

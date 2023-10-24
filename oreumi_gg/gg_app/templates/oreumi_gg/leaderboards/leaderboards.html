@@ -1,0 +1,93 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/header.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/nav.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/leaderboards.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/footer.css' %}" />
+        <link rel="icon" href="{% static 'img\oreumi_gg\favicon.ico' %}" />
+        <title>Oreumi.gg/champions</title>
+    </head>
+    <body>
+        {% include 'oreumi_gg/header.html' %} {% include 'oreumi_gg/nav.html' %}
+
+        <section class="leaderboards_container">
+            <article class="select_article">
+                <div class="type_btn">
+                    <button class="type_ladder" onclick="showType('type_ladder')">솔로랭크</button>
+                    <button class="type_ladder_flex" onclick="showType('type_ladder_flex')">자유랭크</button>
+                    <button class="type_champions" onclick="showType('type_champions')">챔피언</button>
+                    <button class="type_level" onclick="showType('type_level')">레벨</button>
+                </div>
+                <div class="select_container" id="selectContainer">
+                    <!--티어 선택후 높은 점수순으로 정렬-->
+                    <select name="select_tier" id="selectTier">
+                        <option value="All">All</option>
+                        <option value="challenger">Challenger</option>
+                        <option value="grandmaster">GrandMaster</option>
+                        <option value="master">Master</option>
+                        <option value="diamond">Diamond</option>
+                        <option value="emerald">Emerald</option>
+                        <option value="platinum">Platinum</option>
+                        <option value="gold">Gold</option>
+                        <option value="silver">Silver</option>
+                        <option value="bronze">Bronze</option>
+                        <option value="iron">Iron</option>
+                    </select>
+                </div>
+                <div class="summoner_search" id="summonerSearch">
+                    <form method="POST" name="search_form" action="{% url 'gg_app:summoners_info_form' %}">
+                        {% csrf_token %}
+                        <div class="input_group">
+                            <input type="text" class="summoner_search" placeholder="소환사명" name="search_text" />
+                            <span class="input_group_button">
+                                <button class="search_button" type="submit">Oreumi.GG</button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </article>
+            <article class="summoners_article">
+                <div class="summoners_container">
+                    <!-- 소환사들의 랭킹 표시 -->
+                    <thead class="summoners_info_char">
+                        <tr>
+                            <th>#</th>
+                            <th>소환사</th>
+                            <th>티어</th>
+                            <th>LP</th>
+                            <th>모스트 챔피언</th>
+                            <th>레벨</th>
+                            <th>승률</th>
+                        </tr>
+                    </thead>
+                    <tbody class="summoners_info_display">
+                        {% block leaderboards_content %}
+                        {% if selected_type == "type_ladder" %}
+                            <!-- 솔로랭크 -->
+                            {% include "oreumi_gg/leaderboards/type_ladder.html" %}
+                        {% elif selected_type == "type_ladder_flex" %}
+                            <!-- 자유랭크 -->
+                            {% include "oreumi_gg/leaderboards/type_ladder_flex.html" %}
+                        {% elif selected_type == "type_champions" %}
+                            <!-- 챔피언 -->
+                            {% include "oreumi_gg/leaderboards/type_champions.html" %}
+                        {% elif selected_type == "type_level" %}
+                            <!-- 레벨 -->
+                            {% include "oreumi_gg/leaderboards/type_level.html" %}
+                        {% else %}
+                        {% include "oreumi_gg/leaderboards/type_ladder.html" %}
+                        {% endif %}
+                    {% endblock %}
+                    </tbody>
+                </div>
+            </article>
+        </section>
+    </body>
+    <script src="{% static 'js/leaderboards.js' %}"></script>
+</html>

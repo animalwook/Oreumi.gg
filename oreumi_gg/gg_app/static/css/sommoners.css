@@ -1,0 +1,18 @@
+
+.node1
+{
+	border: 2px solid grey;
+}
+.node2
+{
+	float: left;
+	width: 200px;
+	border: 2px solid grey;
+
+}
+.node3
+{
+	float: left;
+	width: calc(100% - 220px);;
+	border: 2px solid grey;
+}

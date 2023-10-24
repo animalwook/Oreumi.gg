@@ -1,0 +1,76 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 250px;
+    height: 50px;
+    background-color: #5383e8;
+    white-space: nowrap;
+}
+
+nav ul {
+    display: flex;
+    width: auto;
+    height: auto;
+    justify-content: space-around;
+    align-items: center; /* 수직 가운데 정렬 추가 */
+}
+
+nav ul li a {
+    margin: 0 30px;
+    text-decoration: none;
+    justify-content: center;
+    color: #b3cdff;
+    position: relative;
+}
+
+.game_mode {
+    color: #00fede;
+}
+
+.patch_note {
+    min-width: 150px;
+    margin-left: 400px;
+    width: auto;
+    height: 35px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 30px;
+    background-color: #4171d6;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.patch_note img {
+    padding: 8px 8px 8px 0;
+    width: 18px;
+    height: 18px;
+}
+
+.patch_note:hover {
+    background-color: #2f5ec0;
+}
+
+ul li a:hover {
+    color: #fff;
+}
+
+ul li a::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: center;
+}
+
+ul li a:hover::after {
+    transform: scaleX(1);
+    background-color: #fff;
+    height: 3px;
+    bottom: -15px; /* 밑에 위치하도록 설정 */
+}

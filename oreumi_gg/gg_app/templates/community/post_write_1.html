@@ -1,92 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>write</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>write</title>
-</head>
-
-<body>
-    {% comment %} {% include 'oreumi_gg/header.html' %}
-    {% include 'oreumi_gg/nav.html' %} {% endcomment %}
-    <aside></aside>
-    <div>
-        <main>
-            <h1>게시글 작성</h1>
-            <form method="POST" action="{% url 'gg_app:write' %}">
-                {% csrf_token %}
-                <select>
-                    <option value="">채널 선택</option>
-                    <option value="user-news">유저 뉴스</option>
-                    <option value="tip">팁과 노하우</option>
-                    <option value="free">자유</option>
-                    <option value="humor">유머</option>
-                    <option value="video">영상</option>
-                    <option value="lfg">유저 찾기</option>
-                    <option value="issues">사건 사고</option>
-                    <option value="fan-art">팬 아트</option>
-                </select><br>
-                <input name="title" placeholder="제목" type="text" class="" value>
-                <div>
-                    <input name="link_uri" type="text" placeholder="동영상 또는 사이트 링크를 입력해주세요. (선택)" class="" value>
-                    {% comment %} <span>https://</span> {% endcomment %}
-                </div>
-                <div class="editor-toolbar">
-                    <div class="toolbar-groop">
-                        <button type="button" class="" aria-label="이미지 삽입">이미지 삽입</button>
-                        <button type="button" class="" aria-label="제목크기">제목크기</button>
-                        <button type="button" class="" aria-label="굵게">굵게</button>
-                        <button type="button" class="" aria-label="글자 색상">글자 색상</button>
-                        <button type="button" class="" aria-label="기울임꼴">기울임꼴</button>
-                        <button type="button" class="" aria-label="취소선">취소선</button>
-                        <div></div>
+    <body>
+        {% comment %} {% include 'oreumi_gg/header.html' %} {% include 'oreumi_gg/nav.html' %} {% endcomment %}
+        <aside></aside>
+        <div>
+            <main>
+                <h1>게시글 작성</h1>
+                <form method="POST" action="{% url 'gg_app:write' %}">
+                    {% csrf_token %}
+                    <select>
+                        <option value="">채널 선택</option>
+                        <option value="user_news">유저 뉴스</option>
+                        <option value="tip">팁과 노하우</option>
+                        <option value="free">자유</option>
+                        <option value="humor">유머</option>
+                        <option value="video">영상</option>
+                        <option value="lfg">유저 찾기</option>
+                        <option value="issues">사건 사고</option>
+                        <option value="fan_art">팬 아트</option></select
+                    ><br />
+                    <input name="title" placeholder="제목" type="text" class="" value />
+                    <div>
+                        <input name="link_uri" type="text" placeholder="동영상 또는 사이트 링크를 입력해주세요. (선택)" class="" value />
+                        {% comment %} <span>https://</span> {% endcomment %}
+                    </div>
+                    <div class="editor_toolbar">
+                        <div class="toolbar_group">
+                            <button type="button" class="" aria-label="이미지 삽입">이미지 삽입</button>
+                            <button type="button" class="" aria-label="제목크기">제목크기</button>
+                            <button type="button" class="" aria-label="굵게">굵게</button>
+                            <button type="button" class="" aria-label="글자 색상">글자 색상</button>
+                            <button type="button" class="" aria-label="기울임꼴">기울임꼴</button>
+                            <button type="button" class="" aria-label="취소선">취소선</button>
+                            <div></div>
+                        </div>
+                        <div>
+                            <button type="button" class="" aria-label="문단나눔">문단나눔</button>
+                            <button type="button" class="" aria-label="인용구">인용구</button>
+                            <div></div>
+                        </div>
+                        <div>
+                            <button type="button" class="" aria-label="글머리 기호">글머리 기호</button>
+                            <button type="button" class="" aria-label="번호 메기기">번호 메기기</button>
+                            <div></div>
+                        </div>
+                        {% comment %}
+                        <div>
+                            <div class="allow"></div>
+                            <span class="text">번호 메기기</span>
+                        </div>
+                        {% endcomment %}
+                    </div>
+                    <div class="editor_main_container">
+                        <textarea rows="20" cols="50" name="content"></textarea>
                     </div>
                     <div>
-                        <button type="button" class="" aria-label="문단나눔">문단나눔</button>
-                        <button type="button" class="" aria-label="인용구">인용구</button>
-                        <div></div>
+                        <ul>
+                            <li><button data-selected="true">챔피언</button></li>
+                            <li><button data-selected="true">아이템</button></li>
+                            <li><button data-selected="true">스킬</button></li>
+                        </ul>
+                        <input placeholder="검색" name="search" type="text" class="" value />
+                    </div>
+                    <div>{% comment %} 챔피언, 아이템, 스킬 이미지 {% endcomment %}</div>
+                    <div>
+                        <label><input type="checkbox" name="" value="이미지 미리보기 허용" /></label>
                     </div>
                     <div>
-                        <button type="button" class="" aria-label="글머리 기호">글머리 기호</button>
-                        <button type="button" class="" aria-label="번호 메기기">번호 메기기</button>
-                        <div></div>
+                        <img />
+                        <span>"불법촬영물등을 게재할 경우 전기통신사업법 제22조의5제1항에 따라 삭제·접속차단 등의 조치가 취해질 수 있으며 관련 법률에 따라 처벌받을 수 있습니다."</span>
                     </div>
-                    {% comment %} <div>
-                        <div class="allow"></div>
-                        <span class="text">번호 메기기</span>
-                    </div> {% endcomment %}
-                </div>
-                <div class="editor-main-container">
-                    <textarea rows="20" cols="50" name="content"></textarea>
-                </div>
-                <div>
-                    <ul>
-                        <li><button data-selected="true">챔피언</button></li>
-                        <li><button data-selected="true">아이템</button></li>
-                        <li><button data-selected="true">스킬</button></li>
-                    </ul>
-                    <input placeholder="검색" name="search" type="text" class="" value>
-                </div>
-                <div>
-                    {% comment %} 챔피언, 아이템, 스킬 이미지 {% endcomment %}
-                </div>
-                <div>
-                    <label><input type="checkbox" name="" value="이미지 미리보기 허용"></label>
-                </div>
-                <div>
-                    <img>
-                    <span>"불법촬영물등을 게재할 경우 전기통신사업법 제22조의5제1항에 따라 삭제·접속차단 등의 조치가 취해질 수 있으며 관련 법률에 따라 처벌받을 수 있습니다."</span>
-                </div>
-                <div>
-                    {% comment %} <button type="submit" class="">취소</button> {% endcomment %}
-                    <button type="submit" class="">작성완료</button>
-                </div>
-            </form>
-            {% comment %} {% include 'oreumi_gg/footer.html' %} {% endcomment %}
-        </main>
-    </div>
-    
-</body>
-
+                    <div>
+                        {% comment %} <button type="submit" class="">취소</button> {% endcomment %}
+                        <button type="submit" class="">작성완료</button>
+                    </div>
+                </form>
+                {% comment %} {% include 'oreumi_gg/footer.html' %} {% endcomment %}
+            </main>
+        </div>
+    </body>
 </html>
