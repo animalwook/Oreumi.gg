@@ -9,12 +9,12 @@
 - 🔗 [링크](#-링크)
 - ✨ [업데이트](#-업데이트)
 - 👨🏻‍💻 [기능 구현](#-기능-구현)
-  - [반응형 웹](#1-반응형 웹)
+  - [반응형 웹](#1-반응형-웹)
   - [롤전적검색](#2-롤전적검색)
-  - [로그인 Email 전송 / social 로그인](#3-로그인 Email 전송 / social 로그인)
+  - [로그인 Email 전송 / social 로그인](#3-Email-전송/social-로그인)
   - [챔피언분석](#4-챔피언분석)
   - [커뮤니티](#5-커뮤니티)
-  - [AWS and git action 배포](#6-AWS and git action 배포)
+  - [AWS and git action 배포](#6-AWS-and-git-action-배포)
 
 
 - 🚀 [배포](#-배포)
@@ -45,12 +45,7 @@
 <br />
 
 ## **🛠 기술 및 도구** https://msdio.github.io/stackticon/#/
-> **프론트:**
-> [![stackticon](https://firebasestorage.googleapis.com/v0/b/stackticon-81399.appspot.com/o/images%2F1698124806327?alt=media&token=808af777-dbae-40d7-b874-b873f7bf5a12)](https://github.com/msdio/stackticon)
-> **백엔드:**
-> [![stackticon](https://firebasestorage.googleapis.com/v0/b/stackticon-81399.appspot.com/o/images%2F1698124756535?alt=media&token=52092830-4ba4-4f08-9f0a-8e64b893ddf4)](https://github.com/msdio/stackticon)
-> **기타:**
-> [![stackticon](https://firebasestorage.googleapis.com/v0/b/stackticon-81399.appspot.com/o/images%2F1698125046483?alt=media&token=c022c68c-af5b-4d1c-a6b7-f22f0b86e03b)](https://github.com/msdio/stackticon)
+[![stackticon](https://firebasestorage.googleapis.com/v0/b/stackticon-81399.appspot.com/o/images%2F1698125409141?alt=media&token=76431300-3e76-40fe-be7c-8192edaeea42)](https://github.com/msdio/stackticon)
 <br />
 
 ## **🔗 링크**
