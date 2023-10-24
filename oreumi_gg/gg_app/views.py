@@ -5,6 +5,9 @@ from django.http import JsonResponse
 from .models import BlogPost, Comment
 from .forms import PostForm, BlogPostForm, CommentForm
 
+import os
+from django.conf import settings
+
 from .lol_match import match
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -28,6 +31,11 @@ def post(request):
     context = {"posts": blog_post}      
     return render(request, 'community/post_list.html', context)
 
+# def image_gallery(request):
+#     img_folder = os.path.join(settings.STATIC_ROOT, 'img')
+#     img_files = os.listdir(img_folder)
+#     return render(request, 'community/post_write_1.html', {'img_files': img_files})
+
 def write(request):
     if request.method == 'POST':
     
@@ -37,9 +45,12 @@ def write(request):
             post_id = post.id
             return redirect('gg_app:post_detail', post_id=post_id)
     else:
+        img_folder = os.path.join('static', 'img', 'champion')
+        print(img_folder)
+        img_files = os.listdir(img_folder)
         form = PostForm()
 
-    return render(request,"community/post_write_1.html", {'form': form})
+    return render(request,"community/post_write_1.html", {'form': form, 'img_files': img_files})
 
 # # 게시글 작정
 # def post_create(request):
@@ -59,17 +70,14 @@ def post_edit(request, post_id):
     post = get_object_or_404(BlogPost, pk=post_id)
 
     if request.method == 'POST':
-        post.delete()
-
-        form = BlogPostForm(request.POST)
+        form = PostForm(request.POST, instance=post)
         if form.is_valid():
-            new_post = form.save()
-            return redirect('gg_app:post_detail', post_id=new_post.id)  # 수정 후 게시물 목록 페이지로 리디렉션
+            form.save()
+            return redirect('gg_app:post_detail', post_id=post_id)  # 수정 후 게시물 목록 페이지로 리디렉션
     else:
-        form = BlogPostForm(instance=post)
+        form = PostForm(instance=post)
 
-    return render(request, 'community/post_write_1.html', {'form': form, 'post_id': post_id})
-
+    return render(request, 'community/post_edit.html', {'form': form, 'post': post})
 
 # 상세 페이지
 def post_detail(request, post_id):

@@ -9,7 +9,7 @@ class BlogPost(models.Model):
     author = models.CharField(max_length=200,default="admin") # 나중에 외래키로
     view = models.IntegerField(default=0)
     category = models.CharField(max_length=64, default="기본") 
-    # images = models.ImageField(null=True,upload)
+    image = models.ImageField(upload_to = "images/", null=True, blank=True)
     # video =
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
