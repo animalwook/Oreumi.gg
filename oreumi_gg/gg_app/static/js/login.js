@@ -7,11 +7,13 @@ document.addEventListener("DOMContentLoaded", function () {
     loginButton.addEventListener("click", function () {
         modal.style.display = "block";
         modalBackground.style.display = "block";
+        modalBackground.removeEventListener("click", modalBackgroundClickHandler);
     });
 
     // 모달 백그라운드 클릭 시 모달 숨김
     modalBackground.addEventListener("click", function () {
         modal.style.display = "none";
         modalBackground.style.display = "none";
+        modalBackground.addEventListener("click", modalBackgroundClickHandler);
     });
 });
