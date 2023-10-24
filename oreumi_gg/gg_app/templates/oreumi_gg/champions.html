@@ -33,7 +33,8 @@
                         <thead>
                             <tr>
                                 <th>Rank</th>
-                                <th>Champion</th> <!-- 하나의 항목으로 합침 -->
+                                <th>Champion</th>
+                                <!-- 하나의 항목으로 합침 -->
                                 <th>Tier</th>
                                 <th>Win Rate</th>
                                 <th>Pick Rate</th>
@@ -43,30 +44,31 @@
                         </thead>
                         <tbody>
                             {% for champion in champion_tiers %}
-                                <tr>
-                                    <td>{{ champion.index }}</td>
-                                    <td>
-                                        <img src="{{ champion.champion_img }}" alt="{{ champion.champion_name }}">
-                                        {{ champion.champion_name }}
-                                    </td>
-                                    <td>{{ champion.tier }}</td>
-                                    <td>{{ champion.win_rate }}</td>
-                                    <td>{{ champion.pick_rate }}</td>
-                                    <td>{{ champion.ban_rate }}</td>
-                                    <td>
-                                        <ul>
-                                            {% for weak_champion in champion.weak_against_champions %}
-                                                <li><img src="{{ weak_champion }}" alt=""></li>
-                                            {% endfor %}
-                                        </ul>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>{{ champion.index }}</td>
+                                <td>
+                                    <img src="{{ champion.champion_img }}" alt="{{ champion.champion_name }}" />
+                                    {{ champion.champion_name }}
+                                </td>
+                                <td>{{ champion.tier }}</td>
+                                <td>{{ champion.win_rate }}</td>
+                                <td>{{ champion.pick_rate }}</td>
+                                <td>{{ champion.ban_rate }}</td>
+                                <td>
+                                    <ul>
+                                        {% for weak_champion in champion.weak_against_champions %}
+                                        <li><img src="{{ weak_champion }}" alt="" /></li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </article>
         </section>
+        {% include 'oreumi_gg/footer.html' %}
     </body>
     <script src="{% static 'js/champions.js' %}"></script>
 </html>
