@@ -8,14 +8,16 @@ nav {
     white-space: nowrap;
 }
 
-ul {
+nav ul {
     display: flex;
-    width: 80%;
+    width: auto;
     height: auto;
     justify-content: space-around;
+    align-items: center; /* 수직 가운데 정렬 추가 */
 }
 
-ul li a {
+nav ul li a {
+    margin: 0 30px;
     text-decoration: none;
     justify-content: center;
     color: #b3cdff;
@@ -27,7 +29,9 @@ ul li a {
 }
 
 .patch_note {
-    width: 150px;
+    min-width: 150px;
+    margin-left: 400px;
+    width: auto;
     height: 35px;
     text-align: center;
     text-decoration: none;

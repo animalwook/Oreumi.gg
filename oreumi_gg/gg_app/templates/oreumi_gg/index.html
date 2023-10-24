@@ -24,6 +24,25 @@
             <form method="POST" name="search_form" action="{% url 'gg_app:summoners_info_form' %}">
                 {% csrf_token %}
                 <div class="input_group">
+                    <select name="select_region" class="select_region" id="selectRegion">
+                        <option value="korea">Korea</option>
+                        <option value="north_america">North America</option>
+                        <option value="europe_west">Europe West</option>
+                        <option value="europe_nordic_east">Europe Nordic % East</option>
+                        <option value="oceania">Oceania</option>
+                        <option value="korea">Korea</option>
+                        <option value="japan">Japan</option>
+                        <option value="brazil">Brazil</option>
+                        <option value="las">LAS</option>
+                        <option value="lan">LAN</option>
+                        <option value="russia">Russia</option>
+                        <option value="turkiye">Türkiye</option>
+                        <option value="Singapore">Singapore</option>
+                        <option value="philippines">Philippines</option>
+                        <option value="taiwan">Taiwan</option>
+                        <option value="vietnam">Vietnam</option>
+                        <option value="thailand">Thailand</option>
+                    </select>
                     <input type="text" class="summoner_search" placeholder="소환사명" name="search_text">
                     <span class="input_group_button">
                         <button class="search_button" type="submit"><img class="search_logo" src="static\img\oreumi_gg\search_logo.png" alt="search_button" /></button>
@@ -34,22 +53,26 @@
             </article>
             <article>
                 <div class="community_container">
-                    <p class="">Oreumi 최신 게시글</p>
+                    <div class="community_title">Oreumi 최신 게시글</div>
                     <div class="community_new_posts">
                         <ul>
                             <!-- 최신 게시물부터 5개 불러오기 -->
-                            {% for post in posts|slice:":5" %}
+                            {% comment %} {% for post in posts|slice:":5" %}
                               <li>
                                 <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
                               </li>
-                            {% endfor %}
+                            {% endfor %} {% endcomment %}
+                            <li>test 1</li>
+                            <li>test 1</li>
+                            <li>test 1</li>
+                            <li>test 1</li>
+                            <li>test 1</li>
                           </ul>
                     </div>
                 </div>
             </article>
             </div>
         </section>
-        {% include 'oreumi_gg/footer.html' %}
-
+        {% comment %} {% include 'oreumi_gg/footer.html' %} {% endcomment %}
     </body>
 </html>
