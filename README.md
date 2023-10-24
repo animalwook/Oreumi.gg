@@ -40,7 +40,7 @@
 >
 > **사용 기술:** html,css,Django, postgreSql, bs4, selenium, pandas
 >
-> **문의:** youngwook616@mgail.com
+> **문의:** youngwook616@gmail.com
 
 <br />
 
