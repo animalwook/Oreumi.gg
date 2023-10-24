@@ -44,10 +44,9 @@
 
 <br />
 
-## **🛠 기술 및 도구**
+## **🛠 기술 및 도구** https://msdio.github.io/stackticon/#/
 
-![React](https://img.shields.io/badge/React-53C1DE?style=flat-square&logo=react&logoColor=white) ![Styled-Components](https://img.shields.io/badge/Styled_Components-DB7C85?style=flat-square&logo=styled-components&logoColor=white) ![Firebase](https://img.shields.io/badge/Firebase-%23039BE5.svg?style=flat-square&logo=firebase)
-![GitHub](https://img.shields.io/badge/Github-%23121011.svg?style=flat-square&logo=github&logoColor=white)
+[![stackticon](https://firebasestorage.googleapis.com/v0/b/stackticon-81399.appspot.com/o/images%2F1698124589669?alt=media&token=e285ca31-c585-41be-acb2-b979fb1d90d3)](https://github.com/msdio/stackticon)
 
 <br />
 
