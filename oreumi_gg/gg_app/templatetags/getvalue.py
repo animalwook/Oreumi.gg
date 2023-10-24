@@ -1,7 +1,8 @@
 from django import template
+import json
 
 register = template.Library()
 
 @register.filter
-def getvalue(list, index):
-    return list[index]
+def getvalue(value):
+    return json.dumps(value)

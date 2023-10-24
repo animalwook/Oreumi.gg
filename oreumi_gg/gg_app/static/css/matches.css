@@ -21,6 +21,55 @@ strong {
     font-weight: bold;
 }
 
+table {
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+colgroup {
+    display: table-column-group;
+}
+
+col {
+    display: table-column;
+}
+
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+th, td {
+    padding: 0px;
+    margin: 0px;
+}
+
+th {
+    display: table-cell;
+    vertical-align: inherit;
+    font-weight: bold;
+    text-align: -internal-center;
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+a {
+    cursor: pointer;
+    text-decoration: none;
+    color: #202d37;
+}
+
 .section {
     display: inline-block;
     font-size: 12px;
@@ -454,4 +503,363 @@ strong {
 .match_statics .positions {
     width: 222px;
     margin-left: 16px;
+}
+
+.match_detail {
+    margin-top: 4px;
+}
+
+.match_detail > ul {
+    display: flex;
+    height: 36px;
+    margin: 4px 0px;
+    padding: 4px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+.match_detail .total {
+    margin-left: 0px;
+    width: 25%;
+}
+
+.match_detail .total button {
+    display: block;
+    width: 100%;
+    height: 28px;
+    padding: 0px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    color: rgb(65, 113, 214);
+    background-color: #758592;
+}
+
+.teamblue:nth-of-type(1) {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.teamblue {
+    width: 100%;
+    table-layout: fixed;
+    background-color: #fff;
+}
+
+.teamblue thead th:nth-of-type(1) {
+    padding-left: 15px;
+    text-align: left;
+}
+
+.teamblue thead th {
+    height: 32px;
+    color: #9aa4af;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #d5e3ff;
+}
+
+.teamblue thead th:nth-of-type(1) span {
+    font-size: 12px;
+    color: #4171d6;
+}
+
+.teamblue tbody {
+    background-color: #ecf2ff;
+    border-top: 1px solid rgb(213, 227, 255);
+    border-right-color: rgb(213, 227, 255);
+    border-bottom-color: rgb(213, 227, 255);
+    border-left-color: rgb(213, 227, 255);
+}
+
+.overview-player td.champion {
+    padding-left: 10px;
+    padding-right: 4px;
+}
+
+.overview-player td.champion a {
+    position: relative;
+    display: block;
+}
+
+.overview-player td.champion a > div {
+    width: 32px;
+}
+
+.overview-player td.champion a img {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.overview-player td.champion a .level {
+    position: absolute;
+    left: -3px;
+    bottom: -3px;
+    width: 15px;
+    height: 15px;
+    background: rgb(32, 45, 55);
+    border-radius: 50%;
+    color: rgb(255, 255, 255);
+    font-size: 10px;
+    text-align: center;
+    line-height: 15px;
+    font-family: Roboto, sans-serif;
+}
+
+.overview-player td {
+    padding: 4px 0px 3px;
+    vertical-align: middle;
+}
+
+.overview-player td.spells div:nth-of-type(1) {
+    margin-bottom: 2px;
+}
+
+.overview-player td.spells div {
+    width: 16px;
+    height: 16px;
+}
+
+.overview-player td.spells div img {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.overview-player td.runes div:nth-of-type(1) {
+    margin-bottom: 2px;
+    background: rgb(0, 0, 0);
+    border-radius: 50%;
+}
+
+.overview-player td.runes div {
+    width: 16px;
+    height: 16px;
+}
+
+.overview-player td.runes div img {
+    display: block;
+    width: 16px;
+    height: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+
+.overview-player td.name {
+    padding-left: 5px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.overview-player td.name a {
+    line-height: 16px;
+    color: #202d37;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.overview-player td.name .tier {
+    color: #9aa4af;
+    font-size: 11px;
+    line-height: 14px;
+}
+
+.overview-player td.killdeathassist {
+    text-align: center;
+    white-space: nowrap;
+    font-family: Roboto, sans-serif;
+}
+
+.overview-player td.killdeathassist .k-d-a {
+    color: #758592;
+    line-height: 14px;
+    font-size: 11px;
+}
+
+.overview-player td.killdeathassist .k-d-a div {
+    display: inline;
+}
+
+.overview-player td.killdeathassist .kda {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.overview-player td.damage {
+    font-family: Roboto, sans-serif;
+}
+
+.overview-player td.damage > div {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+
+.overview-player td.damage .dealt {
+    text-align: center;
+    color: #758592;
+    font-size: 11px;
+    line-height: 14px;
+}
+
+.overview-player td.damage .progress {
+    width: 50px;
+    height: 6px;
+    margin: 4px auto 0px;
+    background-color: #fff;
+}
+
+.overview-player td.damage .taken {
+    text-align: center;
+    color: #758592;
+    font-size: 11px;
+    line-height: 14px;
+    margin-left: 8px;
+}
+
+.overview-player td.damage .taken_progress {
+    width: 50px;
+    height: 6px;
+    margin: 4px auto 0px 8px;
+    background-color: #fff;
+}
+
+.overview-player td.ward {
+    text-align: center;
+    color: #758592;
+    font-size: 11px;
+    font-family: Roboto, sans-serif;
+}
+
+.overview-player td.cs {
+    text-align: center;
+    color: #758592;
+    font-size: 11px;
+}
+
+.overview-player td.items {
+    text-align: center;
+    font-size: 0px;
+}
+
+.overview-player td.items .item:nth-of-type(1) {
+    margin-left: 0px;
+}
+
+.overview-player td.items img {
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+}
+
+.overview-player td.items .item {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    margin-left: 1px;
+    vertical-align: middle;
+}
+
+.overview-player td.items .item .no-item {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    background-color: #b3cdff;
+}
+
+.totalteam .summary {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: #f7f7f9;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: #ebeef1;
+    font-family: Roboto, sans-serif;
+}
+
+.totalteam .summary .team {
+    display: table-cell;
+    height: 30px;
+    vertical-align: middle;
+    padding-right: 10px;
+    text-align: right;
+    line-height: 30px;
+}
+
+.totalteam .summary .team:nth-of-type(1) {
+    padding-right: 0px;
+    padding-left: 16px;
+    text-align: left;
+    border-left: 1px solid transparent;
+}
+
+.totalteam .summary .summary-graph {
+    flex: 0 1 405px;
+}
+.totalteam .summary .team:nth-of-type(3) {
+    padding-right: 16px;
+    border-right: 1px solid transparent;
+    border-top: 1px solid transparent;
+}
+
+.teamred:nth-of-type(2) {
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-color: #ebeef1;
+    overflow: hidden;
+}
+
+.teamred {
+    width: 100%;
+    table-layout: fixed;
+    background-color: #fff;
+}
+
+.teamred thead th:nth-of-type(1) {
+    padding-left: 15px;
+    text-align: left;
+}
+
+.teamred thead th {
+    height: 32px;
+    color: #9aa4af;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #ffd8d9;
+}
+
+.teamred thead th .result {
+    margin-right: 4px;
+    font-weight: bold;
+}
+
+.teamred thead th:nth-of-type(1) span {
+    font-size: 12px;
+    color: #d31a45;
+}
+
+.teamred tbody {
+    background-color: #fff1f3;
+    border-top: 1px solid rgb(255, 216, 217);
+    border-right-color: rgb(255, 216, 217);
+    border-bottom-color: rgb(255, 216, 217);
+    border-left-color: rgb(255, 216, 217);
+}
+
+.overview-player td:first-of-type {
+    padding-top: 4px;
 }

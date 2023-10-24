@@ -1,6 +1,6 @@
 {% load static %}
+{% load getvalue %}
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -172,7 +172,7 @@
                                 </div>
                             </div>
                             <div class="action">
-                                <button class="detail">
+                                <button class="detail" data-match-info="{{ match|getvalue }}" match-result="{{ match.win_or_not_eng }}" status="open">
                                     {% if match.win_or_not_eng == "defeat" %}
                                         <img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down-red.svg?v=1697786050877" width="24" alt="More" height="24">
                                     {% elif match.win_or_not_eng == "repeat" %}
@@ -192,4 +192,7 @@
         </div>
     </body>
     <script src="{% static "js/matches.js" %}"></script>
+    <script src="{% static "js/detail_match.js" %}"></script>
+    
+    
 </html>

@@ -195,7 +195,7 @@ function display(data) {
                 </div>
             </div>
             <div class="action">
-                <button class="detail">
+                <button class="detail" data-match-info="${JSON.stringify(match)}" match-result="${match.win_or_not_eng}" status="open">
                     ${detailHTML}
                 </button>
             </div>
@@ -204,8 +204,8 @@ function display(data) {
         `;
   });
     
-    matchDataContainer.innerHTML += html;
-    total_matchcount.innerHTML = `${count}전`
+    matchDataContainer.insertAdjacentHTML('afterend', html);
+    total_matchcount.textContent = `${count}전`
     let winCount = parseInt(total_wincount.textContent) + data.total_calculate.win_count;
     let loseCount = parseInt(total_losecount.textContent) + data.total_calculate.lose_count;
     let winRate = (winCount / (winCount + loseCount)).toFixed(2) * 100;
