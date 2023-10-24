@@ -17,8 +17,8 @@
 
         <section>
             <article class="champions_article">
+                <button id="lotation-button">로테이션 확인하기</button>
                 <div class="position_btn">
-                    <input class="champions_search" type="text" name="champions_search" id="championsSearch" />
                     <div class="tab-group">
                       <div class="champions_tab champions_top" data-position="top" data-url="{% url 'gg_app:champion_tier' position='top' region='KR' tier='Emerald+' %}">탑</div>
                       <div class="champions_tab champions_jg" data-position="jungle" data-url="{% url 'gg_app:champion_tier' position='jungle' region='KR' tier='Emerald+' %}">정글</div>
@@ -28,7 +28,12 @@
                     </div>
                 </div>
                 <div class="champions_portrait" id="championsPortait">
-                    <!--챔피언 초상화, 검색한 챔피언 표시-->
+                    {% for i , j in combined_champion_names %}
+                        <div class="champion">
+                            <img src="{% static 'img/champion_square/' %}{{ i }}.png" alt="{{ i }}">
+                            <p>{{j}}</p>
+                        </div>
+                    {% endfor %}
                 </div>
                 <div class="champions_tier" id="championsTier">
                     <select id="region-select">

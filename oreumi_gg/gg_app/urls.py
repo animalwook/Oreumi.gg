@@ -19,7 +19,7 @@ urlpatterns = [
     
     path('champions/', views.champions, name='champions'),
     path('champions/champions_tier/<str:position>/<str:region>/<str:tier>', views.champion_tier_list, name='champion_tier'),
-
+    path('champions/lotation/', views.lotation_list, name='lotation'),
     # 전적 검색
     path('summoners_form', views.summoners_info_form, name='summoners_info_form'),
     path('summoners/<str:country>/<str:summoner_name>', views.summoners_info, name='summoners_info'),   #검색결과를 보여줄 화면
