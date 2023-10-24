@@ -11,3 +11,80 @@
     background-color: #007bff;
     color: #fff;
   }
+
+  .tab-group {
+    display: flex; /* 가로로 나열될 수 있도록 설정 */
+  }
+  
+  .champions_tab {
+    flex: 1; /* 각 탭이 동일한 너비를 갖도록 설정 */
+    text-align: center; /* 텍스트를 가운데 정렬 */
+  }
+
+  #lotation-button {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+
+  table {
+    border-collapse: collapse; /* 테이블 셀 경계를 병합하여 선을 만듭니다. */
+    width: 100%; /* 표의 너비 설정 (선택 사항) */
+  }
+  
+  table, th, td {
+    border: 1px solid gray; /* 모든 표 요소에 선을 추가합니다. */
+  }
+  
+  /* 수직 선 스타일 (열에 대한 스타일) */
+  th, td {
+    padding: 8px; /* 셀 안의 여백 설정 (선택 사항) */
+    
+  }
+
+  td, th p {
+    text-align: center; /* 텍스트를 왼쪽 정렬합니다. */
+    vertical-align: middle; /* 텍스트의 세로 가운데 정렬 설정 */
+    color: gray;
+  }
+
+  td img, td p {
+    display: inline-block; /* 이미지와 텍스트를 가로로 배치 */
+    vertical-align: middle; /* 이미지와 텍스트의 세로 가운데 정렬 설정 */
+  }
+  
+  ul {
+    list-style: none; /* 리스트 스타일 제거 */
+    padding: 0; /* 리스트 내부 여백 제거 */
+    text-align: center;
+  }
+  
+  li {
+    display: inline; /* 요소를 가로로 배치 */
+    margin-right: 10px; /* 이미지 사이의 간격 설정 (원하는 크기로 조정) */
+  }
+  
+  img {
+    max-width: 50px; /* 이미지 최대 너비 설정 (원하는 크기로 조정) */
+    height: auto; /* 이미지의 가로세로 비율을 유지하도록 설정 */
+  }
+
+  .champion-box{
+    text-align: left; /* 텍스트를 왼쪽 정렬합니다. */
+    vertical-align: middle; /* 텍스트의 세로 가운데 정렬 설정 */   
+    color:black;
+    font-weight: bold;
+  }
+
+  .tier-box{
+    font-size: 0px;
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+  }
+
+  .weak_champion-box img{
+    border-radius: 50%; /* 이미지를 동그랗게 만듭니다. */
+  }

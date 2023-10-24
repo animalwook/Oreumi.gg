@@ -17,8 +17,8 @@
 
         <section>
             <article class="champions_article">
-                <button id="lotation-button">로테이션 확인하기</button>
-                <div class="position_btn">
+                <div class="btn_group">
+                    <button id="lotation-button">로테이션 확인하기</button>
                     <div class="tab-group">
                       <div class="champions_tab champions_top" data-position="top" data-url="{% url 'gg_app:champion_tier' position='top' region='KR' tier='Emerald+' %}">탑</div>
                       <div class="champions_tab champions_jg" data-position="jungle" data-url="{% url 'gg_app:champion_tier' position='jungle' region='KR' tier='Emerald+' %}">정글</div>
@@ -89,16 +89,30 @@
                             {% for champion in champion_tiers %}
                                 <tr>
                                     <td>{{ champion.rank }}</td>
-                                    <td>
+                                    <td class=champion-box>
                                         <img src="{{ champion.champion_img }}" alt="{{ champion.champion_name }}">
                                         {{ champion.champion_name }}
                                     </td>
-                                    <td>{{ champion.tier }}</td>
-                                    <td>{{ champion.win_rate }}</td>
-                                    <td>{{ champion.pick_rate }}</td>
-                                    <td>{{ champion.ban_rate }}</td>
+                                    <td class=tier-box>
+                                        {%if champion.tier == "0"%}
+                                            <img src="{% static 'img/tier/' %}icon-tier-op.svg" alt="{{ champion.tier }}">
+                                        {%elif champion.tier == "1"%}
+                                            <img src="{% static 'img/tier/' %}icon-tier-1.svg" alt="{{ champion.tier }}">
+                                        {%elif champion.tier == "2"%}
+                                            <img src="{% static 'img/tier/' %}icon-tier-2.svg" alt="{{ champion.tier }}">
+                                        {%elif champion.tier == "3"%}
+                                            <img src="{% static 'img/tier/' %}icon-tier-3.svg" alt="{{ champion.tier }}">
+                                        {%elif champion.tier == "4"%}
+                                            <img src="{% static 'img/tier/' %}icon-tier-4.svg" alt="{{ champion.tier }}">
+                                        {%elif champion.tier == "5"%}
+                                            <img src="{% static 'img/tier/' %}icon-tier-5.svg" alt="{{ champion.tier }}">
+                                        {%endif%}
+                                    </td>
+                                    <td><p>{{ champion.win_rate }}</p></td>
+                                    <td><p>{{ champion.pick_rate }}</p></td>
+                                    <td><p>{{ champion.ban_rate }}</p></td>
                                     <td>
-                                        <ul>
+                                        <ul class=weak_champion-box>
                                             {% for weak_champion in champion.weak_against_champions %}
                                                 <li><img src="{{ weak_champion }}" alt=""></li>
                                             {% endfor %}
