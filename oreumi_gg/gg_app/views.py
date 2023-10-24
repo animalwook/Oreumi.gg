@@ -122,11 +122,11 @@ def champion_tier_list(request, position, region, tier):
     print(opgg_url)
     # HTTP 요청을 보내서 페이지 내용을 가져옵니다.
     response = requests.get(opgg_url,headers={'User-Agent': 'Mozilla/5.0'})
+    response.encoding = 'utf-8'
     print(response)
     if response.status_code == 200:
         # BeautifulSoup를 사용하여 HTML 파싱
-        soup = BeautifulSoup(response.text, 'html.parser')
-        
+        soup = BeautifulSoup(response.text, 'html.parser',from_encoding='utf-8')
         # <tr> 태그를 찾아서 모든 행을 가져옵니다.
         rows = soup.find_all("tr")
 
@@ -137,6 +137,7 @@ def champion_tier_list(request, position, region, tier):
             rank = columns[0].find('span').text.strip()
             champion_img = columns[1].find('img')['src']
             champion_name = columns[1].find('strong').text.strip()
+            print(champion_name)
             tier = columns[2].text.strip()
             win_rate = columns[3].text.strip()
             pick_rate = columns[4].text.strip()
@@ -185,7 +186,7 @@ def lotation_list(request):
     with open(champion_file, 'r',encoding='utf-8') as json_file:
         parsed_data = json.load(json_file)  # JSON 파일을 파싱해서 파이썬 딕셔너리로 읽음
     print(parsed_data["data"]["Aatrox"]["key"])
-    url = "https://kr.api.riotgames.com/lol/platform/v3/champion-rotations?api_key=RGAPI-a624686e-83cd-40e7-a8cf-46cc658b5309"
+    url = "https://kr.api.riotgames.com/lol/platform/v3/champion-rotations?api_key="+get_secret("LOL_API")
     response = requests.get(url,headers={'User-Agent': 'Mozilla/5.0'})
     print(response)
     if response.status_code == 200:
