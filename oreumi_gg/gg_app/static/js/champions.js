@@ -69,6 +69,12 @@ const regionSelect = document.getElementById("region-select");
 const tierSelect = document.getElementById("tier-select");
 const REGION_STORAGE_KEY = "selected_region";
 const TIER_STORAGE_KEY = "selected_tier";
+const lotationButton = document.getElementById("lotation-button");
+
+lotationButton.addEventListener("click", function (event) {
+  const url = `/champions/lotation/`;
+  window.location.href = url;
+});
 
 tabButtons.forEach((button) => {
   button.addEventListener("click", function (event) {

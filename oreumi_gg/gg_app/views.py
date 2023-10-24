@@ -11,6 +11,10 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import requests
 from bs4 import BeautifulSoup
+
+import os, json
+from django.core.exceptions import ImproperlyConfigured
+from pathlib import Path
 # Create your views here.
 
 def index(request):
@@ -159,8 +163,51 @@ def champion_tier_list(request, position, region, tier):
         return render(request, 'oreumi_gg/champions.html', {'champion_tiers': champion_tiers})
     else:
         return render(request, 'oreumi_gg/champions.html', {'error': '페이지를 불러올 수 없습니다.'})
+    
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+secret_file = os.path.join(BASE_DIR, "secrets.json")
 
-        
+
+# SECRET_KEY = os.path.join(BASE_DIRm, "local_secrets.json")
+
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+
+def get_secret(setting, secrets=secrets):
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "{} 경로 확인 실패".format(setting)
+        raise ImproperlyConfigured(error_msg)    
+    
+def lotation_list(request):
+    champion_file = 'C:/Users/KYS/Desktop/est/Oreumi.gg/champion.json'
+    with open(champion_file, 'r',encoding='utf-8') as json_file:
+        parsed_data = json.load(json_file)  # JSON 파일을 파싱해서 파이썬 딕셔너리로 읽음
+    print(parsed_data["data"]["Aatrox"]["key"])
+    url = "https://kr.api.riotgames.com/lol/platform/v3/champion-rotations?api_key=RGAPI-a624686e-83cd-40e7-a8cf-46cc658b5309"
+    response = requests.get(url,headers={'User-Agent': 'Mozilla/5.0'})
+    print(response)
+    if response.status_code == 200:
+        data = response.json()
+        free_champion_ids = data["freeChampionIds"]
+        champion_names=[]
+        champion_eng_names = []
+        print(free_champion_ids)
+        for data in parsed_data["data"]:
+            for champion_id in free_champion_ids:
+                champion_id = str(champion_id)
+                if champion_id == parsed_data["data"][data]["key"]:
+                    champion_names.append(parsed_data["data"][data]["name"])
+                    champion_eng_names.append(data)
+        combined_champion_names = zip(champion_eng_names, champion_names)
+        print(combined_champion_names)
+        return render(request, 'oreumi_gg/champions.html', {
+            'combined_champion_names': combined_champion_names
+        })
+    else:
+        return render(request, 'oreumi_gg/champions.html',{'error': '페이지를 불러올 수 없습니다.'})
+    
 # 더보기 를 위한 함수
 # def summoners_info_api(request, country, summoner_name, start):
 #     temp_matches, temp_total_calculate, temp_match_count = match(country, summoner_name, 0)
