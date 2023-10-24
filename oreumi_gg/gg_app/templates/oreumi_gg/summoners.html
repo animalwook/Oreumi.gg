@@ -15,28 +15,37 @@
         {% include 'oreumi_gg/summoners/summoners_article_1.html' %}
         {% include 'oreumi_gg/summoners/summoners_rank.html' %}
         <div class="section">
-            <div id="match_statics">
+            <div class="match_statics">
                 <div id="win_lose">
                     <span id="total_matchcount">20전</span>
                     <span id="total_wincount">{{ total_calculate.win_count }}승</span>
                     <span id="total_losecount">{{ total_calculate.lose_count }}패</span>
+                    <div id="kda">
+                        <div class="chart">
+                            <div class="text">
+                                <strong id="total_winrate">{{ total_calculate.win_rate }}%</strong>
+                            </div>
+                        </div>
+                        <div class="info">
+                            <div class="k-d-a">
+                                <span id="total_kill">{{ total_calculate.total_kill }}</span>
+                                <span> / </span>
+                                <span id="total_death">{{ total_calculate.total_death }}</span>
+                                <span> / </span>
+                                <span id="total_assist">{{ total_calculate.total_assist }}</span>
+                            </div>
+                            <div id="total_kda">{{ total_calculate.total_kda }}:1</div>
+                            <div id="total_killpart">킬관여 {{ total_calculate.total_kill_part }}%</div>
+                        </div>
+                    </div>
                 </div>
-                
-                <span id="total_winrate">{{ total_calculate.win_rate }}%</span>
-                <span id="total_kill">{{ total_calculate.total_kill }}</span>
-                <span> / </span>
-                <span id="total_death">{{ total_calculate.total_death }}</span>
-                <span> / </span>
-                <span id="total_assist">{{ total_calculate.total_assist }}</span>
-                <span id="total_kda">{{ total_calculate.total_kda }}:1</span>
-                <span id="total_killpart">{{ total_calculate.total_kill_part }}%</span>
-                
-
+                <div class="champions"></div>
+                <div class="positions"></div>
             </div>
             <div class="match_20">
                 {% for match in matches %}
                     <li class="game-item">
-                        <div result="{{ match.win_or_not }}" class="game-match">
+                        <div result="{{ match.win_or_not_eng }}" class="game-match result">
                             <div class="content">
                                 <div class="game-content">
                                     <div class="game">
@@ -51,8 +60,10 @@
                                         <div>
                                             <div class="champion">
                                                 <div class="icon">
-                                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{ match.search_player_champ }}.png" width="48" height="48">
-                                                    <span class="champion-level">{{ match.search_player_champlevel }}</span>
+                                                    <a href="" rel="noreferrer">
+                                                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{ match.search_player_champ }}.png" width="48" height="48">
+                                                        <span class="champion-level">{{ match.search_player_champlevel }}</span>
+                                                    </a>  
                                                 </div>
                                                 <div class="spells">
                                                     <div class="spell">
@@ -100,7 +111,7 @@
                                                 <div class="controlward">제어 와드 {{ match.search_player_visionWardsBoughtInGame }}</div>
                                                 <div class="cs">
                                                     <div class style="position: relative;">
-                                                        CS {{ match.search_player_totalminions_kill }} ({{ match.search_player_minperminions}})
+                                                        CS {{ match.search_player_totalminions_kill }} ({{ match.search_player_minperminions }})
                                                     </div>
                                                 </div>
                                                 <div class="average-tier"><div class style="position: relative;"></div></div>
@@ -116,7 +127,6 @@
                                                                     <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/{{ item }}.png" width="22" height="22">
                                                                 {% endif %}
                                                             </div>
-                                                            
                                                         </li>
                                                     {% endfor %}
                                                 </ul>
@@ -124,24 +134,35 @@
                                         </div>
                                     </div>
                                     <div class="participants">
-                                        
                                         <ul>
                                             {% for key, value in match.items %}
                                                 {% if forloop.counter <= 5 %}
                                                     <li class="team" style="list-style-type: none;">
-                                                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{ value.0.championname }}.png" width="16" height="16">
-                                                        <span class="name">{{ value.0.summonername }}</span>
+                                                        <div class="team_icon" style="position: relative;">
+                                                            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{ value.0.championname }}.png" width="16" height="16">
+                                                        </div>
+                                                        <div class="name">
+                                                            <a href="/summoners/kr/{{ value.0.summonername }}" rel="noreferrer">
+                                                                {{ value.0.summonername }}
+                                                            </a>
+                                                        </div>
                                                     </li>
                                                 {% endif %}
                                             {% endfor %}
                                         </ul>
                                         <ul>
                                             {% for key, value in match.items %}
-                                                {% if forloop.counter <= 10 %}
+                                                {% if 5 < forloop.counter and forloop.counter <= 10 %}
                                                     {% if value.0.championname %}
                                                         <li class="team" style="list-style-type: none;">
-                                                            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{ value.0.championname }}.png" width="16" height="16">
-                                                            <span class="name">{{ value.0.summonername }}</span>         
+                                                            <div class="team_icon" style="position: relative;">
+                                                                <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{ value.0.championname }}.png" width="16" height="16">
+                                                            </div>
+                                                            <div class="name">
+                                                                <a href="/summoners/kr/{{ value.0.summonername }}" rel="noreferrer">
+                                                                    {{ value.0.summonername }}
+                                                                </a>
+                                                            </div>
                                                         </li>
                                                     {% endif %}
                                                 {% endif %}
@@ -152,11 +173,16 @@
                             </div>
                             <div class="action">
                                 <button class="detail">
-                                    <img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down-red.svg?v=1697786050877" width="24" alt="More" height="24">
+                                    {% if match.win_or_not_eng == "defeat" %}
+                                        <img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down-red.svg?v=1697786050877" width="24" alt="More" height="24">
+                                    {% elif match.win_or_not_eng == "repeat" %}
+                                        <img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down.svg?v=1697786050877" width="24" alt="More" height="24">
+                                    {% else %}
+                                        <img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down-blue.svg?v=1697786050877" width="24" alt="More" height="24">
+                                    {% endif %}
                                 </button>
                             </div>
                         </div>
-                        
                     </li>
                 {% endfor %}
             </div>

@@ -1,6 +1,14 @@
 {% load static %}
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="{% static 'css/login.css' %}?{% now 'U' %}" />
+
 <header>
-    <a class="main_link" href=""><img class="main_logo" src="static\img\oreumi_gg\main_logo.png" alt="logo_button" /></a>
+    <a class="main_link" href=""><img class="main_logo" src="{% static 'img/oreumi_gg/main_logo.png' %}" alt="logo_button" /></a>
 
     <!-- 챔피언 페이지에서만 검색창 표시 -->
 
@@ -8,10 +16,29 @@
     <form method="POST" name="search_form" action="{% url 'gg_app:summoners_info_form' %}">
         {% csrf_token %}
         <div class="input_group">
-            <input type="text" class="summoner_search" placeholder="소환사명" name="search_text" />
+            <select name="select_region" class="select_region" id="selectRegion">
+                <option value="korea">Korea</option>
+                <option value="north_america">North America</option>
+                <option value="europe_west">Europe West</option>
+                <option value="europe_nordic_east">Europe Nordic % East</option>
+                <option value="oceania">Oceania</option>
+                <option value="korea">Korea</option>
+                <option value="japan">Japan</option>
+                <option value="brazil">Brazil</option>
+                <option value="las">LAS</option>
+                <option value="lan">LAN</option>
+                <option value="russia">Russia</option>
+                <option value="turkiye">Türkiye</option>
+                <option value="Singapore">Singapore</option>
+                <option value="philippines">Philippines</option>
+                <option value="taiwan">Taiwan</option>
+                <option value="vietnam">Vietnam</option>
+                <option value="thailand">Thailand</option>
+            </select>
+            <input type="text" class="summoner_search" placeholder="소환사명" name="search_text">
             <span class="input_group_button">
-                <a class="search_button" type="submit"> <img class="main_logo" src="static\img\oreumi_gg\main_logo.png" alt="logo_button" /> </a
-            ></span>
+                <button class="search_button" type="submit"><img class="search_logo" src="{% static 'img/oreumi_gg/search_logo.png' %}" alt="search_button" /></button>
+            </span>
         </div>
     </form>
     {% endif %}
@@ -25,6 +52,15 @@
     </form>
 
     {% else %}
-    <a class="auth_link" href="{% url 'account_login' %}">로그인</a>
+    <li class="nav-item">
+        <a class="auth_link" href="#" data-toggle="modal" data-target="#login"> 로그인 </a>
+        <div class="modal" id="login" style="display: none">
+            <div class="modal-dialog-xl">
+                <div class="modal-body">{% include 'account/login.html' %}</div>
+            </div>
+        </div>
+    </li>
+
     {% endif %}
+    {% comment %} <div class="modal-background" id="modal-background style="display: none"></div> {% endcomment %}
 </header>

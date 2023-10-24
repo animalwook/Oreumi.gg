@@ -18,22 +18,62 @@
         <section>
             <article class="champions_article">
                 <div class="position_btn">
-                    <input class="champions_search" type="text" name="champions_search" id="championsSearch" onkeydown="searchOnEnter(event)" />
-                    <a href="{% url 'gg_app:champion_tier' position='top' %}"><button class="champions_top">탑</button></a>
-                    <a href="{% url 'gg_app:champion_tier' position='jungle' %}"><button class="champions_jg">정글</button></a>
-                    <a href="{% url 'gg_app:champion_tier' position='mid' %}"><button class="champions_mid">미드</button></a>
-                    <a href="{% url 'gg_app:champion_tier' position='adc' %}"><button class="champions_adc">바텀</button></a>
-                    <a href="{% url 'gg_app:champion_tier' position='support' %}"><button class="champions_spt">서포터</button></a>
+                    <input class="champions_search" type="text" name="champions_search" id="championsSearch" />
+                    <div class="tab-group">
+                        <div class="champions_tab champions_top" data-position="top" data-url="{% url 'gg_app:champion_tier' position='top' region='KR' tier='Emerald+' %}">탑</div>
+                        <div class="champions_tab champions_jg" data-position="jungle" data-url="{% url 'gg_app:champion_tier' position='jungle' region='KR' tier='Emerald+' %}">정글</div>
+                        <div class="champions_tab champions_mid" data-position="mid" data-url="{% url 'gg_app:champion_tier' position='mid' region='KR' tier='Emerald+' %}">미드</div>
+                        <div class="champions_tab champions_adc" data-position="adc" data-url="{% url 'gg_app:champion_tier' position='adc' region='KR' tier='Emerald+' %}">바텀</div>
+                        <div class="champions_tab champions_spt" data-position="support" data-url="{% url 'gg_app:champion_tier' position='support' region='KR' tier='Emerald+' %}">서포터</div>
+                    </div>
                 </div>
                 <div class="champions_portrait" id="championsPortait">
                     <!--챔피언 초상화, 검색한 챔피언 표시-->
                 </div>
                 <div class="champions_tier" id="championsTier">
+                    <select id="region-select">
+                        <option value="Global">Global</option>
+                        <option value="NA">NA</option>
+                        <option value="EUW">EUW</option>
+                        <option value="EUNE">EUNE</option>
+                        <option value="OCE">OCE</option>
+                        <option value="KR">KR</option>
+                        <option value="JP">JP</option>
+                        <option value="BR">BR</option>
+                        <option value="LAS">LAS</option>
+                        <option value="LAN">LAN</option>
+                        <option value="RU">RU</option>
+                        <option value="TR">TR</option>
+                        <option value="SG">SG</option>
+                        <option value="PH">PH</option>
+                        <option value="TW">TW</option>
+                        <option value="VN">VN</option>
+                        <option value="TH">TH</option>
+                    </select>
+                    <select id="tier-select">
+                        <option value="all">All</option>
+                        <option value="challenger">Challenger</option>
+                        <option value="grandmaster">Grandmaster</option>
+                        <option value="master_plus">Master+</option>
+                        <option value="master">Master</option>
+                        <option value="diamond_plus">Diamond+</option>
+                        <option value="diamond">Diamond</option>
+                        <option value="emerald_plus">Emerald+</option>
+                        <option value="emerald">Emerald</option>
+                        <option value="platinum_plus">Platinum+</option>
+                        <option value="platinum">Platinum</option>
+                        <option value="gold_plus">Gold+</option>
+                        <option value="gold">Gold</option>
+                        <option value="silver">Silver</option>
+                        <option value="bronze">Bronze</option>
+                        <option value="iron">Iron</option>
+                    </select>
                     <table>
                         <thead>
                             <tr>
                                 <th>Rank</th>
-                                <th>Champion</th> <!-- 하나의 항목으로 합침 -->
+                                <th>Champion</th>
+                                <!-- 하나의 항목으로 합침 -->
                                 <th>Tier</th>
                                 <th>Win Rate</th>
                                 <th>Pick Rate</th>
@@ -43,30 +83,31 @@
                         </thead>
                         <tbody>
                             {% for champion in champion_tiers %}
-                                <tr>
-                                    <td>{{ champion.index }}</td>
-                                    <td>
-                                        <img src="{{ champion.champion_img }}" alt="{{ champion.champion_name }}">
-                                        {{ champion.champion_name }}
-                                    </td>
-                                    <td>{{ champion.tier }}</td>
-                                    <td>{{ champion.win_rate }}</td>
-                                    <td>{{ champion.pick_rate }}</td>
-                                    <td>{{ champion.ban_rate }}</td>
-                                    <td>
-                                        <ul>
-                                            {% for weak_champion in champion.weak_against_champions %}
-                                                <li><img src="{{ weak_champion }}" alt=""></li>
-                                            {% endfor %}
-                                        </ul>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>{{ champion.rank }}</td>
+                                <td>
+                                    <img src="{{ champion.champion_img }}" alt="{{ champion.champion_name }}" />
+                                    {{ champion.champion_name }}
+                                </td>
+                                <td>{{ champion.tier }}</td>
+                                <td>{{ champion.win_rate }}</td>
+                                <td>{{ champion.pick_rate }}</td>
+                                <td>{{ champion.ban_rate }}</td>
+                                <td>
+                                    <ul>
+                                        {% for weak_champion in champion.weak_against_champions %}
+                                        <li><img src="{{ weak_champion }}" alt="" /></li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </article>
         </section>
+        {% include 'oreumi_gg/footer.html' %}
     </body>
     <script src="{% static 'js/champions.js' %}"></script>
 </html>

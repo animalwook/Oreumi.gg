@@ -47,6 +47,7 @@ section {
     width: 170px;
     height: 31.99px;
     cursor: pointer;
+    margin-right: 10px;
 }
 
 .select_region:focus {

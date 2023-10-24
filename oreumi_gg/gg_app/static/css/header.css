@@ -36,3 +36,50 @@ header {
     vertical-align: middle;
     display: inline-block;
 }
+
+/* 검색창 */
+
+.input_group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+    height: 36px;
+    background-color: #fff;
+    border-radius: 30px;
+}
+
+.select_region {
+    border: none;
+    width: 100px;
+    height: 31.99px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.select_region:focus {
+    outline: none;
+}
+
+.summoner_search {
+    border: none;
+    width: 200px;
+    height: 30px;
+}
+
+.summoner_search:focus {
+    outline: none;
+}
+
+.search_button {
+    border: none;
+    cursor: pointer;
+    width: 44px;
+    height: 31.99px;
+    background-color: #fff;
+}
+
+.search_logo {
+    width: 40px;
+    height: 18px;
+}

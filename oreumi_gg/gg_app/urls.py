@@ -6,16 +6,19 @@ app_name = 'gg_app'
  
 urlpatterns = [
     path('', views.index, name='index'),
-  
+    
     path('community/', views.community, name='community'),
     path('post/', views.post, name='post'),
     path('write/', views.write, name='write'), 
     path('create/', views.post_create, name='post_create'),                  # create. post 원리 이해하기
     path('post/<int:post_id>/', views.post_detail, name='post_detail'),      # 새로 추가한 URL 패턴), <int:post_id> 부분은 URL 패턴에서 변수를 캡처하는 부분
     path('post_edit/<int:post_id>/', views.post_edit, name='post_edit'),     # post_edit 수정 부분
+
+    path('post/<int:post_id>/add_comment/', views.add_comment, name='add_comment'),
+
     
     path('champions/', views.champions, name='champions'),
-    path('champions/champions_tier/<str:position>/', views.champion_tier_list, name='champion_tier'),
+    path('champions/champions_tier/<str:position>/<str:region>/<str:tier>', views.champion_tier_list, name='champion_tier'),
 
     # 전적 검색
     path('summoners_form', views.summoners_info_form, name='summoners_info_form'),

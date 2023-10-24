@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'gg_app',
     'user_app',
 
+
     # social api
     'allauth',
     'allauth.account',
@@ -73,6 +74,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.kakao',
 
+    # 댓글
+    
+    
 
 ]
 
@@ -93,6 +97,7 @@ ACCOUNT_USERNAME_REQUIRED = False  # USERNAME 을 필수항목에서 제거
 ACCOUNT_UNIQUE_EMAIL = True # 중복을  허용하지 않음
 ACCOUNT_LOGOUT_ON_GET = True # 로그아웃 확인 묻지 않고 즉시 로그아웃
 SOCIALACCOUNT_LOGIN_ON_GET = True # 바로 소셜로그인페이지로 넘어가도록
+
 ACCOUNT_SIGNUP_FORM_CLASS = 'user_app.forms.SignupForm'
 AUTH_USER_MODEL = 'user_app.User'
 
@@ -189,8 +194,8 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'gg_app\static')]
-
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'oreumi_gg/gg_app/static')]
+"gg_app/templates"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

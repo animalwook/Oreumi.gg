@@ -16,9 +16,12 @@ class BlogPost(models.Model):
     up = models.IntegerField(default=0)
     down = models.IntegerField(default=0)
     # image = models.ImageField(upload_to='images/')  # 이미지 필드 추가
+    comments = models.ManyToManyField('Comment', related_name='blog_posts')
 
 class Comment(models.Model):
     post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
-    author = models.CharField(max_length=255, default="User")  # 기본값을 "User"로 설정
+    author = models.CharField(max_length=255, default="User")
     text = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
+
+

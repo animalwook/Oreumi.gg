@@ -2,9 +2,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import JsonResponse
-from .models import BlogPost
-
-from .forms import PostForm, BlogPostForm
+from .models import BlogPost, Comment
+from .forms import PostForm, BlogPostForm, CommentForm
 
 from .lol_match import match
 from selenium import webdriver
@@ -104,7 +103,7 @@ def summoners_info(request, country, summoner_name):
 
 
 def summoners_info_api(request, country, summoner_name, count):
-    matches, total_calculate = match(country, summoner_name, count)
+    matches, total_calculate, search_player_info_dict = match(country, summoner_name, count)
     response_data = {
         "matches": matches,
         "total_calculate": total_calculate,
@@ -112,9 +111,9 @@ def summoners_info_api(request, country, summoner_name, count):
     return JsonResponse(response_data)
   
   
-def champion_tier_list(request, position):
+def champion_tier_list(request, position, region, tier):
 # Op.gg URL 생성
-    opgg_url = "https://www.op.gg/champions?region=kr&tier=emerald_plus&position="+position
+    opgg_url = "https://www.op.gg/champions?region="+region+"&tier="+tier+"&position="+position
     print(opgg_url)
     # HTTP 요청을 보내서 페이지 내용을 가져옵니다.
     response = requests.get(opgg_url,headers={'User-Agent': 'Mozilla/5.0'})
@@ -155,7 +154,7 @@ def champion_tier_list(request, position):
                 'ban_rate': ban_rate,
                 'weak_against_champions': weak_against_champions,
             })
-
+        print(champion_tiers[0].items())
         return render(request, 'oreumi_gg/champions.html', {'champion_tiers': champion_tiers})
     else:
         return render(request, 'oreumi_gg/champions.html', {'error': '페이지를 불러올 수 없습니다.'})
@@ -172,3 +171,17 @@ def champion_tier_list(request, position):
 #         "match_count" : match_count
 #     }
 #     return JsonResponse(response_data)
+
+
+def add_comment(request, post_id):
+    post = get_object_or_404(BlogPost, pk=post_id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect('gg_app:post_detail', post_id=post_id)
+
+    return redirect('gg_app:post_detail', post_id=post_id)  # 실패 시 동일한 페이지로 리디렉션

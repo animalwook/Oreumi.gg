@@ -39,69 +39,168 @@ function display(data) {
     let html = '';
     matches.forEach(match => {
         let itemsHTML = '';
-        let champHTML = '';
+        let bluechampHTML = '';
+        let redchampHTML = '';
+        let detailHTML = '';
+
+        if (match.win_or_not_eng == "defeat") {
+            detailHTML += `<img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down-red.svg?v=1697786050877" width="24" alt="More" height="24">`;
+        }
+        else if (match.win_or_not_eng == "repeat") {
+            detailHTML += `<img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down.svg?v=1697786050877" width="24" alt="More" height="24">`;
+        }
+        else {
+            detailHTML += `<img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down-blue.svg?v=1697786050877" width="24" alt="More" height="24">`;
+        }
+
+
+
         match.search_player_item.forEach(item => {
             if (item != 0) {
-                itemsHTML += `<img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/${ item }.png" style="width: 100px; height: 100px;">`;
+                itemsHTML += `
+                <li style="list-style-type: none;">
+                    <div class style="position: relative">
+                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/${ item }.png" width="22" height="22">
+                    </div>
+                </li>
+                `;
                 }
             });
         for (let i = 1; i <= 10; i++) {
             if (Array.isArray(match[i])) {
                 match[i].forEach(item => {
                     if (i <= 5) {
-                        champHTML += `
-                        <li style="list-style-type: none;">
-                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/${item.championname}.png">
-                        ${item.summonername}
+                        bluechampHTML += `
+                        <li class="team" style="list-style-type: none;">
+                            <div class="team_icon" style="position: relative">
+                                <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/${item.championname}.png" width="16" height="16">
+                            </div>
+                            <div class="name">
+                                <a href="/summoners/kr/${item.summonername}" rel="noreferrer">
+                                    ${item.summonername}
+                                </a>
+                            </div>
                         </li>
                     `;
                     }
                     else if (i <= 10) {
-                    if (item.championname) {
-                        champHTML += `
-                        <li style="list-style-type: none;">
-                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/${item.championname}.png">
-                        ${item.summonername}
-                        </li>
-                    `; 
+                        if (item.championname) {
+                            redchampHTML += `
+                            <li class="team" style="list-style-type: none;">
+                                <div class="team_icon" style="position: relative">
+                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/${item.championname}.png" width="16" height="16">
+                                </div>
+                                <div class="name">
+                                    <a href="/summoners/kr/${item.summonername}" rel="noreferrer">
+                                        ${item.summonername}
+                                    </a>
+                                </div>
+                            </li>
+                        `; 
+                        }
                     }
-                }
-                        
                 });
             }
         }
         html += `
-      <div style="border: 2px solid #333; display: flex;">
-          <div class="match_info">
-              <li style="list-style-type: none;"> ${match.win_or_not} </li>
-              <li style="list-style-type: none;"> ${match.game_type} </li>
-              <li style="list-style-type: none;"> ${match.game_playtime}</li>
-              <li style="list-style-type: none;"> ${match.game_time}</li>
+        <li class="game-item">
+          <div result="${match.win_or_not_eng}" class="game-match result">
+            <div class="content">
+                <div class="game-content">
+                    <div class="game">
+                        <div class="type">${match.game_type}</div>
+                        <div class="time-stamp">
+                            <div class style="position: relative;">${match.game_time}</div>
+                        </div>
+                        <div class="result">${match.win_or_not}</div>
+                        <div class="length">${match.game_playtime}</div>
+                    </div>
+                    <div class="info">
+                        <div>
+                            <div class="champion">
+                                <div class="icon">
+                                    <a href="" rel="noreferrer">
+                                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/${match.search_player_champ}.png" width="48" height="48">
+                                        <span class="champion-level">${match.search_player_champlevel}</span>
+                                    </a>
+                                </div>
+                                <div class="spells">
+                                    <div class="spell">
+                                        <div class style="position: relative;">
+                                            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/${match.search_player_summonerspell1}.png" width="22" height="22">
+                                        </div>
+                                    </div>
+                                    <div class="spell">
+                                        <div class style="position: relative;">
+                                            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/${match.search_player_summonerspell2}.png" width="22" height="22">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="runes">
+                                    <div class="rune">
+                                        <div class style="position: relative;">
+                                            <img src="https://ddragon.canisback.com/img/${match.search_player_main_rune}" width="22" height="22">
+                                        </div>
+                                    </div>
+                                    <div class="rune">
+                                        <div class style="position: relative;">
+                                            <img src="https://ddragon.canisback.com/img/perk-images/Styles/${match.search_player_sub_rune}.png" width="22" height="22">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kill_death_assist">
+                                <div class="k-d-a">
+                                    <span>${match.search_player_kill}</span>
+                                    <span> / </span>
+                                    <span class="d">${match.search_player_death}</span>
+                                    <span> / </span>
+                                    <span>${match.search_player_assist}</span>
+                                </div>
+                                <div class="ratio">
+                                    <span>${match.search_player_kda}:1</span>
+                                </div>
+                            </div>
+                            <div class="stats">
+                                <div class="p-kill">
+                                    <div class style="position: relative;">
+                                        킬관여 ${match.search_player_killpart}%
+                                    </div>
+                                </div>
+                                <div class="controlward">제어 와드 ${match.search_player_visionWardsBoughtInGame}</div>
+                                <div class="cs">
+                                    <div class style="position: relative;">
+                                        CS ${match.search_player_totalminions_kill} (${match.search_player_minperminions})
+                                    </div>
+                                </div>
+                                <div class="average-tier"><div class style="position relative;"></div></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="items">
+                                <ul>
+                                    ${itemsHTML}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="participants">
+                        <ul>
+                            ${bluechampHTML}
+                        </ul>
+                        <ul>
+                            ${redchampHTML}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="action">
+                <button class="detail">
+                    ${detailHTML}
+                </button>
+            </div>
           </div>
-          <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/${match.search_player_champ}.png" style="width:160px; height:160px;">
-          <p>${match.search_player_champlevel}</p>
-          <div class="champ_spell">
-              <li style="list-style-type: none;"><img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/${match.search_player_summonerspell1}.png"></li>
-              <li style="list-style-type: none;"><img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/${match.search_player_summonerspell2}.png"></li>
-          </div>
-          <div class="rune">
-              <li style="list-style-type: none;"><img src="https://ddragon.canisback.com/img/${match.search_player_main_rune}" style="width: 80px; height: 80px;"></li>
-              <li style="list-style-type: none;"><img src="https://ddragon.canisback.com/img/perk-images/Styles/${match.search_player_sub_rune}.png"></li>
-          </div>
-          <div class="kill">
-              <li style="list-style-type: none;"><p> ${match.search_player_kill} / ${match.search_player_death} / ${match.search_player_assist}</p></li>
-              <li style="list-style-type: none;"><p>kda ${match.search_player_kda}</p></li>
-          </div>
-          <div class="total">
-              <li style="list-style-type: none;">
-                  <p>킬관여율 ${match.search_player_killpart}% </p>
-                  <p>CS ${match.search_player_totalminions_kill} (${match.search_player_minperminions})</p>
-                  <p>제어 와드 ${match.search_player_visionWardsBoughtInGame}</p>
-              </li>
-          </div>
-          ${itemsHTML}
-          ${champHTML}
-        </div>
+        </li>
         `;
   });
     
@@ -114,8 +213,7 @@ function display(data) {
     let assistCount = parseFloat(total_assist.textContent) + data.total_calculate.total_assist;
     let deathCount = parseFloat(total_death.textContent) + data.total_calculate.total_death;
     let kda = parseFloat(total_kda.textContent.split(":")[0]) + data.total_calculate.total_kda;
-    let killPart = parseInt(total_killpart.textContent) + data.total_calculate.total_kill_part;
-
+    let killPart = parseInt((total_killpart.textContent).split(" ")[1]) + data.total_calculate.total_kill_part;
     total_wincount.textContent = winCount + "승";
     total_losecount.textContent = loseCount + "패";
     total_winrate.textContent = winRate + "%";
@@ -123,7 +221,7 @@ function display(data) {
     total_death.textContent = (deathCount / 2).toFixed(1);
     total_assist.textContent = (assistCount / 2).toFixed(1);
     total_kda.textContent = (kda / 2).toFixed(2) + ":1";
-    total_killpart.textContent = (killPart / 2).toFixed(0) + "%";
+    total_killpart.textContent = "킬관여 " + (killPart / 2).toFixed(0) + "%";
 }
 let count = 20;
 const fetchButton = document.getElementById('addmatch_btn');

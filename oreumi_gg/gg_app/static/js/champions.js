@@ -49,3 +49,85 @@ function searchOnEnter(event) {
         searchChampions(); // Enter 키가 눌렸을 때 검색 기능 호출
     }
 }
+
+//지역 드롭다운 박스 변경 감지
+// document.getElementById("region-select").addEventListener("change", function() {
+//     // 선택된 포지션 가져오기
+//     var selectedPosition = document.getElementById("region-select").value;
+    
+//     // Django URL 생성
+//     var url = "{% url 'gg_app:champion_tier' region='%s' %}".replace('%s', selectedPosition);
+    
+//     // 페이지 이동 (드롭다운 목록 변경과 함께)
+//     document.getElementById("champion-tier-link").href = url;
+//     document.getElementById("champion-tier-link").click();
+//   });
+
+const tabButtons = document.querySelectorAll(".champions_tab");
+const STORAGE_KEY = "selected_tab";
+const regionSelect = document.getElementById("region-select");
+const tierSelect = document.getElementById("tier-select");
+const REGION_STORAGE_KEY = "selected_region";
+const TIER_STORAGE_KEY = "selected_tier";
+
+tabButtons.forEach((button) => {
+  button.addEventListener("click", function (event) {
+    event.stopPropagation();
+    // 선택된 탭의 클래스 변경
+    tabButtons.forEach((btn) => {
+      btn.classList.remove("active");
+    });
+    button.classList.add("active");
+
+
+    const selectedPosition = button.getAttribute("data-position");
+    localStorage.setItem(STORAGE_KEY, selectedPosition);
+
+    // URL 업데이트
+    updateURL();
+  });
+});
+
+// 드롭다운 박스의 변경 이벤트에 대한 핸들러
+regionSelect.addEventListener("change", function () {
+    const selectedRegion = regionSelect.value;
+    localStorage.setItem(REGION_STORAGE_KEY, selectedRegion);
+});
+
+tierSelect.addEventListener("change", function () {
+    const selectedTier = tierSelect.value;
+    localStorage.setItem(TIER_STORAGE_KEY, selectedTier);
+});
+
+//탭 유지를 위한 로드할때 탭상태 불러오기
+window.addEventListener("load", function () {
+    const selectedTab = localStorage.getItem(STORAGE_KEY);
+    if (selectedTab) {
+      const buttonToActivate = document.querySelector(`.champions_tab[data-position='${selectedTab}']`);
+      if (buttonToActivate) {
+        buttonToActivate.classList.add("active");
+      }
+    }
+    
+    const savedRegion = localStorage.getItem(REGION_STORAGE_KEY);
+    if (savedRegion) {
+        regionSelect.value = savedRegion;
+    }
+
+    const savedTier = localStorage.getItem(TIER_STORAGE_KEY);
+    if (savedTier) {
+        tierSelect.value = savedTier;
+    }
+
+  });
+
+  function updateURL() {
+    //탭유지를 위한 변수 저장
+    const selectedPosition = document.querySelector(".champions_tab.active").getAttribute("data-position");
+    const selectedRegion = regionSelect.value;
+    const selectedTier = tierSelect.value;
+  
+    // URL을 동적으로 생성
+    const url = `/champions/champions_tier/${selectedPosition}/${selectedRegion}/${selectedTier}`;
+    window.location.href = url;
+  }
