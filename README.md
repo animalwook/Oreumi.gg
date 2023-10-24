@@ -38,16 +38,19 @@
 >
 > **주요 기능:** 반응형 웹, 롤전적검색, 챔피언분석, 로그인 Email 전송, 커뮤니티, 배포 및 커스텀 도메인 연결
 >
-> **사용 기술:** html,css,Django, Django-channel, postgreSql, bs4, selenium, pandas
+> **사용 기술:** html,css,Django, postgreSql, bs4, selenium, pandas
 >
 > **문의:** youngwook616@mgail.com
 
 <br />
 
 ## **🛠 기술 및 도구** https://msdio.github.io/stackticon/#/
-
-[![stackticon](https://firebasestorage.googleapis.com/v0/b/stackticon-81399.appspot.com/o/images%2F1698124589669?alt=media&token=e285ca31-c585-41be-acb2-b979fb1d90d3)](https://github.com/msdio/stackticon)
-
+프론트
+[![stackticon](https://firebasestorage.googleapis.com/v0/b/stackticon-81399.appspot.com/o/images%2F1698124806327?alt=media&token=808af777-dbae-40d7-b874-b873f7bf5a12)](https://github.com/msdio/stackticon)
+백엔드
+[![stackticon](https://firebasestorage.googleapis.com/v0/b/stackticon-81399.appspot.com/o/images%2F1698124756535?alt=media&token=52092830-4ba4-4f08-9f0a-8e64b893ddf4)](https://github.com/msdio/stackticon)
+기타
+[![stackticon](https://firebasestorage.googleapis.com/v0/b/stackticon-81399.appspot.com/o/images%2F1698124806327?alt=media&token=808af777-dbae-40d7-b874-b873f7bf5a12)](https://github.com/msdio/stackticon)
 <br />
 
 ## **🔗 링크**
