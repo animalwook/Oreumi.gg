@@ -2,8 +2,33 @@
 <h1>{{ post.title }}</h1>
 <p>작성자: {{ post.author }}</p>
 <p>게시일: {{ post.created_at }}</p>
-<p>내용: {{ post.content }}</p>
+<div class="ck ck-content">{{ post.content | safe }}</div>
 <a href="{% url 'gg_app:post' %}">뒤로 가기</a>
 {% comment %}  <a href="{% url 'gg_app:post_edit' post.id %}">수정</a> {% endcomment %}
+
+
+<div class="comments">
+    <h3>댓글</h3>
+    <ul>
+      {% for comment in comments %}
+        <li>
+          <p class="author">{{ comment.author }}:</p>
+          <p class="text">{{ comment.text }}</p>
+        </li>
+      {% empty %}
+        <li>댓글이 없습니다.</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% if user.is_authenticated %}
+  <form method="post" action="{% url 'gg_app:add_comment' post_id=post.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class='comment-button' type="submit">댓글 작성</button>
+  </form>
+  {% else %}
+    <p>댓글을 작성하려면 로그인이 필요합니다.</p>
+  {% endif %} 
+
 
 {% endblock %}

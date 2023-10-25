@@ -1,17 +1,27 @@
 from django import forms
-from .models import BlogPost
-from .models import Comment
-
-class PostForm(forms.ModelForm):
-    class Meta:
-        model = BlogPost
-        fields = ['title', 'content']
-
+from django_ckeditor_5.widgets import CKEditor5Widget
+from .models import BlogPost, Comment
 
 class BlogPostForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["content"].required = False        
     class Meta:
         model = BlogPost
-        fields = ['title', 'content', 'author', 'category']  # 'image' 필드 추가
+        fields = ("title", "content",'category')
+        widgets = {
+            "content": CKEditor5Widget(
+                attrs={"class": "django_ckeditor_5"}, config_name="extends",
+            )
+        }
+
+
+
+
+
+
+
 
 class CommentForm(forms.ModelForm):
     class Meta:
