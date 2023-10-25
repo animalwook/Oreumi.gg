@@ -1,6 +1,37 @@
 {% load static %}
 
 <footer>
-    <a href="{% url 'gg_app:index' %}">OREUMI.GG</a>
-    <div>Designed by Django</div>
+    <div class="divide_line"></div>
+    <div class="link_container">
+        <a class="main_link" href="{% url 'gg_app:index' %}"><img class="main_logo" src="{% static 'img/oreumi_gg/main_logo.png' %}" alt="logo_button" /></a>
+        <div class="developed_text">Developed by team OREUMI.GG</div>
+    </div>
+
+    <div class="developer_container">
+        <ul class="developers_list">
+            <li>구영재</li>
+            <li>강민서</li>
+            <li>김유성</li>
+            <li>김정윤</li>
+            <li>배영덕</li>
+            <li>홍영욱</li>
+            <li>황찬혁</li>
+        </ul>
+    </div>
+    <div class="stacks_container">
+        <ul class="stacks_list">
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+            <li>Django</li>
+            <li>Python</li>
+            <li>PostgreSQL</li>
+            <li>Amazon AWS</li>
+            <li>Bootstrap</li>
+            <li>Selenium</li>
+            <li>Pandas</li>
+            <li>GitHub Actions</li>
+        </ul>
+    </div>
+    <div class="divide_line"></div>
 </footer>
