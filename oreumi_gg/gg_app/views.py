@@ -8,14 +8,10 @@ from django.conf import settings
 from .models import BlogPost, Comment
 from .forms import BlogPostForm, CommentForm
 from .lol_match import match
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 import requests
-from bs4 import BeautifulSoup
 
-import os, json
-from django.core.exceptions import ImproperlyConfigured
-from pathlib import Path
+from bs4 import BeautifulSoup
+import json
 from oreumi_gg.settings import get_secret, champion_file
 # Create your views here.
 
