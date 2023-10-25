@@ -2,9 +2,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import JsonResponse
-from .models import BlogPost, Comment
-from .forms import PostForm, BlogPostForm, CommentForm
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
+
+from .models import BlogPost, Comment
+from .forms import BlogPostForm, CommentForm
 from .lol_match import match
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -32,30 +34,27 @@ def post(request):
     context = {"posts": blog_post}      
     return render(request, 'community/post_list.html', context)
 
-def write(request):
-    if request.method == 'POST':
-    
-        form = PostForm(request.POST) 
-        if form.is_valid(): # 유효성 검사(필수과정)
-            form.save()
 
-            return redirect('gg_app:community')
-    else:
-        form = PostForm()
-
-    return render(request,"community/post_write_1.html", {'form': form})
 
 # 게시글 작정
-def post_create(request):
-    if request.method == 'POST':
-        form = BlogPostForm(request.POST)
-        if form.is_valid():
-            form.save()  # 폼이 유효하면 데이터베이스에 저장
-            return redirect('gg_app:community')  # 게시글 목록 페이지로 리다이렉트
-    else:
-        form = BlogPostForm()  # GET 요청인 경우 빈 폼 생성
+@login_required
+def post_write(request):
 
-    return render(request, 'community/post_write_2.html', {'form': form})
+    if request.method == 'POST':
+        form = BlogPostForm(request.POST) 
+        if form.is_valid(): # 유효성 검사(필수과정)
+            post = form.save()
+            post_id = post.id
+            return redirect('gg_app:post_detail', post_id=post_id)
+        
+    # get요청시
+    post = BlogPostForm()
+    context = {
+        'form':post,
+        'MEDIA_URL':settings.MEDIA_URL
+    }
+    return render(request,"community/post_write.html", context)
+
 
 
 # 게시글 수정
@@ -76,7 +75,11 @@ def post_edit(request, post_id):
 # 상세 페이지
 def post_detail(request, post_id):
     post = get_object_or_404(BlogPost, pk=post_id)  # 게시물 가져오기, 없으면 404 에러 발생
-    return render(request, 'community/post_detail.html', {'post': post})
+
+    comments = Comment.objects.filter(post=post_id).order_by('-created_date')
+    
+
+    return render(request, 'community/post_detail.html', {'post': post, 'comments':comments,'form': CommentForm()})
 
   
 def summoners_info_form(request):
