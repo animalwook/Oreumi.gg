@@ -7,8 +7,8 @@ const summonerName = decodeURIComponent(spliturl[3]);
 
 
 
-function addmatch(count) {
-    fetch(`/api/summoners_info/${country}/${summonerName}/${count}`)
+function addmatch(count, queue) {
+    fetch(`/api/summoners_info/${country}/${summonerName}/${count}/${queue}`)
         .then(response => response.json())
         .then(data => {
             // 데이터 사용
@@ -24,7 +24,7 @@ function addmatch(count) {
 }
 
 function display(data) {
-    const matchDataContainer = document.getElementById("addmatch");
+    const matchDataContainer = document.querySelector(".match_20");
     const total_matchcount = document.getElementById("total_matchcount");
     const total_wincount = document.getElementById("total_wincount");
     const total_losecount = document.getElementById("total_losecount");
@@ -42,6 +42,7 @@ function display(data) {
         let bluechampHTML = '';
         let redchampHTML = '';
         let detailHTML = '';
+        let resultmatch = {};
 
         if (match.win_or_not_eng == "defeat") {
             detailHTML += `<img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down-red.svg?v=1697786050877" width="24" alt="More" height="24">`;
@@ -68,6 +69,8 @@ function display(data) {
             });
         for (let i = 1; i <= 10; i++) {
             if (Array.isArray(match[i])) {
+                // 동적으로 생긴(html) 부분 json 형태로 만들기 위한 변수
+                resultmatch[`${i}`] = match[i];
                 match[i].forEach(item => {
                     if (i <= 5) {
                         bluechampHTML += `
@@ -102,6 +105,7 @@ function display(data) {
                 });
             }
         }
+        resultJson = JSON.stringify(resultmatch)
         html += `
         <li class="game-item">
           <div result="${match.win_or_not_eng}" class="game-match result">
@@ -195,7 +199,7 @@ function display(data) {
                 </div>
             </div>
             <div class="action">
-                <button class="detail" data-match-info="${JSON.stringify(match)}" match-result="${match.win_or_not_eng}" status="open">
+                <button class="detail" data-match-info='${resultJson}' match-result="${match.win_or_not_eng}" status="open">
                     ${detailHTML}
                 </button>
             </div>
@@ -204,7 +208,7 @@ function display(data) {
         `;
   });
     
-    matchDataContainer.insertAdjacentHTML('afterend', html);
+    matchDataContainer.insertAdjacentHTML('beforeend', html);
     total_matchcount.textContent = `${count}전`
     let winCount = parseInt(total_wincount.textContent) + data.total_calculate.win_count;
     let loseCount = parseInt(total_losecount.textContent) + data.total_calculate.lose_count;
@@ -225,7 +229,22 @@ function display(data) {
 }
 let count = 20;
 const fetchButton = document.getElementById('addmatch_btn');
+
 fetchButton.addEventListener('click', function() {
-    addmatch(count)
+    const selectedGameType = document.querySelector('.game-type');
+    let button;
+    if (selectedGameType.getAttribute("selected")) {
+        button = selectedGameType.querySelector('button');
+    }
+    const buttonValue = button.value;
+    let buttonIntValue;
+    if (buttonValue == "TOTAL") {
+        buttonIntValue = 9999;
+    }
+    else {
+        buttonIntValue = 420;
+    }
+    queue = buttonIntValue
+    addmatch(count, queue)
     count += 20;
 });
