@@ -16,6 +16,7 @@ from bs4 import BeautifulSoup
 import os, json
 from django.core.exceptions import ImproperlyConfigured
 from pathlib import Path
+from oreumi_gg.settings import get_secret, champion_file
 # Create your views here.
 
 def index(request):
@@ -167,9 +168,10 @@ def champion_tier_list(request, position, region, tier):
     else:
         return render(request, 'oreumi_gg/champions.html', {'error': '페이지를 불러올 수 없습니다.'})
     
+
 def lotation_list(request):
-    champion_file = 'C:/oreumi/!final/action/champion.json'
-    with open(champion_file, 'r',encoding='utf-8') as json_file:
+    champion_json_file = champion_file
+    with open(champion_json_file, 'r',encoding='utf-8') as json_file:
         parsed_data = json.load(json_file)  # JSON 파일을 파싱해서 파이썬 딕셔너리로 읽음
     print(parsed_data["data"]["Aatrox"]["key"])
     url = "https://kr.api.riotgames.com/lol/platform/v3/champion-rotations?api_key="+getattr(settings,"LOL_API" ,"LOL_API")
@@ -194,7 +196,22 @@ def lotation_list(request):
         })
     else:
         return render(request, 'oreumi_gg/champions.html',{'error': '페이지를 불러올 수 없습니다.'})
-    
+
+def ingame_info(request):
+    return render(request, 'oreumi_gg/ingame_test.html')
+
+# 더보기 를 위한 함수
+# def summoners_info_api(request, country, summoner_name, start):
+#     temp_matches, temp_total_calculate, temp_match_count = match(country, summoner_name, 0)
+#     match_count = temp_match_count
+#     matches, total_calculate, match_count = match(country, summoner_name, match_count)
+#     response_data = {
+#         "matches": matches,
+#         "total_calculate": total_calculate,
+#         "match_count" : match_count
+#     }
+#     return JsonResponse(response_data)
+
 
 
 def add_comment(request, post_id):
