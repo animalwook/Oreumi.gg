@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="ingame-button">인게임 정보</button>
+    <div class="ingame-box">
+
+    </div>
+</body>
+<script>
+    document.getElementById("ingame-button").addEventListener("click", function() {
+        const url = `/ingame/`;
+        window.location.href = url;
+    });
+</script>
+</html>

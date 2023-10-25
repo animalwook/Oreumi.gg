@@ -14,6 +14,7 @@ from bs4 import BeautifulSoup
 import os, json
 from django.core.exceptions import ImproperlyConfigured
 from pathlib import Path
+from oreumi_gg.settings import get_secret
 # Create your views here.
 
 def index(request):
@@ -164,21 +165,6 @@ def champion_tier_list(request, position, region, tier):
     else:
         return render(request, 'oreumi_gg/champions.html', {'error': '페이지를 불러올 수 없습니다.'})
     
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-secret_file = os.path.join(BASE_DIR, "secrets.json")
-
-
-# SECRET_KEY = os.path.join(BASE_DIRm, "local_secrets.json")
-
-with open(secret_file) as f:
-    secrets = json.loads(f.read())
-
-def get_secret(setting, secrets=secrets):
-    try:
-        return secrets[setting]
-    except KeyError:
-        error_msg = "{} 경로 확인 실패".format(setting)
-        raise ImproperlyConfigured(error_msg)    
     
 def lotation_list(request):
     champion_file = 'C:/Users/KYS/Desktop/est/Oreumi.gg/champion.json'
@@ -207,7 +193,10 @@ def lotation_list(request):
         })
     else:
         return render(request, 'oreumi_gg/champions.html',{'error': '페이지를 불러올 수 없습니다.'})
-    
+
+def ingame_info(request):
+    return render(request, 'oreumi_gg/ingame_test.html')
+
 # 더보기 를 위한 함수
 # def summoners_info_api(request, country, summoner_name, start):
 #     temp_matches, temp_total_calculate, temp_match_count = match(country, summoner_name, 0)
