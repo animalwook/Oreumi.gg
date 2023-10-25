@@ -50,7 +50,7 @@
 
 ## **🔗 링크**
 
-**링크:** [https://oreumi.shop](https://oreumi.shop)
+**링크:** [https://oreumi.shop](http://oreumi.shop)
 
 <br />
 
