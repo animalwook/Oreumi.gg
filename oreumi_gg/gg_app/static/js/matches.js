@@ -8,6 +8,13 @@ const summonerName = decodeURIComponent(spliturl[3]);
 
 
 function addmatch(count, queue) {
+    /**
+     * api를 사용해서 추가로 20경기를 불러오는 함수
+     * @param {int} count
+     * @param {int} queue 
+     * @return {dict}
+     * 
+     */
     fetch(`/api/summoners_info/${country}/${summonerName}/${count}/${queue}`)
         .then(response => response.json())
         .then(data => {

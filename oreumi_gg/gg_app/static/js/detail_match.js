@@ -1,15 +1,21 @@
 function display_detailmatch(data, result, gameItem, gameminute) {
+    /**
+     * 
+     * 매치 상세 정보를 보여주는 함수
+     * 일반 매치와 아레나의 숫자가 다르기 때문에 if문으로 조건을 줌
+     * 
+     */
     if (data[8]) {
         let win_or_lose = data[0][0].win;
         let blueteam_win = "";
         let redteam_win = "";
         if (gameminute > 3) {
             if (win_or_lose == true) {
-                blueteam_win = "승리"
-                redteam_win = "패배"
+                blueteam_win = "(승리)"
+                redteam_win = "(패배)"
             } else {
-                blueteam_win = "패배"
-                redteam_win = "승리"
+                blueteam_win = "(패배)"
+                redteam_win = "(승리)"
             }
         }
         
@@ -227,7 +233,7 @@ function display_detailmatch(data, result, gameItem, gameminute) {
                         </colgroup>
                         <thead>
                             <tr>
-                                <th colspan="4"><span class="result">블루팀 (${blueteam_win})</span></th>
+                                <th colspan="4"><span class="result">블루팀 ${blueteam_win}</span></th>
                                 <th>KDA</th>
                                 <th>피해량</th>
                                 <th>와드</th>
@@ -258,7 +264,7 @@ function display_detailmatch(data, result, gameItem, gameminute) {
                         </colgroup>
                         <thead>
                             <tr>
-                                <th colspan="4"><span class="result">레드팀 (${redteam_win})</span></th>
+                                <th colspan="4"><span class="result">레드팀 ${redteam_win}</span></th>
                                 <th>KDA</th>
                                 <th>피해량</th>
                                 <th>와드</th>
@@ -693,6 +699,10 @@ function display_detailmatch(data, result, gameItem, gameminute) {
 }
 
 function delete_detailmatch(gameItem) {
+    /** 
+     * 클래스를 집어넣으면 해당 클래스에서 match_detail을 찾아 지움
+     * 전적 상세 정보를 닫을 때 사용하는 함수
+     */
     let matchDetail = gameItem.querySelector(".match_detail");
     matchDetail.remove();
 }
@@ -701,6 +711,7 @@ function delete_detailmatch(gameItem) {
 const commonParent = document.querySelector('.match_20'); // 공통 상위 요소 선택
 
 commonParent.addEventListener('click', function(event) {
+    // 옆 버튼을 찾아 해당 버튼을 누르면 이벤트 일어나도록 함
     if (event.target.classList.contains('detail')) {
         // "detail" 버튼이 클릭된 경우 처리할 코드
         const button = event.target;
@@ -714,8 +725,6 @@ commonParent.addEventListener('click', function(event) {
             const match = [];
             const matchInfo = JSON.parse(button.getAttribute("data-match-info"));
             const matchResult = button.getAttribute("match-result");
-            console.log("data-match-info:", matchInfo);
-            console.log("match-result:", matchResult);
             for (let i = 1; i <= 10; i++) {
                 match.push(matchInfo[i]);
             }
