@@ -174,7 +174,7 @@ def lotation_list(request):
     with open(champion_json_file, 'r',encoding='utf-8') as json_file:
         parsed_data = json.load(json_file)  # JSON 파일을 파싱해서 파이썬 딕셔너리로 읽음
     print(parsed_data["data"]["Aatrox"]["key"])
-    url = "https://kr.api.riotgames.com/lol/platform/v3/champion-rotations?api_key="+getattr(settings,"LOL_API" ,"LOL_API")
+    url = "https://kr.api.riotgames.com/lol/platform/v3/champion-rotations?api_key="+get_secret("LOL_API")
     response = requests.get(url,headers={'User-Agent': 'Mozilla/5.0'})
     print(response)
     if response.status_code == 200:
