@@ -29,6 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 secret_file = os.path.join(BASE_DIR, "secrets.json")
+champion_file = os.path.join(BASE_DIR, "champion.json")
 # SECRET_KEY = os.path.join(BASE_DIRm, "local_secrets.json")
 
 with open(secret_file) as f:
