@@ -14,6 +14,7 @@ urlpatterns = [
     path('post_edit/<int:post_id>/', views.post_edit, name='post_edit'),     # post_edit 수정 부분
 
     path('post/<int:post_id>/add_comment/', views.add_comment, name='add_comment'),
+    path('posts/<str:order_by>/', views.post_list, name='post_list'),
 
     #챔피언 티어 및 로테이션 정보
     path('champions/', views.champions, name='champions'),

@@ -14,6 +14,13 @@
         <title>Oreumi.gg/community</title>
     </head>
     <body>
-        {% include 'oreumi_gg/header.html' %} {% include 'oreumi_gg/nav.html' %} {% include 'community/post_list.html' %}
+        {% include 'oreumi_gg/header.html' %} {% include 'oreumi_gg/nav.html' %} 
+        <h1>게시물 목록</h1>
+        <p>정렬 :
+            <a href="{% url 'gg_app:post_list' 'author' %}">작성자</a> |
+            <a href="{% url 'gg_app:post_list' 'date' %}">날짜</a> |
+            <a href="{% url 'gg_app:post_list' 'views' %}">조회수</a>
+        </p>
+        {% include 'community/post_list.html' %}
     </body>
 </html>

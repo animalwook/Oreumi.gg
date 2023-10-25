@@ -226,3 +226,16 @@ def add_comment(request, post_id):
             return redirect('gg_app:post_detail', post_id=post_id)
 
     return redirect('gg_app:post_detail', post_id=post_id)  # 실패 시 동일한 페이지로 리디렉션
+
+def post_list(request, order_by):
+    if order_by == 'author':
+        posts = BlogPost.objects.order_by('author')
+    elif order_by == 'date':
+        posts = BlogPost.objects.order_by('-created_at')
+    elif order_by == 'view':
+        posts = BlogPost.objects.order_by('-view')
+    else:
+        posts = BlogPost.objects.all()  # 기본적으로 모든 게시물을 가져옵니다.
+
+    context = {'posts': posts}
+    return render(request, 'community/community.html', context)
