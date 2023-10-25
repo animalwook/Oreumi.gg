@@ -10,17 +10,11 @@
         <link rel="stylesheet" href="{% static 'css/nav.css' %}" />
         <link rel="stylesheet" href="{% static 'css/statistics_champions.css' %}" />
         <link rel="stylesheet" href="{% static 'css/statistics_tier.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/footer.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/footer_gray.css' %}" />
         <link rel="icon" href="{%static 'img\oreumi_gg\favicon.ico'%}" />
         <title>Oreumi.gg/statistic_champions</title>
     </head>
     <body>
-        {% include 'oreumi_gg/header.html' %} {% include 'oreumi_gg/nav.html' %}
-        
-        {% if  %}
-        {% include "" %}
-        {% endif %}
-
-        {% include 'oreumi_gg/footer.html' %}
+        {% include 'oreumi_gg/header.html' %} {% include 'oreumi_gg/nav.html' %} {% if %} {% include "" %} {% endif %} {% include 'oreumi_gg/footer.html' %}
     </body>
 </html>

@@ -2,36 +2,45 @@
 
 <footer>
     <div class="divide_line"></div>
-    <div class="link_container">
-        <a class="main_link" href="{% url 'gg_app:index' %}"><img class="main_logo" src="{% static 'img/oreumi_gg/main_logo.png' %}" alt="logo_button" /></a>
-        <div class="developed_text">Developed by team OREUMI.GG</div>
-    </div>
+    <div class="footer_container">
+        <div class="link_container">
+            {% if request.path != '/' %}
+            <a class="footer_link" href="{% url 'gg_app:index' %}"><img class="footer_logo_gray" src="{% static 'img/oreumi_gg/main_logo_gray.png' %}" alt="logo_button" /></a>
+            {% else %}
+            <a class="footer_link_gray" href="{% url 'gg_app:index' %}"><img class="footer_logo" src="{% static 'img/oreumi_gg/main_logo.png' %}" alt="logo_button" /></a>
+            {% endif %}
+            <div class="developed_text">Developed by team OREUMI.GG</div>
+        </div>
 
-    <div class="developer_container">
-        <ul class="developers_list">
-            <li>구영재</li>
-            <li>강민서</li>
-            <li>김유성</li>
-            <li>김정윤</li>
-            <li>배영덕</li>
-            <li>홍영욱</li>
-            <li>황찬혁</li>
-        </ul>
+        <div class="list_container">
+            <div class="developers_container">
+                <ul class="developers_list">
+                    <li class="list_title">Developers</li>
+                    <li>구영재<img class="github_icon" src="{% static 'img/tech_icons/github.png' %}" /><a class="github_link" href="https://github.com/kooyoungjae">kooyoungjae</a></li>
+                    <li>강민서<img class="github_icon" src="{% static 'img/tech_icons/github.png' %}" /><a class="github_link" href="https://github.com/kangminseo12">kangminseo12</a></li>
+                    <li>김유성<img class="github_icon" src="{% static 'img/tech_icons/github.png' %}" /><a class="github_link" href="https://github.com/jagabiAssessor">jagabiAssessor</a></li>
+                    <li>김정윤<img class="github_icon" src="{% static 'img/tech_icons/github.png' %}" /><a class="github_link" href="https://github.com/wdyneed">wdyneed</a></li>
+                    <li>배영덕<img class="github_icon" src="{% static 'img/tech_icons/github.png' %}" /><a class="github_link" href="https://github.com/deok9614"></a>deok9614</li>
+                    <li>홍영욱<img class="github_icon" src="{% static 'img/tech_icons/github.png' %}" /><a class="github_link" href="https://github.com/animalwook">animalwook</a></li>
+                    <li>황찬혁<img class="github_icon" src="{% static 'img/tech_icons/github.png' %}" /><a class="github_link" href="https://github.com/Hwang-99">Hwang-99</a></li>
+                </ul>
+            </div>
+            <div class="stacks_container">
+                <ul class="stacks_list">
+                    <li class="list_title">Tech Stacks</li>
+                    <li><img class="tech_icon" src="{% static 'img/tech_icons/html5.png' %}" alt="HTML5" />HTML5</li>
+                    <li><img class="tech_icon" src="{% static 'img/tech_icons/css3.png' %}" alt="CSS3" />CSS3</li>
+                    <li><img class="tech_icon" src="{% static 'img/tech_icons/javascript.png' %}" alt="JavaScript" />JavaScript</li>
+                    <li><img class="tech_icon" src="{% static 'img/tech_icons/django.png' %}" alt="Django" />Django</li>
+                    <li><img class="tech_icon" src="{% static 'img/tech_icons/python.png' %}" alt="Python" />Python</li>
+                    <li><img class="tech_icon" src="{% static 'img/tech_icons/postgre_sql.png' %}" alt="PostgreSQL" />PostgreSQL</li>
+                    <li><img class="tech_icon" src="{% static 'img/tech_icons/amazon_aws.png' %}" alt="Amazon AWS" />Amazon AWS</li>
+                    <li><img class="tech_icon" src="{% static 'img/tech_icons/bootstrap.png' %}" alt="Bootstrap" />Bootstrap</li>
+                    <li><img class="tech_icon" src="{% static 'img/tech_icons/selenium.png' %}" alt="Selenium" />Selenium</li>
+                    <li><img class="tech_icon" src="{% static 'img/tech_icons/pandas.png' %}" alt="Pandas" />Pandas</li>
+                    <li><img class="tech_icon" src="{% static 'img/tech_icons/github_actions.png' %}" alt="Github Actions" />GitHub Actions</li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <div class="stacks_container">
-        <ul class="stacks_list">
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>JavaScript</li>
-            <li>Django</li>
-            <li>Python</li>
-            <li>PostgreSQL</li>
-            <li>Amazon AWS</li>
-            <li>Bootstrap</li>
-            <li>Selenium</li>
-            <li>Pandas</li>
-            <li>GitHub Actions</li>
-        </ul>
-    </div>
-    <div class="divide_line"></div>
 </footer>
