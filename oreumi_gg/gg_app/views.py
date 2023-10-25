@@ -168,7 +168,7 @@ def champion_tier_list(request, position, region, tier):
         return render(request, 'oreumi_gg/champions.html', {'error': '페이지를 불러올 수 없습니다.'})
     
 def lotation_list(request):
-    champion_file = 'C:/Users/KYS/Desktop/est/Oreumi.gg/champion.json'
+    champion_file = 'C:/oreumi/!final/action/champion.json'
     with open(champion_file, 'r',encoding='utf-8') as json_file:
         parsed_data = json.load(json_file)  # JSON 파일을 파싱해서 파이썬 딕셔너리로 읽음
     print(parsed_data["data"]["Aatrox"]["key"])
