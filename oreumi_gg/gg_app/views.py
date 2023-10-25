@@ -7,7 +7,6 @@ from django.conf import settings
 
 from .models import BlogPost, Comment
 from .forms import BlogPostForm, CommentForm
-
 from .lol_match import match
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -100,7 +99,7 @@ def summoners_info_form(request):
 
 
 def summoners_info(request, country, summoner_name):
-    matches, total_calculate, search_player_info_dict = match(country, summoner_name, 0)
+    matches, total_calculate, search_player_info_dict = match(country, summoner_name, 0, None)
     context = {
         "matches" : matches, 
         "total_calculate": total_calculate,
@@ -110,8 +109,8 @@ def summoners_info(request, country, summoner_name):
 
 
 
-def summoners_info_api(request, country, summoner_name, count):
-    matches, total_calculate, search_player_info_dict = match(country, summoner_name, count)
+def summoners_info_api(request, country, summoner_name, count, queue):
+    matches, total_calculate, search_player_info_dict = match(country, summoner_name, count, queue)
     response_data = {
         "matches": matches,
         "total_calculate": total_calculate,
@@ -168,28 +167,12 @@ def champion_tier_list(request, position, region, tier):
     else:
         return render(request, 'oreumi_gg/champions.html', {'error': '페이지를 불러올 수 없습니다.'})
     
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-secret_file = os.path.join(BASE_DIR, "secrets.json")
-
-
-# SECRET_KEY = os.path.join(BASE_DIRm, "local_secrets.json")
-
-with open(secret_file) as f:
-    secrets = json.loads(f.read())
-
-def get_secret(setting, secrets=secrets):
-    try:
-        return secrets[setting]
-    except KeyError:
-        error_msg = "{} 경로 확인 실패".format(setting)
-        raise ImproperlyConfigured(error_msg)    
-    
 def lotation_list(request):
     champion_file = 'C:/Users/KYS/Desktop/est/Oreumi.gg/champion.json'
     with open(champion_file, 'r',encoding='utf-8') as json_file:
         parsed_data = json.load(json_file)  # JSON 파일을 파싱해서 파이썬 딕셔너리로 읽음
     print(parsed_data["data"]["Aatrox"]["key"])
-    url = "https://kr.api.riotgames.com/lol/platform/v3/champion-rotations?api_key="+get_secret("LOL_API")
+    url = "https://kr.api.riotgames.com/lol/platform/v3/champion-rotations?api_key="+getattr(settings,"LOL_API" ,"LOL_API")
     response = requests.get(url,headers={'User-Agent': 'Mozilla/5.0'})
     print(response)
     if response.status_code == 200:
@@ -212,17 +195,6 @@ def lotation_list(request):
     else:
         return render(request, 'oreumi_gg/champions.html',{'error': '페이지를 불러올 수 없습니다.'})
     
-# 더보기 를 위한 함수
-# def summoners_info_api(request, country, summoner_name, start):
-#     temp_matches, temp_total_calculate, temp_match_count = match(country, summoner_name, 0)
-#     match_count = temp_match_count
-#     matches, total_calculate, match_count = match(country, summoner_name, match_count)
-#     response_data = {
-#         "matches": matches,
-#         "total_calculate": total_calculate,
-#         "match_count" : match_count
-#     }
-#     return JsonResponse(response_data)
 
 
 def add_comment(request, post_id):
