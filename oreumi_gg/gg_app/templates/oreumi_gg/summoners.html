@@ -15,6 +15,25 @@
         {% include 'oreumi_gg/summoners/summoners_article_1.html' %}
         {% include 'oreumi_gg/summoners/summoners_rank.html' %}
         <div class="section">
+            <div class="game-queue">
+                <ul>
+                    <li class="first-type game-type" selected="SELECTED">
+                        <button value="TOTAL">전체</button>
+                    </li>
+                    <li class="game-type"> 
+                        <button value="SOLORANKED">솔로랭크</button>
+                    </li>
+                    <li class="game-type"> 
+                        <button value="FLEXRANKED">자유랭크</button>
+                    </li>
+                    <li class="game-type"> 
+                        <button value="NORMAL">일반 (비공개 선택)</button>
+                    </li>
+                    <li class="game-type"> 
+                        <button value="ARAM">칼바람 나락</button>
+                    </li>
+                </ul>
+            </div>
             <div class="match_statics">
                 <div id="win_lose">
                     <span id="total_matchcount">20전</span>
