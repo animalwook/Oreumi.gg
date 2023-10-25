@@ -1,0 +1,9 @@
+footer {
+    display: flex;
+    flex-direction: column;
+    min-width: 100%;
+    width: auto;
+    height: 300px;
+    background-color: inherit;
+    margin-top: 800px;
+}
