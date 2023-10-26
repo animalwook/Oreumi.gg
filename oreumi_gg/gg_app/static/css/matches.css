@@ -46,7 +46,8 @@ tr {
     border-color: inherit;
 }
 
-th, td {
+th,
+td {
     padding: 0px;
     margin: 0px;
 }
@@ -87,7 +88,7 @@ a {
     margin-top: 8px;
 }
 
-.game-item{
+.game-item {
     position: relative;
     margin-bottom: 8px;
     list-style: none;
@@ -104,8 +105,8 @@ a {
 }
 
 .game-match[result="defeat"] {
-    border-color: #E84057;
-    background-color: #FFF1F3;
+    border-color: #e84057;
+    background-color: #fff1f3;
 }
 
 .game-match[result="victory"] {
@@ -117,7 +118,6 @@ a {
     border-color: #758592;
     background-color: #f7f7f9;
 }
-
 
 .game-match .content {
     display: flex;
@@ -168,7 +168,7 @@ a {
     display: flex;
 }
 
-.game-match .info > div:nth-of-type(1) .champion{
+.game-match .info > div:nth-of-type(1) .champion {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -185,7 +185,7 @@ a {
     background-color: #b3cdff;
 }
 
-.game-match .info > div:nth-of-type(1) .champion .icon img{
+.game-match .info > div:nth-of-type(1) .champion .icon img {
     display: block;
     border-radius: 50%;
 }
@@ -261,7 +261,7 @@ a {
 }
 
 .game-match .info > div:nth-of-type(1) .kill_death_assist .k-d-a .d {
-    color: #d31a45
+    color: #d31a45;
 }
 
 .game-match .info > div:nth-of-type(1) .kill_death_assist .ratio {
@@ -384,7 +384,7 @@ a {
     background-color: #fff;
     border-radius: 4px;
     display: block;
-    width: 100%;
+    width: calc(100% - 200px);
     height: 40px;
     padding: 8px 0px;
     color: #202d37;
@@ -420,14 +420,13 @@ a {
     background-color: #dbe0e4;
 }
 
-
 .game-match .action .detail img {
     position: absolute;
     bottom: 8px;
     left: 8px;
     width: 24px;
     height: 24px;
-    transform: rotate( 0deg );
+    transform: rotate(0deg);
 }
 
 .match_statics {
@@ -933,7 +932,7 @@ a {
     -webkit-text-decoration: none;
     text-decoration: none;
     background-color: #ecf2ff;
-    color: #4171D6;
+    color: #4171d6;
     box-sizing: border-box;
     height: 28px;
 }
@@ -951,7 +950,7 @@ a {
     font-size: 14px;
     -webkit-text-decoration: none;
     text-decoration: none;
-    background: #FFF;
+    background: #fff;
     background-color: #fff;
     color: #202d37;
     box-sizing: border-box;
