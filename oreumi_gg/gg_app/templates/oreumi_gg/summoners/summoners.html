@@ -9,17 +9,18 @@
         <link rel="stylesheet" href="{% static 'css/nav.css' %}">
         <link rel="stylesheet" href="{% static 'css/footer_gray.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static "css/reset.css" %}?{% now 'U' %}">
-        <link rel="stylesheet" type="text/css" href="{% static "css/matches.css" %}?{% now 'U' %}">
         <link rel="stylesheet" href="{% static 'css/summoners.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static "css/matches.css" %}?{% now 'U' %}">
         <link rel="icon" href="{%static 'img\oreumi_gg\favicon.ico'%}">
         <title>소환사 정보</title>
     </head>
     <body>
         {% include 'oreumi_gg/header.html' %}
         {% include 'oreumi_gg/nav.html' %}
+        
+        <section class="summoner_section" style="margin-top: 150px;">
         {% include 'oreumi_gg/summoners/summoners_article_1.html' %}
         {% include 'oreumi_gg/summoners/summoners_rank.html' %}
-        <div class="section">
             <div class="game-queue">
                 <ul>
                     <li class="first-type game-type" selected="SELECTED">
@@ -213,7 +214,7 @@
             <div id="addmatch">
             </div>
             <button id="addmatch_btn">더보기</button>
-        </div>
+        </section>
         {% include 'oreumi_gg/footer.html' %}
     </body>
     <script src="{% static "js/matches.js" %}"></script>
