@@ -15,7 +15,7 @@ footer {
 }
 
 .developed_text {
-    color: #fff;
+    color: #0c0c0c;
 }
 
 /* 리스트 */
@@ -55,17 +55,17 @@ footer {
 } */
 
 footer ul li {
-    color: #fff;
+    color: #434343;
     line-height: 1.5;
 }
 
 footer ul li a {
-    color: #fff;
+    color: #434343;
 }
 
 footer ul li a:hover {
     text-decoration: underline;
-    color: #fff;
+    color: #434343;
 }
 
 .list_title {
@@ -89,7 +89,7 @@ footer ul li a:hover {
 /* 경계선 */
 
 .divide_line {
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid #9aa4af;
     margin: 14px 27px 14px 27px;
 }
 

@@ -6,7 +6,21 @@ app_name = 'gg_app'
  
 urlpatterns = [
     path('', views.index, name='index'),
-    
+    path('modes/', views.modes, name='modes'),
+
+
+    # 통계
+    path('statistics_champions/', views.statistics_champions, name='statistics_champions'),
+    path('statistics_tier/', views.statistics_tier, name='statistics_tier'),
+
+    # 랭킹
+    path('leaderboards/', views.leaderboards, name='leaderboards'),
+    path('type_champions/', views.type_champions, name='type_champions'),
+    path('type_ladder_flex/', views.type_ladder_flex, name='type_ladder_flex'),
+    path('type_ladder/', views.type_ladder, name='type_ladder'),
+    path('type_level/', views.type_level, name='type_level'),
+
+    #커뮤니티, 글 작성
     path('community/', views.community, name='community'),
     path('post/', views.post, name='post'),
     path('write/', views.post_write, name='post_write'), 
