@@ -7,7 +7,7 @@ const summonerName = decodeURIComponent(spliturl[3]);
 
 
 
-function addmatch(count, queue) {
+function addmatch(count, queue, callback) {
     /**
      * api를 사용해서 추가로 20경기를 불러오는 함수
      * @param {int} count
@@ -21,6 +21,7 @@ function addmatch(count, queue) {
             // 데이터 사용
             console.log(data);
             display(data);
+            callback();
         })
         .catch(error => {
             console.log(error);
@@ -113,7 +114,7 @@ function display(data) {
                         bluechampHTML += `
                         <li class="team" style="list-style-type: none;">
                             <div class="team_icon" style="position: relative">
-                                <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/${item.championname}.png" width="16" height="16">
+                                <img src="/static/img/champion_square/${item.championname}.png" width="16" height="16">
                             </div>
                             <div class="name">
                                 <a href="/summoners/kr/${item.summonername}" rel="noreferrer">
@@ -128,7 +129,7 @@ function display(data) {
                             redchampHTML += `
                             <li class="team" style="list-style-type: none;">
                                 <div class="team_icon" style="position: relative">
-                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/${item.championname}.png" width="16" height="16">
+                                    <img src="/static/img/champion_square/${item.championname}.png" width="16" height="16">
                                 </div>
                                 <div class="name">
                                     <a href="/summoners/kr/${item.summonername}" rel="noreferrer">
@@ -161,7 +162,7 @@ function display(data) {
                             <div class="champion">
                                 <div class="icon">
                                     <a href="" rel="noreferrer">
-                                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/${match.search_player_champ}.png" width="48" height="48">
+                                        <img src="/static/img/champion_square/${match.search_player_champ}.png" width="48" height="48">
                                         <span class="champion-level">${match.search_player_champlevel}</span>
                                     </a>
                                 </div>
@@ -237,7 +238,7 @@ function display(data) {
   });
     
     matchDataContainer.insertAdjacentHTML('beforeend', html);
-    total_matchcount.textContent = `${count}전`
+    total_matchcount.textContent = `${document.querySelectorAll('.game-item').length}전`
     let winCount = parseInt(total_wincount.textContent) + data.total_calculate.win_count;
     let loseCount = parseInt(total_losecount.textContent) + data.total_calculate.lose_count;
     let winRate = (winCount / (winCount + loseCount)).toFixed(2) * 100;
@@ -255,24 +256,37 @@ function display(data) {
     total_kda.textContent = (kda / 2).toFixed(2) + ":1";
     total_killpart.textContent = "킬관여 " + (killPart / 2).toFixed(0) + "%";
 }
-let count = 20;
-const fetchButton = document.getElementById('addmatch_btn');
 
+const fetchButton = document.getElementById('addmatch_btn');
+let count = 20;
 fetchButton.addEventListener('click', function() {
-    const selectedGameType = document.querySelector('.game-type');
+    fetchButton.textContent = "";
+    fetchButton.insertAdjacentHTML("beforeend", `<img src="/static/img/oreumi_gg/loading.gif" width="22" height="22">`);
+    const selectedGameType = document.querySelector('.selected');
     let button;
-    if (document.querySelector(".selected")) {
-        button = selectedGameType.querySelector('button');
-    }
-    const buttonValue = button.value;
     let buttonIntValue;
+    button = selectedGameType.querySelector('button');
+    const buttonValue = button.value;
     if (buttonValue == "TOTAL") {
         buttonIntValue = 9999;
     }
-    else {
+    else if (buttonValue =="SOLORANKED") {
         buttonIntValue = 420;
     }
+    else if (buttonValue =="FLEXRANKED") {
+        buttonIntValue = 440;
+    }
+    else if (buttonValue =="NORMAL") {
+        buttonIntValue = 430;
+    }
+    else if (buttonValue =="ARAM") {
+        buttonIntValue = 450;
+    }
+
     queue = buttonIntValue
-    addmatch(count, queue)
+    addmatch(count, queue, function() {
+        fetchButton.textContent = "더보기";
+    });
+    
     count += 20;
 });
