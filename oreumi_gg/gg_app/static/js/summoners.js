@@ -7,3 +7,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const marginHeight = articleHeight - 300;
     node2.style.marginBottom = marginHeight + "px";
 });
+
+var favoriteButton = document.getElementById("favorite-button");
+var image = document.querySelector(".favorite-icon-image");
+
+favoriteButton.addEventListener("click", function () {
+    if (image.getAttribute("alt") === "off") {
+        image.setAttribute("src", "/static/img/favorite_icon_true.png");
+        image.setAttribute("alt", "on");
+    } else {
+        image.setAttribute("src", "/static/img/favorite_icon_false.png");
+        image.setAttribute("alt", "off");
+    }
+});

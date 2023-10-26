@@ -1,3 +1,5 @@
+{% load static %}
+
 <div id="content-header" class="node1">
     <div class="user-info">
         <div class="wrapper" style="z-index: 10000000">
@@ -20,13 +22,15 @@
                                 <li>
                                     <div class="" style="position: relative"><b>S2021</b> silver 1</div>
                                 </li>
+                                <li><button class="more-tier">More Season Tier</button></li>
                             </ul>
-                            <button class="more-tier">More Season Tier</button>
                         </div>
                     </div>
-                    <div class="name">
+                    <div class="summoner-name-container">
                         <h1 class="summoner-name">{{search_player_info_dict.search_player_name}}</h1>
-                        <button class="favorite-icon"><img src="https://s-lol-web.op.gg/images/icon/icon-bookmark.svg?v=1697786050877" alt="off" /></button>
+                        <button class="favorite-icon" id="favorite-button">
+                            <img class="favorite-icon-image" src="/static/img/favorite_icon_false.png" alt="off" />
+                        </button>
                     </div>
                     <div class="team-and-rank">
                         <div class="rank">

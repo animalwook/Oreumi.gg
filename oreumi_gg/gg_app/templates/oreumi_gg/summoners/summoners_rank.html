@@ -1,7 +1,8 @@
 <div class="node2">
     {% if search_player_info_dict.search_player_solo_rank == None %}
     <div class="solo-rank">
-        <div class="header">솔로랭크 <span class="unranked">Unranked</span></div>
+        <div class="header">솔로랭크</div>
+        <div class="unranked">Unranked</div>
     </div>
     {% else %}
     <div class="solo-rank">
@@ -39,14 +40,15 @@
     </div>
     {% endif %} {% if search_player_info_dict.search_player_flex_rank == None %}
     <div class="flex-rank">
-        <div class="header">자유랭크<span class="unranked">Unranked</span></div>
+        <div class="header">자유랭크</div>
+        <div class="unranked">Unranked</div>
     </div>
     {% else %}
     <div class="flex-rank">
         <div class="header">자유랭크</div>
         <div class="content">
             <div style="position: relative" class="">
-                src="https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/{{search_player_info_dict.search_player_flex_tear|lower}}.png" width="72" alt="">
+                <src="https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/{{search_player_info_dict.search_player_flex_tear|lower}}.png" width="72" alt="">
             </div>
             <div class="info">
                 <div class="tier">{{search_player_info_dict.search_player_flex_rank}} {{search_player_info_dict.search_player_flex_rank}}</div>
