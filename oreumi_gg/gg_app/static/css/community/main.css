@@ -8,7 +8,7 @@
 */
 
 html, body, div, span, applet, object,
-iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
+iframe, f1, f2, f3, f4, f5, f6, p, blockquote,
 pre, a, abbr, acronym, address, big, cite,
 code, del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var, b,
@@ -117,13 +117,13 @@ input, select, textarea {
 		color: #232323;
 	}
 
-	h2, h3, h4, h5, h6 {
+	f2, f3, f4, f5, f6 {
 		font-family: 'Open Sans Condensed', sans-serif;
 		font-weight: 700;
 		color: #232323;
 	}
 
-	h2 a, h4 a, h5 a, h6 a {
+	f2 a, f4 a, f5 a, f6 a {
 		text-decoration: none;
 		color: inherit;
 	}
@@ -1779,7 +1779,7 @@ input, select, textarea {
 	button,
 	.button {
 		cursor: pointer;
-		background-color: #c94663;
+		background-color: #5383e8;
 		background-image: url("images/bg01.png");
 		border-radius: 0.4em;
 		text-align: center;
@@ -1813,7 +1813,7 @@ input, select, textarea {
 		input[type="reset"]:hover,
 		button:hover,
 		.button:hover {
-			background-color: #d95673;
+			background-color: #87a6e8;
 		}
 
 		input[type="button"]:active,
@@ -1821,7 +1821,7 @@ input, select, textarea {
 		input[type="reset"]:active,
 		button:active,
 		.button:active {
-			background-color: #b93653;
+			background-color: #2951a9;
 		}
 
 		input[type="button"].alt,
@@ -1980,7 +1980,7 @@ input, select, textarea {
 		}
 
 	.box.calendar td.today a {
-		background-color: #c94663;
+		background-color: #5383e8;
 		background-image: url("images/bg01.png");
 		box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.15), 0 0.025em 0.15em 0em rgba(0, 0, 0, 0.25);
 		color: #fff !important;
@@ -2135,7 +2135,9 @@ input, select, textarea {
 		}
 
 /* Nav */
-
+	#nav {
+		top:46px
+	}
 	#nav > ul > li > ul {
 		display: none;
 	}
@@ -2201,12 +2203,63 @@ input, select, textarea {
 		height: 44px;
 		left: 0;
 		position: fixed;
+		top: 46px;
+		width: 50px;
+		z-index: 20001;
+	}
+/* ------------커뮤니티 헤더--------- */
+	.communtityTitle{
+		-moz-backface-visibility: hidden;
+		-webkit-backface-visibility: hidden;
+		-ms-backface-visibility: hidden;
+		backface-visibility: hidden;
+		-moz-transition: -moz-transform 0.5s ease;
+		-webkit-transition: -webkit-transform 0.5s ease;
+		-ms-transition: -ms-transform 0.5s ease;
+		transition: transform 0.5s ease;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0 100px 0 0;
+		height: 44px;
+		left: 0;
+		position: fixed;
 		top: 0;
 		width: 100%;
-		z-index: 10001;
-		background: #364050 url("images/bg01.png");
+		z-index: 10005;
+		background-color: #28344e;
 	}
 
+	.main_link {
+		display: flex;
+		width: 250px;
+		height: 100%;
+		align-items: center;
+		justify-content: center;
+		color: #fff;
+		background-color: #5383e8;
+	}
+	
+	.main_link img {
+		display: block;
+		margin: 0 auto;
+		width: 200px;
+		height: 25px;
+	}
+	.auth_link {
+    width: 100px;
+    height: 40px;
+    background-color: #5383e8;
+    border-radius: 5px;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    line-height: 40px;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+/* -------------------------------- */
 		#titleBar .title {
 			display: block;
 			color: #fff;
@@ -2232,6 +2285,8 @@ input, select, textarea {
 			position: absolute;
 			top: 0;
 			left: 0;
+			z-index: 20000;
+
 		}
 
 			#titleBar .toggle:before {
@@ -2257,7 +2312,7 @@ input, select, textarea {
 				width: 50px;
 				height: 30px;
 				line-height: 30px;
-				background: #c94663 url("images/bg01.png");
+				background: #5383e8 url("images/bg01.png");
 				border-radius: 5px;
 				color: #fff;
 				text-align: center;
@@ -2267,7 +2322,7 @@ input, select, textarea {
 			}
 
 			#titleBar .toggle:active:before {
-				background-color: #d95673;
+				background-color: #5383e8;
 			}
 
 	#sidebar {
@@ -2322,7 +2377,7 @@ input, select, textarea {
 			color: #d4dde0;
 		}
 
-		#sidebar h2, #sidebar h3, #sidebar h4, #sidebar h5, #sidebar h6 {
+		#sidebar f2, #sidebar f3, #sidebar f4, #sidebar f5, #sidebar f6 {
 			color: #fff;
 		}
 
@@ -2396,11 +2451,11 @@ input, select, textarea {
 				line-height: 1.75em;
 			}
 
-			h2 {
+			f2 {
 				font-size: 1.2em;
 			}
 
-			h3, h4, h5, h6 {
+			f3, f4, f5, f6 {
 				font-size: 1em;
 			}
 
@@ -2505,7 +2560,7 @@ input, select, textarea {
 
 				#logo a {
 					display: block;
-					background-color: #c94663;
+					background-color: #5383e8;
 					background-image: url("images/bg01.png");
 					padding: 0.875em 0.25em;
 					border-radius: 0.2em;
@@ -2569,7 +2624,7 @@ input, select, textarea {
 
 		/* Box */
 
-			.box.post h2 {
+			.box.post f2 {
 				font-size: 3.25em;
 				line-height: 1.25em;
 			}
@@ -2681,7 +2736,7 @@ input, select, textarea {
 
 		/* Box */
 
-			.box.post h2 {
+			.box.post f2 {
 				font-size: 3.25em;
 				line-height: 1.25em;
 			}
@@ -2798,7 +2853,7 @@ input, select, textarea {
 				letter-spacing: 0;
 			}
 
-			h2, h3, h4, h5, h6 {
+			f2, f3, f4, f5, f6 {
 				font-size: 1.5em;
 			}
 
@@ -3010,11 +3065,6 @@ input, select, textarea {
 
 	}
 
-	#xxx .xxx{
-		width: 80px;
-		height: 60px;
-		position: absolute;
-		top: 0;
-		left: 0;
-		display: block;
-	}
+#xxx{
+	display: block;
+}
