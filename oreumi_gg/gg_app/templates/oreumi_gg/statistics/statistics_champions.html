@@ -2,19 +2,247 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/header.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/nav.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/statistics_champions.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/statistics_tier.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/footer_gray.css' %}" />
-        <link rel="icon" href="{%static 'img\oreumi_gg\favicon.ico'%}" />
-        <title>Oreumi.gg/statistic_champions</title>
-    </head>
-    <body>
-        {% include 'oreumi_gg/header.html' %} {% include 'oreumi_gg/nav.html' %} {% if %} {% include "" %} {% endif %} {% include 'oreumi_gg/footer.html' %}
-    </body>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/header.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/statistics_champions.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/statistics_tier.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/footer_gray.css' %}" />
+    <link rel="icon" href="{%static 'img\oreumi_gg\favicon.ico'%}" />
+    <title>Oreumi.gg/statistic_champions</title>
+</head>
+
+<body>
+    {% include 'oreumi_gg/header.html' %}
+    {% include 'oreumi_gg/nav.html' %}
+    <section>
+        {% comment %} 분류 체크 {% endcomment %}
+        <div class="">
+            <div>챔피언별 통계를 볼 수 있습니다.</div>
+            <table>
+                <colgroup>
+                    <col width="118">
+                    <col wrdth="*">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th scope="row">큐 타입</th>
+                        <td>
+                            <div class="">
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">솔로랭크</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">자유랭크</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">칼바람</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">우르프</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">티어</th>
+                        <td>
+                            <div class="">
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">전체</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">Iron</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">Bronze</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">Silver</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">Gold</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">Platinum</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">Emerald</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">Diamond</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">Master</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">Grandmaster</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">Chellenger</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">지역</th>
+                        <td>
+                            <div class="">
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">Global</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">NA</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">EUW</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">EUNE</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">OCE</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">KR</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">JP</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">BR</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">LAS</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">LAN</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">RU</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">TR</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">SG</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">PH</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">TW</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">VN</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">TH</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">기간</th>
+                        <td>
+                            <div class="">
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">최근 1달</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">최근 7일</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">오늘</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">포지션</th>
+                        <td>
+                            <div class="">
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">전체</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">탑</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">정글</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">미드</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">바텀</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mode" value="ranked" checked>
+                                    <span class="text">서포터</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+        {% comment %} 챔피언별 게임 통계 {% endcomment %}
+        <div class="">
+            <table>
+
+            </table>
+        </div>
+    </section>
+
+
+
+
+    {% include 'oreumi_gg/footer.html' %}
+</body>
+
 </html>
