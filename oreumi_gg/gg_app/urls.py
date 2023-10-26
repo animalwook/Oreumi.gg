@@ -30,6 +30,10 @@ urlpatterns = [
     path('post/<int:post_id>/add_comment/', views.add_comment, name='add_comment'),
     path('posts/<str:order_by>/', views.post_list, name='post_list'),
 
+    path('post/<int:post_id>/like/', views.post_like, name='post_like'),            #추천 비추천
+    path('post/<int:post_id>/dislike/', views.post_dislike, name='post_dislike'),
+
+    
     #챔피언 티어 및 로테이션 정보
     path('champions/', views.champions, name='champions'),
     path('champions/champions_tier/<str:position>/<str:region>/<str:tier>', views.champion_tier_list, name='champion_tier'),

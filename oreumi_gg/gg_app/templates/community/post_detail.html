@@ -4,31 +4,39 @@
 <p>게시일: {{ post.created_at }}</p>
 <div class="ck ck-content">{{ post.content | safe }}</div>
 <a href="{% url 'gg_app:post' %}">뒤로 가기</a>
-{% comment %}  <a href="{% url 'gg_app:post_edit' post.id %}">수정</a> {% endcomment %}
+{% comment %} <a href="{% url 'gg_app:post_edit' post.id %}">수정</a> {% endcomment %}
+
+
+<!-- 추천 버튼 -->
+<a href="{% url 'gg_app:post_like' post.id %}">추천</a> <!-- 추천화살표 추가? -->
+{{ post.up }}
+
+<!-- 비 추천 버튼 -->
+<a href="{% url 'gg_app:post_dislike' post.id %}">비추천</a>
+{{ post.down }}
 
 
 <div class="comments">
-    <h3>댓글</h3>
-    <ul>
-      {% for comment in comments %}
-        <li>
-          <p class="author">{{ comment.author }}:</p>
-          <p class="text">{{ comment.text }}</p>
-        </li>
-      {% empty %}
-        <li>댓글이 없습니다.</li>
-      {% endfor %}
-    </ul>
-  </div>
-  {% if user.is_authenticated %}
-  <form method="post" action="{% url 'gg_app:add_comment' post_id=post.id %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class='comment-button' type="submit">댓글 작성</button>
-  </form>
-  {% else %}
-    <p>댓글을 작성하려면 로그인이 필요합니다.</p>
-  {% endif %} 
+  <h3>댓글</h3>
+  <ul>
+    {% for comment in comments %}
+    <li>
+      <p class="author">{{ comment.author }}: <span class="text">{{ comment.text }}</span></p>
+    </li>
+    {% empty %}
+    <li>댓글이 없습니다.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% if user.is_authenticated %}
+<form method="post" action="{% url 'gg_app:add_comment' post_id=post.id %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class='comment-button' type="submit">댓글 작성</button>
+</form>
+{% else %}
+<p>댓글을 작성하려면 로그인이 필요합니다.</p>
+{% endif %}
 
 
 {% endblock %}

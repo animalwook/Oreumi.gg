@@ -247,6 +247,7 @@ def add_comment(request, post_id):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = post
+            comment.author = request.user.nickname      # 댓글작성자: 닉네임으로 표시하기
             comment.save()
             return redirect('gg_app:post_detail', post_id=post_id)
 
@@ -264,3 +265,20 @@ def post_list(request, order_by):
 
     context = {'posts': posts}
     return render(request, 'community/community.html', context)
+
+
+
+# 추천, 비추천 기능
+@login_required
+def post_like(request, post_id):
+    post = BlogPost.objects.get(pk=post_id)
+    post.up += 1
+    post.save()
+    return redirect('gg_app:post_detail', post_id=post_id)
+
+@login_required
+def post_dislike(request, post_id):
+    post = BlogPost.objects.get(pk=post_id)
+    post.down += 1
+    post.save()
+    return redirect('gg_app:post_detail', post_id=post_id)
