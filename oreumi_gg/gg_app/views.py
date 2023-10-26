@@ -131,7 +131,7 @@ def summoners_info(request, country, summoner_name):
         "total_calculate": total_calculate,
         "search_player_info_dict" : search_player_info_dict
     }
-    return render(request, "oreumi_gg/summoners.html", context)
+    return render(request, "oreumi_gg/summoners/summoners.html", context)
 
 
 
