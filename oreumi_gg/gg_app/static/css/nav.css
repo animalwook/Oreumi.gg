@@ -53,11 +53,11 @@ nav ul li a {
     background-color: #2f5ec0;
 }
 
-.nav_lists li a:hover {
+nav ul li a:hover {
     color: #fff;
 }
 
-.nav_lists li a::after {
+nav ul li a::after {
     content: "";
     position: absolute;
     width: 100%;
@@ -68,7 +68,7 @@ nav ul li a {
     transform-origin: center;
 }
 
-.nav_lists li a:hover::after {
+nav ul li a:hover::after {
     transform: scaleX(1);
     background-color: #fff;
     height: 3px;
