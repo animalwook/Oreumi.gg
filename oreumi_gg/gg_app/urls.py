@@ -5,6 +5,7 @@ from django.contrib.auth import views as auth_views
 app_name = 'gg_app' 
  
 urlpatterns = [
+    path('1',views.com, name='com'),
     path('', views.index, name='index'),
     
     path('community/', views.community, name='community'),

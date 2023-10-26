@@ -15,6 +15,10 @@ import json
 from oreumi_gg.settings import get_secret, champion_file
 # Create your views here.
 
+def com(request):
+    return render(request, "community/index_community.html")
+
+
 def index(request):
     return render(request, "oreumi_gg/index.html")
   
