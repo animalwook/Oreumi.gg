@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>delete</title>
+</head>
+
+<body>
+    <h1>게시물 삭제</h1>
+    <p>다음 게시물을 정말로 삭제하시겠습니까?</p>
+
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+
+    <form method="post" action="{% url 'gg_app:post_delete' post_id %}">
+        {% csrf_token %}
+        <button type="submit">삭제</button>
+    </form>
+</body>
+
+</html>

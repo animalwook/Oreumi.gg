@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>전체 게시판 - 리그오브레전드</title>
+    <title>OREUMI.GG - 커뮤니티</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 
@@ -24,11 +24,12 @@
             <div class="board_list_wrap">
                 {% for post in posts %} <!-- views 에서 넘겨 받은 변수 -->
                 <ul>
-                    <span>{{post.up}}</span>
+                    <span>{{post.net_count}}</span> <!-- 추천과 비추천 합산 -->
                     <span><a href="{% url 'gg_app:post_detail' post.id %}">{{post.title}}</a></span>
                     <!-- 임시 버튼 누르면 상세 페이지(post_content.html) 이동하기, 상세페이지 안에서 up, down 기능 -->
                     <span>{{post.author}}</span>
                     <span>{{post.updated_at}}</span>
+                    <span>{{post.view}}</span>
                 </ul>
                 {% endfor %}
             </div>
