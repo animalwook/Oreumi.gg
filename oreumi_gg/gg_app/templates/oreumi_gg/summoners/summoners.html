@@ -42,7 +42,7 @@
             </div>
             <div class="match_statics">
                 <div id="win_lose">
-                    <span id="total_matchcount">20전</span>
+                    <span id="total_matchcount">{{ total_calculate.total_match_count }}전</span>
                     <span id="total_wincount">{{ total_calculate.win_count }}승</span>
                     <span id="total_losecount">{{ total_calculate.lose_count }}패</span>
                     <div id="kda">
@@ -87,7 +87,9 @@
                                             <div class="champion">
                                                 <div class="icon">
                                                     <a href="" rel="noreferrer">
-                                                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{ match.search_player_champ }}.png" width="48" height="48">
+                                                        {% with champ_image="img/champion_square/"|add:match.search_player_champ|add:".png" %}
+                                                            <img src="{% static champ_image %}" width="48" height="48">
+                                                        {% endwith %}
                                                         <span class="champion-level">{{ match.search_player_champlevel }}</span>
                                                     </a>  
                                                 </div>
@@ -176,7 +178,9 @@
                                                 {% if forloop.counter <= 5 %}
                                                     <li class="team" style="list-style-type: none;">
                                                         <div class="team_icon" style="position: relative;">
-                                                            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{ value.0.championname }}.png" width="16" height="16">
+                                                            {% with champ_image="img/champion_square/"|add:value.0.championname|add:".png" %}
+                                                                <img src="{% static champ_image %}" width="16" height="16">
+                                                            {% endwith %}
                                                         </div>
                                                         <div class="name">
                                                             <a href="/summoners/kr/{{ value.0.summonername }}" rel="noreferrer">
@@ -193,7 +197,9 @@
                                                     {% if value.0.championname %}
                                                         <li class="team" style="list-style-type: none;">
                                                             <div class="team_icon" style="position: relative;">
-                                                                <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{ value.0.championname }}.png" width="16" height="16">
+                                                                {% with champ_image="img/champion_square/"|add:value.0.championname|add:".png" %}
+                                                                    <img src="{% static champ_image %}" width="16" height="16">
+                                                                {% endwith %}
                                                             </div>
                                                             <div class="name">
                                                                 <a href="/summoners/kr/{{ value.0.summonername }}" rel="noreferrer">
