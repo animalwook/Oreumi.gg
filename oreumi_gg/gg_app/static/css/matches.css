@@ -70,7 +70,7 @@ a {
     color: #202d37;
 }
 
-.section {
+section {
     display: inline-block;
     font-size: 12px;
     width: 740px;
@@ -1121,4 +1121,18 @@ a {
 .overview-arena-other.overview-arena--result-4 thead th b {
     color: #d31a45;
     font-weight: bold;
+}
+
+section .no-data {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    padding: 96px 0 40px;
+    text-align: center;
+    background-image: url(https://s-lol-web.op.gg/images/icon/icon-nodata.svg);
+    -webkit-background-position: 50% 40px;
+    background-position: 50% 40px;
+    background-repeat: no-repeat;
+    background-color: #fff;
+    font-size: 14px;
+    color: #9aa4af;
 }

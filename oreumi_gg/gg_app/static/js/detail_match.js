@@ -738,9 +738,10 @@ const commonParent = document.querySelector('.match_20'); // 공통 상위 요�
 
 commonParent.addEventListener('click', function(event) {
     // 옆 버튼을 찾아 해당 버튼을 누르면 이벤트 일어나도록 함
-    if (event.target.classList.contains('detail')) {
+    if (event.target.closest('.action')) {
         // "detail" 버튼이 클릭된 경우 처리할 코드
-        const button = event.target;
+        const actiondiv = event.target.closest('.action');
+        const button = actiondiv.querySelector('.detail');
         let gameItem = button.closest(".game-item");
         let buttonstatus = button.getAttribute("status");
         let gameDuration = gameItem.querySelector(".length");
