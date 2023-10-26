@@ -40,8 +40,9 @@
                     </li>
                 </ul>
             </div>
-            <div class="match_statics">
-                <div id="win_lose">
+            <article class="match_container">
+                <div class="match_statics">
+                    <div id="win_lose">
                     <span id="total_matchcount">20전</span>
                     <span id="total_wincount">{{ total_calculate.win_count }}승</span>
                     <span id="total_losecount">{{ total_calculate.lose_count }}패</span>
@@ -67,8 +68,8 @@
                 </div>
                 <div class="champions"></div>
                 <div class="positions"></div>
-            </div>
-            <div class="match_20">
+                </div>
+                <div class="match_20">
                 {% for match in matches %}
                     <li class="game-item">
                         <div result="{{ match.win_or_not_eng }}" class="game-match result">
@@ -222,15 +223,16 @@
                         </div>
                     </li>
                 {% endfor %}
-            </div>
-            <div id="addmatch">
+                </div>
+                <div id="addmatch">
             </div>
             <button id="addmatch_btn">더보기</button>
+        </article>
         </section>
         {% include 'oreumi_gg/footer.html' %}
     </body>
     <script src="{% static "js/matches.js" %}"></script>
     <script src="{% static "js/detail_match.js" %}"></script>
     <script src="{% static "js/tap_match.js" %}"></script>
-    
+    <script src="{% static "js/summoners.js" %}"></script>  
 </html>

@@ -5,11 +5,26 @@
 .node2 {
     float: left;
     width: 200px;
+    height: 300px;
     border: 2px solid grey;
-    background-color: orange;
+    position: relative; /* 내부 내용을 정확한 위치에 표시하기 위해 필요 */
 }
+
+/* .node2 .css-1ialdhq,
+.node2 .css-1kw4425 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto; 
+    max-height: 100%;
+} */
 .node3 {
     float: left;
     width: calc(100% - 220px);
     border: 2px solid grey;
+}
+
+#addmatch_btn {
 }
