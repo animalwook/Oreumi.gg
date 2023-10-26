@@ -2,25 +2,28 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/header.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/nav.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/community.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/footer.css' %}" />
-        <link rel="icon" href="{%static 'img\oreumi_gg\favicon.ico'%}" />
-        <title>Oreumi.gg/community</title>
-    </head>
-    <body>
-        {% include 'oreumi_gg/header.html' %} {% include 'oreumi_gg/nav.html' %} 
-        <h1>게시물 목록</h1>
-        <p>정렬 :
-            <a href="{% url 'gg_app:post_list' 'author' %}">작성자</a> |
-            <a href="{% url 'gg_app:post_list' 'date' %}">날짜</a> |
-            <a href="{% url 'gg_app:post_list' 'views' %}">조회수</a>
-        </p>
-        {% include 'community/post_list.html' %}
-    </body>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/header.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/community.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}" />
+    <link rel="icon" href="{%static 'img\oreumi_gg\favicon.ico'%}" />
+    <title>OREUMI.GG - 커뮤니티</title>
+</head>
+
+<body>
+    {% include 'oreumi_gg/header.html' %} {% include 'oreumi_gg/nav.html' %}
+    <h1>게시물 목록</h1>
+    <p>정렬 :
+        <a href="{% url 'gg_app:post_list' 'author' %}">작성자</a> |
+        <a href="{% url 'gg_app:post_list' 'date' %}">날짜</a> |
+        <a href="{% url 'gg_app:post_list' 'views' %}">조회수</a>
+    </p>
+    {% include 'community/post_list.html' %}
+</body>
+
 </html>

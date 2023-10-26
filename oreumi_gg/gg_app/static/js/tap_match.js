@@ -1,13 +1,7 @@
+const totalmatch = document.querySelector(".match_statics");
+const match_20_info = document.querySelector(".match_20");
 
-const currentURL = window.location.href;
-const url = new URL(currentURL);
-const spliturl = url.pathname.split('/');
-const country = spliturl[2];
-const summonerName = decodeURIComponent(spliturl[3]);
-
-
-
-function addmatch(count, queue, callback) {
+function changematch(queue) {
     /**
      * api를 사용해서 추가로 20경기를 불러오는 함수
      * @param {int} count
@@ -15,13 +9,12 @@ function addmatch(count, queue, callback) {
      * @return {dict}
      * 
      */
-    fetch(`/api/summoners_info/${country}/${summonerName}/${count}/${queue}`)
+    fetch(`/api/summoners_info/${country}/${summonerName}/${0}/${queue}`)
         .then(response => response.json())
         .then(data => {
             // 데이터 사용
             console.log(data);
-            display(data);
-            callback();
+            changematch_display(data);
         })
         .catch(error => {
             console.log(error);
@@ -31,20 +24,44 @@ function addmatch(count, queue, callback) {
         });
 }
 
-function display(data) {
-    const matchDataContainer = document.querySelector(".match_20");
-    const total_matchcount = document.getElementById("total_matchcount");
-    const total_wincount = document.getElementById("total_wincount");
-    const total_losecount = document.getElementById("total_losecount");
-    const total_winrate = document.getElementById("total_winrate")
-    const total_kill = document.getElementById("total_kill")
-    const total_death = document.getElementById("total_death")
-    const total_assist = document.getElementById("total_assist")
-    const total_kda = document.getElementById("total_kda")
-    const total_killpart = document.getElementById("total_killpart")
+function changematch_display(data) {
+    
+    let totalHTML = '';
+    let matchHTML = '';
     const matches = data.matches;
+   
+    totalHTML += `
+        <div id="win_lose">
+            <span id="total_matchcount">${data.total_calculate.total_match_count}전</span>
+            <span id="total_wincount">${data.total_calculate.win_count}승</span>
+            <span id="total_losecount">${data.total_calculate.lose_count}패</span>
+            <div id="kda">
+                <div class="chart">
+                    <span>승률</span>
+                    <div class="text">
+                        <strong id="total_winrate">${data.total_calculate.win_rate}%</strong>
+                    </div>
+                </div>
+                <div class="info">
+                    <div class="k-d-a">
+                        <span id="total_kill">${data.total_calculate.total_kill}</span>
+                        <span> / </span>
+                        <span id="total_death">${data.total_calculate.total_death}</span>
+                        <span> / </span>
+                        <span id="total_assist">${data.total_calculate.total_assist}</span>
+                    </div>
+                    <div id="total_kda">${data.total_calculate.total_kda}:1</div>
+                    <div id="total_killpart">킬관여 ${data.total_calculate.total_kill_part}%</div>
+                </div>
+            </div>
+        </div>
+        <div class="champions"></div>
+        <div class="positions"></div>
+    `;
 
-    let html = '';
+    totalmatch.insertAdjacentHTML('beforeend', totalHTML);
+
+
     matches.forEach(match => {
         let itemsHTML = '';
         let runesHTML = '';
@@ -144,7 +161,7 @@ function display(data) {
             }
         }
         resultJson = JSON.stringify(resultmatch)
-        html += `
+        matchHTML += `
         <li class="game-item">
           <div result="${match.win_or_not_eng}" class="game-match result">
             <div class="content">
@@ -235,58 +252,47 @@ function display(data) {
           </div>
         </li>
         `;
-  });
-    
-    matchDataContainer.insertAdjacentHTML('beforeend', html);
-    total_matchcount.textContent = `${document.querySelectorAll('.game-item').length}전`
-    let winCount = parseInt(total_wincount.textContent) + data.total_calculate.win_count;
-    let loseCount = parseInt(total_losecount.textContent) + data.total_calculate.lose_count;
-    let winRate = (winCount / (winCount + loseCount)).toFixed(2) * 100;
-    let killCount = parseFloat(total_kill.textContent) + data.total_calculate.total_kill;
-    let assistCount = parseFloat(total_assist.textContent) + data.total_calculate.total_assist;
-    let deathCount = parseFloat(total_death.textContent) + data.total_calculate.total_death;
-    let kda = parseFloat(total_kda.textContent.split(":")[0]) + data.total_calculate.total_kda;
-    let killPart = parseInt((total_killpart.textContent).split(" ")[1]) + data.total_calculate.total_kill_part;
-    total_wincount.textContent = winCount + "승";
-    total_losecount.textContent = loseCount + "패";
-    total_winrate.textContent = winRate + "%";
-    total_kill.textContent = (killCount / 2).toFixed(1);
-    total_death.textContent = (deathCount / 2).toFixed(1);
-    total_assist.textContent = (assistCount / 2).toFixed(1);
-    total_kda.textContent = (kda / 2).toFixed(2) + ":1";
-    total_killpart.textContent = "킬관여 " + (killPart / 2).toFixed(0) + "%";
+    });
+
+    match_20_info.insertAdjacentHTML('beforeend', matchHTML);
 }
 
-const fetchButton = document.getElementById('addmatch_btn');
-let count = 20;
-fetchButton.addEventListener('click', function() {
-    fetchButton.textContent = "";
-    fetchButton.insertAdjacentHTML("beforeend", `<img src="/static/img/oreumi_gg/loading.gif" width="22" height="22">`);
-    const selectedGameType = document.querySelector('.selected');
-    let button;
-    let buttonIntValue;
-    button = selectedGameType.querySelector('button');
-    const buttonValue = button.value;
-    if (buttonValue == "TOTAL") {
-        buttonIntValue = 9999;
-    }
-    else if (buttonValue =="SOLORANKED") {
-        buttonIntValue = 420;
-    }
-    else if (buttonValue =="FLEXRANKED") {
-        buttonIntValue = 440;
-    }
-    else if (buttonValue =="NORMAL") {
-        buttonIntValue = 430;
-    }
-    else if (buttonValue =="ARAM") {
-        buttonIntValue = 450;
-    }
 
-    queue = buttonIntValue
-    addmatch(count, queue, function() {
-        fetchButton.textContent = "더보기";
+
+
+const buttons = document.querySelectorAll('.game-type button');
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            // 현재 선택된 버튼의 값
+            count = 20;
+            const original_btn = document.querySelector('.selected');
+            const li = button.parentElement;
+            if (li.classList.contains("notselected")) {
+                original_btn.classList.remove('selected');
+                original_btn.classList.add('notselected');
+                li.classList.add("selected");
+                li.classList.remove("notselected");
+            }
+            const buttonValue = button.value;
+            let buttonIntValue;
+            if (buttonValue == "TOTAL") {
+                buttonIntValue = 9999;
+            }
+            else if (buttonValue =="SOLORANKED") {
+                buttonIntValue = 420;
+            }
+            else if (buttonValue =="FLEXRANKED") {
+                buttonIntValue = 440;
+            }
+            else if (buttonValue =="NORMAL") {
+                buttonIntValue = 430;
+            }
+            else {
+                buttonIntValue = 450;
+            }
+            changematch(buttonIntValue);
+            match_20_info.innerHTML = '';
+            totalmatch.innerHTML = '';
+
+        });
     });
-    
-    count += 20;
-});

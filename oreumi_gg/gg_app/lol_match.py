@@ -209,13 +209,15 @@ def match(country, summonername, start, queue):
     search_player_info_dict = summoner_info(country,myinfo)
 
     puuid = myinfo['puuid']
+    summonerid = myinfo['id']
     # 사용자 puuid와 country를 이용하여 최근 20경기 정보를 가져옴
     if queue == 9999:
         match_20 = watcher.match.matchlist_by_puuid(country, puuid, start)
     else:
-        match_20 = watcher.match.matchlist_by_puuid(country, puuid, start, None, queue)
+        match_20 = watcher.match.matchlist_by_puuid(country, puuid, start, 20, queue)
     result_match = []
     win_count = 0
+    total_match_count = 0
     lose_count = 0
     total_kill = 0
     total_death = 0
@@ -259,22 +261,26 @@ def match(country, summonername, start, queue):
             # 티어부분 보류(api문제)
             
             # 검색한 사용자의 정보를 가져옴
-            if player_info["summonerName"].lower().replace(' ', '') == summonername.lower().replace(' ', ''):
+            if player_info["summonerId"] == summonerid:
                 if player_info["win"] == True:
                     if game_playtime_min <= 3:
                         win_or_not = "다시하기"
+                        total_match_count += 1
                         win_or_not_eng = "repeat"
                     else:
                         win_or_not = "승리"
                         win_count += 1
+                        total_match_count += 1
                         win_or_not_eng = "victory"
                 else:
                     if game_playtime_min <= 3:
                         win_or_not = "다시하기"
+                        total_match_count += 1
                         win_or_not_eng = "repeat"
                     else:
                         win_or_not = "패배"
                         lose_count += 1
+                        total_match_count += 1
                         win_or_not_eng = "defeat"
                 # search_player로 시작하는 것은 검색한 사용자의 정보를 저장하는 변수들
                 search_player_kill = player_info["kills"]
@@ -332,6 +338,9 @@ def match(country, summonername, start, queue):
             first_rune = player_info["perks"]["styles"][0]["selections"][0]["perk"]
             second_rune = player_info["perks"]["styles"][1]["style"]
             main_rune = 'none'
+            placement = 0
+            if player_info.get("placement"):
+                placement = player_info["placement"]
             sub_rune = 'none'
             for item in rune_data:
                 if item.get("id") == first_rune:
@@ -371,7 +380,8 @@ def match(country, summonername, start, queue):
                         "summonerspell1" : summonerspell1, "summonerspell2" : summonerspell2, "kda" : kda,
                         "killparticipation" : player_kill_part, "totalDamageDealtToChampions": player_info["totalDamageDealtToChampions"],
                         "totalDamageTaken" : player_info["totalDamageTaken"], "champlevel" : player_info["champLevel"], 
-                        "main_rune" : main_rune, "sub_rune" : sub_rune, "minperminions" : minperminions}]
+                        "main_rune" : main_rune, "sub_rune" : sub_rune, "minperminions" : minperminions, "placement": placement,
+                        "goldearned" : player_info["goldEarned"], "win":player_info["win"]}]
             result[num] = player_dict
             num += 1
         result.update({"game_playtime" : game_playtime, "game_type" : game_type, "win_or_not" : win_or_not, "win_or_not_eng" : win_or_not_eng,
@@ -402,7 +412,7 @@ def match(country, summonername, start, queue):
     total_calculate = {"win_count" : win_count, "lose_count" : lose_count, 
                     "win_rate" : win_rate, "total_kill" : total_kill, 
                     "total_death" : total_death, "total_assist" : total_assist,
-
+                    "total_match_count" : total_match_count,
                     "total_kda" : total_kda, "total_kill_part" : total_kill_part // 20}    
     return result_match, total_calculate, search_player_info_dict
 
