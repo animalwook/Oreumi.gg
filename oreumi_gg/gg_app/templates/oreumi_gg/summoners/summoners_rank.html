@@ -1,54 +1,73 @@
 <div class="node2">
-
     {% if search_player_info_dict.search_player_solo_rank == None %}
-    <div class="css-1ialdhq ecc8cxr0">
-        <div class="header">솔로랭크<span class="unranked">Unranked</span></div>
+    <div class="solo-rank">
+        <div class="header">솔로랭크 <span class="unranked">Unranked</span></div>
     </div>
     {% else %}
-    <div class="css-1kw4425 ecc8cxr0">
+    <div class="solo-rank">
         <div class="header">솔로랭크</div>
         <div class="content">
-        <div style="position:relative" class=""><img src="https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/{{search_player_info_dict.search_player_solo_tear|lower}}.png" width="72" alt=""></div>
-        <div class="info">
-            <div class="tier">{{search_player_info_dict.search_player_solo_tear}} {{search_player_info_dict.search_player_solo_rank}}</div>
-            <div class="lp">{{search_player_info_dict.search_player_solo_points}}
-                <!-- --> LP</div>
-        </div>
-        <div class="win-lose-container">
-            <div class="win-lose">{{search_player_info_dict.search_player_solo_wins}}승
-                <!-- -->
-                <!-- -->{{search_player_info_dict.search_player_solo_losses}}패</div>
-            <div class="ratio">승률
-                <!-- -->
-                <!-- -->나중에 추가하기
-                <!-- -->%</div>
-        </div>
+            <div style="position: relative" class="">
+                <img
+                    src="https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/{{search_player_info_dict.search_player_solo_tear|lower}}.png"
+                    width="72"
+                    alt=""
+                />
+            </div>
+            <div class="info">
+                <div class="tier">{{search_player_info_dict.search_player_solo_tear}} {{search_player_info_dict.search_player_solo_rank}}</div>
+                <div class="lp">
+                    {{search_player_info_dict.search_player_solo_points}}
+                    <!-- -->
+                    LP
+                </div>
+            </div>
+            <div class="win-lose-container">
+                <div class="win-lose">
+                    {{search_player_info_dict.search_player_solo_wins}}승
+                    <!-- -->
+                    <!-- -->{{search_player_info_dict.search_player_solo_losses}}패
+                </div>
+                <div class="ratio">
+                    승률
+                    <!-- -->
+                    <!-- -->나중에 추가하기
+                    <!-- -->%
+                </div>
+            </div>
         </div>
     </div>
-    {% endif %}
-
-    {% if search_player_info_dict.search_player_flex_rank == None %}
-    <div class="css-1ialdhq ecc8cxr0">
+    {% endif %} {% if search_player_info_dict.search_player_flex_rank == None %}
+    <div class="flex-rank">
         <div class="header">자유랭크<span class="unranked">Unranked</span></div>
     </div>
     {% else %}
-    <div class="css-1kw4425 ecc8cxr0">
+    <div class="flex-rank">
         <div class="header">자유랭크</div>
         <div class="content">
-            <div style="position:relative" class="">src="https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/{{search_player_info_dict.search_player_flex_tear|lower}}.png" width="72" alt=""></div>
+            <div style="position: relative" class="">
+                src="https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/{{search_player_info_dict.search_player_flex_tear|lower}}.png" width="72" alt="">
+            </div>
             <div class="info">
                 <div class="tier">{{search_player_info_dict.search_player_flex_rank}} {{search_player_info_dict.search_player_flex_rank}}</div>
-                <div class="lp">{{search_player_info_dict.search_player_flex_points}}
-                    <!-- --> LP</div>
+                <div class="lp">
+                    {{search_player_info_dict.search_player_flex_points}}
+                    <!-- -->
+                    LP
+                </div>
             </div>
             <div class="win-lose-container">
-                <div class="win-lose">{{search_player_info_dict.search_player_flex_wins}}승
+                <div class="win-lose">
+                    {{search_player_info_dict.search_player_flex_wins}}승
                     <!-- -->
-                    <!-- -->{{search_player_info_dict.search_player_flex_losses}}패</div>
-                <div class="ratio">승률
+                    <!-- -->{{search_player_info_dict.search_player_flex_losses}}패
+                </div>
+                <div class="ratio">
+                    승률
                     <!-- -->
                     <!-- -->나중에 추가하기
-                    <!-- -->%</div>
+                    <!-- -->%
+                </div>
             </div>
         </div>
     </div>

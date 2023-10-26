@@ -384,7 +384,7 @@ a {
     background-color: #fff;
     border-radius: 4px;
     display: block;
-    width: calc(100% - 200px);
+    width: calc(100% - 300px);
     height: 40px;
     padding: 8px 0px;
     color: #202d37;
@@ -392,6 +392,7 @@ a {
     text-align: center;
     text-decoration: none;
     box-sizing: border-box;
+    margin-left: 300px;
 }
 
 .game-match .action {
