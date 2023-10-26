@@ -17,19 +17,19 @@
         <div class="section">
             <div class="game-queue">
                 <ul>
-                    <li class="first-type game-type" selected="SELECTED">
+                    <li class="first-type game-type selected">
                         <button value="TOTAL">전체</button>
                     </li>
-                    <li class="game-type"> 
+                    <li class="game-type notselected"> 
                         <button value="SOLORANKED">솔로랭크</button>
                     </li>
-                    <li class="game-type"> 
+                    <li class="game-type notselected"> 
                         <button value="FLEXRANKED">자유랭크</button>
                     </li>
-                    <li class="game-type"> 
+                    <li class="game-type notselected"> 
                         <button value="NORMAL">일반 (비공개 선택)</button>
                     </li>
-                    <li class="game-type"> 
+                    <li class="game-type notselected"> 
                         <button value="ARAM">칼바람 나락</button>
                     </li>
                 </ul>
@@ -41,6 +41,7 @@
                     <span id="total_losecount">{{ total_calculate.lose_count }}패</span>
                     <div id="kda">
                         <div class="chart">
+                            <span>승률</span>
                             <div class="text">
                                 <strong id="total_winrate">{{ total_calculate.win_rate }}%</strong>
                             </div>
@@ -98,14 +99,23 @@
                                                 </div>
                                                 <div class="runes">
                                                     <div class="rune">
-                                                        <div class style="position: relative;">
-                                                            <img src="https://ddragon.canisback.com/img/{{ match.search_player_main_rune }}" width="22" height="22">
-                                                        </div>
+                                                        {% if match.search_player_main_rune %}
+                                                            <div class style="position: relative;">
+                                                                    <img src="https://ddragon.canisback.com/img/{{ match.search_player_main_rune }}" width="22" height="22">
+                                                            </div>
+                                                        {% else %}
+                                                            <div class="augment augment--empty"></div>
+                                                        {% endif %} 
                                                     </div>
                                                     <div class="rune">
-                                                        <div class style="position: relative;">
-                                                            <img src="https://ddragon.canisback.com/img/perk-images/Styles/{{ match.search_player_sub_rune }}.png" width="22" height="22">
-                                                        </div>
+                                                        {% if match.search_player_sub_rune %}
+                                                            <div class style="position: relative;">
+                                                                <img src="https://ddragon.canisback.com/img/perk-images/Styles/{{ match.search_player_sub_rune }}.png" width="22" height="22">
+                                                            </div>
+                                                        {% else %}
+                                                            <div class="augment augment--empty"></div>
+                                                        {% endif %}
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -140,13 +150,15 @@
                                             <div class="items">
                                                 <ul>
                                                     {% for item in match.search_player_item %}
-                                                        <li style="list-style-type: none;">
-                                                            <div class style="position: relative;">
-                                                                {% if item %}
-                                                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/{{ item }}.png" width="22" height="22">
-                                                                {% endif %}
-                                                            </div>
-                                                        </li>
+                                                        {% if item %}
+                                                            <li style="list-style-type: none;">
+                                                                <div class style="position: relative;">
+                                                                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/{{ item }}.png" width="22" height="22">
+                                                                </div>
+                                                            </li>
+                                                        {% else %}
+                                                            <li></li>
+                                                        {% endif %}
                                                     {% endfor %}
                                                 </ul>
                                             </div>
@@ -212,6 +224,6 @@
     </body>
     <script src="{% static "js/matches.js" %}"></script>
     <script src="{% static "js/detail_match.js" %}"></script>
-    
+    <script src="{% static "js/tap_match.js" %}"></script>
     
 </html>

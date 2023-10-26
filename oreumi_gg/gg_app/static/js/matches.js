@@ -46,6 +46,7 @@ function display(data) {
     let html = '';
     matches.forEach(match => {
         let itemsHTML = '';
+        let runesHTML = '';
         let bluechampHTML = '';
         let redchampHTML = '';
         let detailHTML = '';
@@ -72,8 +73,37 @@ function display(data) {
                     </div>
                 </li>
                 `;
-                }
+            }
+            else {
+                itemsHTML += `<li></li>`;
+            }
             });
+
+            if (match.search_player_main_rune) {
+                runesHTML += `
+                <div class="rune">
+                    <div class style="position: relative;">
+                        <img src="https://ddragon.canisback.com/img/${match.search_player_main_rune}" width="22" height="22">
+                    </div>
+                </div>
+                <div class="rune">
+                    <div class style="position: relative;">
+                        <img src="https://ddragon.canisback.com/img/perk-images/Styles/${match.search_player_sub_rune}.png" width="22" height="22">
+                    </div>
+                </div>
+                `;
+            }
+            else {
+                runesHTML += `
+                    <div class="rune">
+                        <div class="augment augment--empty"></div>
+                    </div>
+                    <div class="rune">
+                        <div class="augment augment--empty"></div>
+                    </div>
+                `;
+            }
+
         for (let i = 1; i <= 10; i++) {
             if (Array.isArray(match[i])) {
                 // 동적으로 생긴(html) 부분 json 형태로 만들기 위한 변수
@@ -148,16 +178,7 @@ function display(data) {
                                     </div>
                                 </div>
                                 <div class="runes">
-                                    <div class="rune">
-                                        <div class style="position: relative;">
-                                            <img src="https://ddragon.canisback.com/img/${match.search_player_main_rune}" width="22" height="22">
-                                        </div>
-                                    </div>
-                                    <div class="rune">
-                                        <div class style="position: relative;">
-                                            <img src="https://ddragon.canisback.com/img/perk-images/Styles/${match.search_player_sub_rune}.png" width="22" height="22">
-                                        </div>
-                                    </div>
+                                    ${runesHTML}
                                 </div>
                             </div>
                             <div class="kill_death_assist">
@@ -240,7 +261,7 @@ const fetchButton = document.getElementById('addmatch_btn');
 fetchButton.addEventListener('click', function() {
     const selectedGameType = document.querySelector('.game-type');
     let button;
-    if (selectedGameType.getAttribute("selected")) {
+    if (document.querySelector(".selected")) {
         button = selectedGameType.querySelector('button');
     }
     const buttonValue = button.value;

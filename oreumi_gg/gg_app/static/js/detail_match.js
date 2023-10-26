@@ -1,4 +1,4 @@
-function display_detailmatch(data, result, gameItem, gameminute) {
+function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxtaken) {
     /**
      * 
      * 매치 상세 정보를 보여주는 함수
@@ -91,19 +91,23 @@ function display_detailmatch(data, result, gameItem, gameminute) {
                         <div>
                             <div class style="position: relative;">
                                 <div class="dealt">${data[player][0].totalDamageDealtToChampions}</div>
-                                <div class="progress"></div>
+                                <div class="progress">
+                                    <div class="fill" style="width: ${Math.round((data[player][0].totalDamageDealtToChampions / maxdealt) * 100)}%"></div>
+                                </div>
                             </div>
                             <div class style="position: relative;">
                                 <div class="taken">${data[player][0].totalDamageTaken}</div>
-                                <div class="taken_progress"></div>
+                                <div class="taken_progress">
+                                    <div class="fill" style="width: ${Math.round((data[player][0].totalDamageTaken / maxtaken) * 100)}%"></div>
+                                </div>
                             </div>
                         </div>
                     </td>
                     <td class="ward">
-                        <div class style="position: relative;">
+                        <div class="ward_info" style="position: relative;">
                             <div>${data[player][0].visionWardsBoughtInGame}</div>
                             <div>${data[player][0].wardsPlaced} / ${data[player][0].wardsKilled}</div>
-                        </div>
+                        </div>  
                     </td>
                     <td class="cs">
                         <div>${data[player][0].totalminions_kill}</div>
@@ -187,11 +191,15 @@ function display_detailmatch(data, result, gameItem, gameminute) {
                         <div>
                             <div class style="position: relative;">
                                 <div class="dealt">${data[player][0].totalDamageDealtToChampions}</div>
-                                <div class="progress"></div>
+                                <div class="progress">
+                                    <div class="fill" style="width: ${Math.round((data[player][0].totalDamageDealtToChampions / maxdealt) * 100)}%"></div>
+                                </div>
                             </div>
                             <div class style="position: relative;">
                                 <div class="taken">${data[player][0].totalDamageTaken}</div>
-                                <div class="taken_progress"></div>
+                                <div class="taken_progress">
+                                    <div class="fill" style="width: ${Math.round((data[player][0].totalDamageTaken / maxtaken) * 100)}%"></div>
+                                </div>
                             </div>
                         </div>
                     </td>
@@ -352,11 +360,15 @@ function display_detailmatch(data, result, gameItem, gameminute) {
                             <div>
                                 <div class style="position: relative;">
                                     <div class="dealt">${data[player][0].totalDamageDealtToChampions}</div>
-                                    <div class="progress"></div>
+                                    <div class="progress">
+                                        <div class="fill" style="width: ${Math.round((data[player][0].totalDamageDealtToChampions / maxdealt) * 100)}%"></div>
+                                    </div>
                                 </div>
                                 <div class style="position: relative;">
                                     <div class="taken">${data[player][0].totalDamageTaken}</div>
-                                    <div class="taken_progress"></div>
+                                    <div class="taken_progress">
+                                        <div class="fill" style="width: ${Math.round((data[player][0].totalDamageTaken / maxtaken) * 100)}%"></div>
+                                    </div>
                                 </div>
                             </div>
                         </td>
@@ -424,11 +436,15 @@ function display_detailmatch(data, result, gameItem, gameminute) {
                             <div>
                                 <div class style="position: relative;">
                                     <div class="dealt">${data[player][0].totalDamageDealtToChampions}</div>
-                                    <div class="progress"></div>
+                                    <div class="progress">
+                                        <div class="fill" style="width: ${Math.round((data[player][0].totalDamageDealtToChampions / maxdealt) * 100)}%"></div>
+                                    </div>
                                 </div>
                                 <div class style="position: relative;">
                                     <div class="taken">${data[player][0].totalDamageTaken}</div>
-                                    <div class="taken_progress"></div>
+                                    <div class="taken_progress">
+                                        <div class="fill" style="width: ${Math.round((data[player][0].totalDamageTaken / maxtaken) * 100)}%"></div>
+                                    </div>
                                 </div>
                             </div>
                         </td>
@@ -497,11 +513,15 @@ function display_detailmatch(data, result, gameItem, gameminute) {
                             <div>
                                 <div class style="position: relative;">
                                     <div class="dealt">${data[player][0].totalDamageDealtToChampions}</div>
-                                    <div class="progress"></div>
+                                    <div class="progress">
+                                        <div class="fill" style="width: ${Math.round((data[player][0].totalDamageDealtToChampions / maxdealt) * 100)}%"></div>
+                                    </div>
                                 </div>
                                 <div class style="position: relative;">
                                     <div class="taken">${data[player][0].totalDamageTaken}</div>
-                                    <div class="taken_progress"></div>
+                                    <div class="taken_progress">
+                                        <div class="fill" style="width: ${Math.round((data[player][0].totalDamageTaken / maxtaken) * 100)}%"></div>
+                                    </div>
                                 </div>
                             </div>
                         </td>
@@ -569,11 +589,15 @@ function display_detailmatch(data, result, gameItem, gameminute) {
                             <div>
                                 <div class style="position: relative;">
                                     <div class="dealt">${data[player][0].totalDamageDealtToChampions}</div>
-                                    <div class="progress"></div>
+                                    <div class="progress">
+                                        <div class="fill" style="width: ${Math.round((data[player][0].totalDamageDealtToChampions / maxdealt) * 100)}%"></div>
+                                    </div>
                                 </div>
                                 <div class style="position: relative;">
                                     <div class="taken">${data[player][0].totalDamageTaken}</div>
-                                    <div class="taken_progress"></div>
+                                    <div class="taken_progress">
+                                        <div class="fill" style="width: ${Math.round((data[player][0].totalDamageTaken / maxtaken) * 100)}%"></div>
+                                    </div>
                                 </div>
                             </div>
                         </td>
@@ -710,6 +734,8 @@ function delete_detailmatch(gameItem) {
 
 const commonParent = document.querySelector('.match_20'); // 공통 상위 요소 선택
 
+
+
 commonParent.addEventListener('click', function(event) {
     // 옆 버튼을 찾아 해당 버튼을 누르면 이벤트 일어나도록 함
     if (event.target.classList.contains('detail')) {
@@ -723,14 +749,22 @@ commonParent.addEventListener('click', function(event) {
 
         if (buttonstatus === "open") {
             const match = [];
+            const dealt = [];
+            const taken = [];
             const matchInfo = JSON.parse(button.getAttribute("data-match-info"));
             const matchResult = button.getAttribute("match-result");
             for (let i = 1; i <= 10; i++) {
                 match.push(matchInfo[i]);
+                if (matchInfo[i]) {
+                    dealt.push(matchInfo[i][0].totalDamageDealtToChampions);
+                    taken.push(matchInfo[i][0].totalDamageTaken);
+                }
             }
+            maxdealt = Math.max(...dealt);
+            maxtaken = Math.max(...taken);
             button.setAttribute("status", "close");
             button.querySelector("img").style.transform = `rotate(${180}deg)`;
-            display_detailmatch(match, matchResult, gameItem, gameminute);
+            display_detailmatch(match, matchResult, gameItem, gameminute, maxdealt, maxtaken);
         } else {
             button.setAttribute("status", "open");
             button.querySelector("img").style.transform = `rotate(${0}deg)`;
@@ -738,3 +772,6 @@ commonParent.addEventListener('click', function(event) {
         }
     }
 });
+    
+
+

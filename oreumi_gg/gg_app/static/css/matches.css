@@ -181,6 +181,10 @@ a {
     height: 48px;
 }
 
+.game-match .info > div:nth-of-type(1) .champion .runes .rune .augment--empty {
+    background-color: #b3cdff;
+}
+
 .game-match .info > div:nth-of-type(1) .champion .icon img{
     display: block;
     border-radius: 50%;
@@ -310,6 +314,14 @@ a {
 .game-match .info > div:nth-of-type(2) .items ul {
     display: flex;
     list-style: none;
+}
+
+.game-match .info > div:nth-of-type(2) .items ul li {
+    width: 22px;
+    height: 22px;
+    margin-left: 2px;
+    background-color: #9aa4af;
+    border-radius: 4px;
 }
 
 .game-match .info > div:nth-of-type(2) .items ul li img {
@@ -449,6 +461,17 @@ a {
     position: relative;
     width: 88px;
     height: 88px;
+}
+
+.match_statics #win_lose #kda .chart span {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 88px;
+    height: 88px;
+    text-align: center;
+    font-weight: bolder;
+    color: black;
 }
 
 .match_statics #win_lose #kda .chart .text {
@@ -717,6 +740,11 @@ a {
     background-color: #fff;
 }
 
+.overview-player td.damage .progress .fill {
+    height: 100%;
+    background-color: #e84057;
+}
+
 .overview-player td.damage .taken {
     text-align: center;
     color: #758592;
@@ -730,6 +758,11 @@ a {
     height: 6px;
     margin: 4px auto 0px 8px;
     background-color: #fff;
+}
+
+.overview-player td.damage .taken_progress .fill {
+    height: 100%;
+    background-color: #9aa4af;
 }
 
 .overview-player td.ward {
@@ -887,16 +920,11 @@ a {
     height: 28px;
 }
 
-.first-type:nth-of-type(1) {
+.game-type:nth-of-type(1) {
     margin-left: 0;
 }
 
-.first-type {
-    margin-left: 4px;
-    vertical-align: top;
-}
-
-.first-type button {
+.selected button {
     display: block;
     padding: 4px 12px;
     border-radius: 4px;
@@ -915,7 +943,7 @@ a {
     vertical-align: top;
 }
 
-.game-type button {
+.notselected button {
     display: block;
     padding: 4px 12px;
     border-radius: 4px;
