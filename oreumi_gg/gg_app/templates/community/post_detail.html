@@ -4,7 +4,8 @@
 <p>게시일: {{ post.created_at }}</p>
 <div class="ck ck-content">{{ post.content | safe }}</div>
 <a href="{% url 'gg_app:post' %}">뒤로 가기</a>
-{% comment %}  <a href="{% url 'gg_app:post_edit' post.id %}">수정</a> {% endcomment %}
+<a href="{% url 'gg_app:post_edit' post.id %}">수정</a>
+<a href="{% url 'gg_app:post_delete' post.id %}">삭제</a>
 
 
 <div class="comments">
