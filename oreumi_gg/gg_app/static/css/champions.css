@@ -1,19 +1,47 @@
+body {
+    background-color: #ebeef1;
+}
+
+/* 버튼 */
+
+.btn_group {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .champions_tab {
-    /* 일반적인 탭 스타일 */
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 130px;
+    max-width: 250px;
+    width: 12vw;
+    height: 100%;
     cursor: pointer;
-    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+@media (max-width: 1000px) {
+    .champions_tab {
+        min-width: auto;
+    }
 }
 
 .champions_tab.active {
-    /* 활성화된 탭 스타일 */
     background-color: #007bff;
     color: #fff;
 }
 
-.tab-group {
+.tab_group {
     display: flex; /* 가로로 나열될 수 있도록 설정 */
+    margin-right: 20px;
 }
 
 .champions_tab {
@@ -22,28 +50,64 @@
 }
 
 #lotation-button {
+    background-color: #fff;
     cursor: pointer;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-weight: bold;
+    margin-left: 20px;
+}
+
+/* 지역, 티어 선택 */
+
+.select_container {
+    display: flex;
+    width: 300px;
+    height: 40px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+#region-select {
+    width: 30%;
+}
+
+#tier-select {
+    width: 70%;
+}
+
+/* 챔피언 테이블 */
+
+thead {
+    border-bottom: 1px solid black;
+}
+
+.table_container {
+    margin: 20px;
 }
 
 table {
-    border-collapse: collapse; /* 테이블 셀 경계를 병합하여 선을 만듭니다. */
-    width: 100%; /* 표의 너비 설정 (선택 사항) */
+    border-radius: 10px;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: none;
+    background-color: #fff;
+    width: 100%;
+    border: 1px solid #ccc;
 }
 
 table,
 th,
 td {
-    border: 1px solid gray; /* 모든 표 요소에 선을 추가합니다. */
+    border: 1px solid #ccc; /* 모든 표 요소에 선을 추가합니다. */
 }
 
 /* 수직 선 스타일 (열에 대한 스타일) */
 th,
 td {
     padding: 8px; /* 셀 안의 여백 설정 (선택 사항) */
+    border: none;
 }
 
 td,
@@ -73,6 +137,8 @@ tbody li {
 tbody img {
     max-width: 50px; /* 이미지 최대 너비 설정 (원하는 크기로 조정) */
     height: auto; /* 이미지의 가로세로 비율을 유지하도록 설정 */
+    border-radius: 5px;
+    margin-right: 5px;
 }
 
 .champion-box {
