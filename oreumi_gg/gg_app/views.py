@@ -343,8 +343,9 @@ def statisics_champions_list_2(request):
 
 def statistics_champions_list(request, position, region, tier, period, mode):
     #OP.gg URL 생성
-    opgg_url = "https://www.op.gg/statistics/champions?region="+region+"&tier="+tier+"&position="+position+"&period="+period+"&mode="+mode
+    opgg_url = "https://www.op.gg/statistics/champions?region="+region+"&position="+position+"&mode="+mode+"&tier="+tier+"&period="+period
     print(opgg_url)
+
     # HTTP 요청을 보내서 페이지 내용을 가져옵니다.
     response = requests.get(opgg_url,headers={'User-Agent': 'Mozilla/5.0'})
     response.encoding = 'utf-8'
@@ -353,38 +354,40 @@ def statistics_champions_list(request, position, region, tier, period, mode):
         # BeautifulSoup를 사용하여 HTML 파싱
         soup = BeautifulSoup(response.text, 'html.parser',from_encoding='utf-8')
         # <tr> 태그를 찾아서 모든 행을 가져옵니다.
-        rows = soup.find_all("tr")
-
+        rows = soup.select("#content-container > div:nth-child(2) > table > tbody > tr:nth-child(1)")
+        
+        print(1111111111111111111111111111111111111111111111111111)
+        print(rows[0])
         # 헤더 행 제외하고 각 행에서 챔피언의 통계 정보를 추출합니다.
-        champion_statistics = []
-        for row in rows[6:]:  
-            columns = row.find_all("td")
-            rank = columns[0].text.strip()
-            champion_img = columns[1].find('img')['src']
-            champion_name = columns[1].find('strong').text.strip()
-            print(champion_name)
-            num_of_plays = columns[2].text.strip()
-            rating = columns[3].find('span').text.strip()
-            win_rate = columns[4].text.strip()
-            pick_rate = columns[5].text.strip()
-            ban_rate = columns[6].text.strip()
-            cs = columns[7].text.strip()
-            gold = columns[8].text.strip()
+        # champion_statistics = []
+        # for row in rows[6:]:  
+        #     columns = row.find_all("td")
+        #     rank = columns[0].text.strip()
+        #     champion_img = columns[1].find('img')['src']
+        #     champion_name = columns[1].find('strong').text.strip()
+        #     print(champion_name)
+        #     num_of_plays = columns[2].text.strip()
+        #     rating = columns[3].find('span').text.strip()
+        #     win_rate = columns[4].text.strip()
+        #     pick_rate = columns[5].text.strip()
+        #     ban_rate = columns[6].text.strip()
+        #     cs = columns[7].text.strip()
+        #     gold = columns[8].text.strip()
             
-            champion_statistics.append({
-                'rank' : rank,
-                'champion_img': champion_img,
-                'champion_name': champion_name,
-                'num_of_plays': num_of_plays,
-                'rating' : rating,
-                'win_rate': win_rate,
-                'pick_rate': pick_rate,
-                'ban_rate': ban_rate,
-                'cs': cs,
-                'gold': gold,
-            })
-        print(champion_statistics[0].items())
-        return render(request, 'oreumi_gg/statistics/statistics_champions.html', {'champion_statistics': champion_statistics})
+        #     champion_statistics.append({
+        #         'rank' : rank,
+        #         'champion_img': champion_img,
+        #         'champion_name': champion_name,
+        #         'num_of_plays': num_of_plays,
+        #         'rating' : rating,
+        #         'win_rate': win_rate,
+        #         'pick_rate': pick_rate,
+        #         'ban_rate': ban_rate,
+        #         'cs': cs,
+        #         'gold': gold,
+        #     })
+        # print(champion_statistics[0].items())
+        return render(request, 'oreumi_gg/statistics/statistics_champions.html')
     else:
         return render(request, 'oreumi_gg/statistics/statistics_champions.html', {'error': '페이지를 불러올 수 없습니다.'})
 
