@@ -89,14 +89,16 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                     </td>
                     <td class="damage">
                         <div>
-                            <div class style="position: relative;">
+                            <div class="deal_box" style="position: relative;">
                                 <div class="dealt">${data[player][0].totalDamageDealtToChampions}</div>
+                                <span class="dealt_tooltip dealt_tooltiptop">챔피언에게 가한 피해량:${data[player][0].totalDamageDealtToChampions}</span>
                                 <div class="progress">
                                     <div class="fill" style="width: ${Math.round((data[player][0].totalDamageDealtToChampions / maxdealt) * 100)}%"></div>
                                 </div>
                             </div>
-                            <div class style="position: relative;">
+                            <div class="taken_box" style="position: relative;">
                                 <div class="taken">${data[player][0].totalDamageTaken}</div>
+                                <span class="taken_tooltip taken_tooltiptop">받은 피해량:${data[player][0].totalDamageTaken}</span>
                                 <div class="taken_progress">
                                     <div class="fill" style="width: ${Math.round((data[player][0].totalDamageTaken / maxtaken) * 100)}%"></div>
                                 </div>
@@ -107,7 +109,12 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                         <div class="ward_info" style="position: relative;">
                             <div>${data[player][0].visionWardsBoughtInGame}</div>
                             <div>${data[player][0].wardsPlaced} / ${data[player][0].wardsKilled}</div>
-                        </div>  
+                        </div>
+                        <span class="ward_tooltip">
+                                제어와드:${data[player][0].visionWardsBoughtInGame}
+                                와드설치:${data[player][0].wardsPlaced}
+                                와드제거:${data[player][0].wardsKilled}
+                            </span>
                     </td>
                     <td class="cs">
                         <div>${data[player][0].totalminions_kill}</div>
@@ -189,14 +196,16 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                     </td>
                     <td class="damage">
                         <div>
-                            <div class style="position: relative;">
+                            <div class="deal_box" style="position: relative;">
                                 <div class="dealt">${data[player][0].totalDamageDealtToChampions}</div>
+                                <span class="dealt_tooltip dealt_tooltiptop">챔피언에게 가한 피해량:${data[player][0].totalDamageDealtToChampions}</span>
                                 <div class="progress">
                                     <div class="fill" style="width: ${Math.round((data[player][0].totalDamageDealtToChampions / maxdealt) * 100)}%"></div>
                                 </div>
                             </div>
-                            <div class style="position: relative;">
+                            <div class="taken_box" style="position: relative;">
                                 <div class="taken">${data[player][0].totalDamageTaken}</div>
+                                <span class="taken_tooltip taken_tooltiptop">받은 피해량:${data[player][0].totalDamageTaken}</span>
                                 <div class="taken_progress">
                                     <div class="fill" style="width: ${Math.round((data[player][0].totalDamageTaken / maxtaken) * 100)}%"></div>
                                 </div>
@@ -204,10 +213,15 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                         </div>
                     </td>
                     <td class="ward">
-                        <div class style="position: relative;">
+                        <div class="ward_info" style="position: relative;">
                             <div>${data[player][0].visionWardsBoughtInGame}</div>
                             <div>${data[player][0].wardsPlaced} / ${data[player][0].wardsKilled}</div>
                         </div>
+                        <span class="ward_tooltip">
+                                제어와드:${data[player][0].visionWardsBoughtInGame}
+                                와드설치:${data[player][0].wardsPlaced}
+                                와드제거:${data[player][0].wardsKilled}
+                            </span>
                     </td>
                     <td class="cs">
                         <div>${data[player][0].totalminions_kill}</div>

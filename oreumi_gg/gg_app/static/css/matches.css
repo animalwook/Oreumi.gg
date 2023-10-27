@@ -1150,3 +1150,111 @@ a {
     width: 1080px;
     margin: 0px auto;
 }
+
+.deal_box {
+    display: block;
+}
+
+.taken_box {
+    display: block;
+}
+
+.ward_info {
+    display: block;
+}
+
+.deal_box .dealt_tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.taken_box .taken_tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.ward .ward_tooltip {
+    visibility: hidden;
+    width: 60px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.deal_box:hover .dealt_tooltip {
+    visibility: visible;
+}
+
+.taken_box:hover .taken_tooltip {
+    visibility: visible;
+}
+
+.ward:hover .ward_tooltip {
+    visibility: visible;
+}
+
+.deal_box .dealt_tooltip::after {
+    content: " ";
+    position: absolute;
+    border-style: solid;
+    border-width: 5px;
+}
+
+.taken_box .taken_tooltip::after {
+    content: " ";
+    position: absolute;
+    border-style: solid;
+    border-width: 5px;
+}
+
+.deal_box .dealt_tooltiptop {
+    width: 170px;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -80px;
+}
+
+.taken_box .taken_tooltiptop {
+    width: 120px;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -50px;
+}
+
+.ward .ward_tooltiptop {
+    width: 120px;
+    left: 60%;
+    margin-left: -40px;
+}
+
+.deal_box .dealt_tooltiptop::after {
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-color: black transparent transparent transparent;
+}
+
+.taken_box .taken_tooltiptop::after {
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-color: black transparent transparent transparent;
+}

@@ -238,8 +238,8 @@
         </section>
         {% include 'oreumi_gg/footer.html' %}
     </body>
-    <script src="{% static "js/matches.js" %}"></script>
-    <script src="{% static "js/detail_match.js" %}"></script>
-    <script src="{% static "js/tap_match.js" %}"></script>
+    <script src="{% static "js/matches.js" %}?{% now 'U' %}"></script>
+    <script src="{% static "js/detail_match.js" %}?{% now 'U' %}"></script>
+    <script src="{% static "js/tap_match.js" %}?{% now 'U' %}"></script>
     
 </html>
