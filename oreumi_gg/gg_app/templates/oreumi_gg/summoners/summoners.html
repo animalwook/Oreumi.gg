@@ -87,7 +87,7 @@
                                                 <div class="champion">
                                                     <div class="icon">
                                                         <a href="" rel="noreferrer">
-                                                            {% with champ_image="img/champion_square/"|add:match.search_player_champ|add:".png" %}
+                                                            {% with champ_image="img/champion_square_test/"|add:match.search_player_champ|add:".webp" %}
                                                                 <img src="{% static champ_image %}" width="48" height="48">
                                                             {% endwith %}
                                                             <span class="champion-level">{{ match.search_player_champlevel }}</span>
@@ -107,9 +107,11 @@
                                                     </div>
                                                     <div class="runes">
                                                         <div class="rune">
-                                                            {% if match.search_player_main_rune %}
+                                                            {% if match.search_player_main_rune %} 
                                                                 <div class style="position: relative;">
-                                                                        <img src="https://ddragon.canisback.com/img/{{ match.search_player_main_rune }}" width="22" height="22">
+                                                                    {% with search_player_main_rune="img/"|add:match.search_player_main_rune|add:".webp" %}
+                                                                        <img src="{% static search_player_main_rune %}" width="22" height="22">
+                                                                    {% endwith %}
                                                                 </div>
                                                             {% else %}
                                                                 <div class="augment augment--empty"></div>
@@ -157,11 +159,11 @@
                                             <div>
                                                 <div class="items">
                                                     <ul>
-                                                        {% for item in match.search_player_item %}
-                                                            {% if item %}
+                                                        {% for player_item in match.search_player_item %}
+                                                            {% if player_item %}
                                                                 <li style="list-style-type: none;">
                                                                     <div class style="position: relative;">
-                                                                            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/{{ item }}.png" width="22" height="22">
+                                                                        <img src="/static/img/item/{{player_item}}.webp" width="22" height="22">
                                                                     </div>
                                                                 </li>
                                                             {% else %}
@@ -178,7 +180,7 @@
                                                     {% if forloop.counter <= 5 %}
                                                         <li class="team" style="list-style-type: none;">
                                                             <div class="team_icon" style="position: relative;">
-                                                                {% with champ_image="img/champion_square/"|add:value.0.championname|add:".png" %}
+                                                                {% with champ_image="img/champion_square_test/"|add:value.0.championname|add:".webp" %}
                                                                     <img src="{% static champ_image %}" width="16" height="16">
                                                                 {% endwith %}
                                                             </div>
@@ -197,7 +199,7 @@
                                                         {% if value.0.championname %}
                                                             <li class="team" style="list-style-type: none;">
                                                                 <div class="team_icon" style="position: relative;">
-                                                                    {% with champ_image="img/champion_square/"|add:value.0.championname|add:".png" %}
+                                                                    {% with champ_image="img/champion_square_test/"|add:value.0.championname|add:".webp" %}
                                                                         <img src="{% static champ_image %}" width="16" height="16">
                                                                     {% endwith %}
                                                                 </div>

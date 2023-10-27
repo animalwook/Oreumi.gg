@@ -88,7 +88,7 @@ function changematch_display(data) {
                     itemsHTML += `
                     <li style="list-style-type: none;">
                         <div class style="position: relative">
-                            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/${ item }.png" width="22" height="22">
+                            <img src="/static/img/item/${ item }.webp" width="22" height="22">
                         </div>
                     </li>
                     `;
@@ -102,7 +102,7 @@ function changematch_display(data) {
                     runesHTML += `
                     <div class="rune">
                         <div class style="position: relative;">
-                            <img src="https://ddragon.canisback.com/img/${match.search_player_main_rune}" width="22" height="22">
+                            <img src="/static/img/${match.search_player_main_rune}.webp" width="22" height="22">
                         </div>
                     </div>
                     <div class="rune">
@@ -132,7 +132,7 @@ function changematch_display(data) {
                             bluechampHTML += `
                             <li class="team" style="list-style-type: none;">
                                 <div class="team_icon" style="position: relative">
-                                    <img src="/static/img/champion_square/${item.championname}.png" width="16" height="16">
+                                    <img src="/static/img/champion_square_test/${item.championname}.webp" width="16" height="16">
                                 </div>
                                 <div class="name">
                                     <a href="/summoners/kr/${item.summonername}" rel="noreferrer">
@@ -147,7 +147,7 @@ function changematch_display(data) {
                                 redchampHTML += `
                                 <li class="team" style="list-style-type: none;">
                                     <div class="team_icon" style="position: relative">
-                                        <img src="/static/img/champion_square/${item.championname}.png" width="16" height="16">
+                                        <img src="/static/img/champion_square_test/${item.championname}.webp" width="16" height="16">
                                     </div>
                                     <div class="name">
                                         <a href="/summoners/kr/${item.summonername}" rel="noreferrer">
@@ -180,7 +180,7 @@ function changematch_display(data) {
                                 <div class="champion">
                                     <div class="icon">
                                         <a href="" rel="noreferrer">
-                                            <img src="/static/img/champion_square/${match.search_player_champ}.png" width="48" height="48">
+                                            <img src="/static/img/champion_square_test/${match.search_player_champ}.webp" width="48" height="48">
                                             <span class="champion-level">${match.search_player_champlevel}</span>
                                         </a>
                                     </div>
