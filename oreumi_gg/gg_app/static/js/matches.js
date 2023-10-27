@@ -255,6 +255,9 @@ function display(data) {
     total_assist.textContent = (assistCount / 2).toFixed(1);
     total_kda.textContent = (kda / 2).toFixed(2) + ":1";
     total_killpart.textContent = "킬관여 " + (killPart / 2).toFixed(0) + "%";
+    if (document.querySelectorAll('.game-item').length % 20 != 0) {
+        fetchButton.remove();
+    }
 }
 
 const fetchButton = document.getElementById('addmatch_btn');
@@ -266,6 +269,7 @@ fetchButton.addEventListener('click', function() {
     let button;
     let buttonIntValue;
     button = selectedGameType.querySelector('button');
+    fetchButton.disabled = true;
     const buttonValue = button.value;
     if (buttonValue == "TOTAL") {
         buttonIntValue = 9999;
@@ -286,6 +290,7 @@ fetchButton.addEventListener('click', function() {
     queue = buttonIntValue
     addmatch(count, queue, function() {
         fetchButton.textContent = "더보기";
+        fetchButton.disabled = false;
     });
     
     count += 20;

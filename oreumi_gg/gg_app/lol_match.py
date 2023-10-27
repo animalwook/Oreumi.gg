@@ -252,6 +252,8 @@ def match(country, summonername, start, queue):
             game_type = "ai 대전"
         elif match_detail['info']['queueId'] == 900:
             game_type = "우르프"
+        elif match_detail['info']['queueId'] == 1300:
+            game_type = "돌격! 넥서스"
         elif match_detail['info']['queueId'] == 1700:
             game_type = "아레나"
             
@@ -403,12 +405,18 @@ def match(country, summonername, start, queue):
                     "search_player_minperminions" : search_player_minperminions
         }) 
         result_match.append(result)
-            
-    win_rate = int(roundup2(win_count / (win_count + lose_count)) * 100)
+    
+    win_rate = 0
+    if (win_count + lose_count != 0):
+        win_rate = int(roundup2(win_count / (win_count + lose_count)) * 100)
+        
     total_kill = roundup(total_kill / 20)
     total_death = roundup(total_death / 20)
     total_assist = roundup(total_assist / 20)
-    total_kda = roundup2((total_kill + total_assist) / total_death)
+    total_kda = 0
+    if (total_death != 0) :
+        total_kda = roundup2((total_kill + total_assist) / total_death)
+        
     total_calculate = {"win_count" : win_count, "lose_count" : lose_count, 
                     "win_rate" : win_rate, "total_kill" : total_kill, 
                     "total_death" : total_death, "total_assist" : total_assist,

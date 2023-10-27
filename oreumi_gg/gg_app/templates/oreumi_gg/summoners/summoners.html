@@ -231,7 +231,10 @@
             </div>
             <div id="addmatch">
             </div>
-            <button id="addmatch_btn">더보기</button>
+            {% if total_calculate.total_match_count|divisibleby:20 %}
+                <button id="addmatch_btn">더보기</button>
+            {% endif %}
+            
         </section>
         {% include 'oreumi_gg/footer.html' %}
     </body>
