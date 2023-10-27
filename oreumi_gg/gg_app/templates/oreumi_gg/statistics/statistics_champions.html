@@ -234,7 +234,48 @@
         {% comment %} 챔피언별 게임 통계 {% endcomment %}
         <div class="">
             <table>
-
+                <colgroup>
+                    <col width="45">
+                    <col width="*">
+                    <col width="128">
+                    <col width="64">
+                    <col width="150">
+                    <col width="150">
+                    <col width="143">
+                    <col width="65">
+                    <col width="80">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>챔피언</th>
+                        <th>플레이수</th>
+                        <th>평점</th>
+                        <th>승률</th>
+                        <th>게임당 픽률</th>
+                        <th>게임당 벤율</th>
+                        <th>cs</th>
+                        <th>골드</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for champion in champion_statistics %}
+                    <tr>
+                        <td>{{ champion.rank }}</td>
+                        <td class="champion-box">
+                            <img src="{{ champion.champion_img }}" alt="{{ champion.champion_name }}" />
+                            {{ champion.champion_name }}
+                        </td>
+                        <td><p>{{ champion.num_of_plays }}</p></td>
+                        <td><p>{{ champion.rating }}</p></td>
+                        <td><p>{{ champion.win_rate }}</p></td>
+                        <td><p>{{ champion.pick_rate }}</p></td>
+                        <td><p>{{ champion.ban_rate }}</p></td>
+                        <td><p>{{ champion.cs }}</p></td>
+                        <td><p>{{ champion.gold }}</p></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
     </section>

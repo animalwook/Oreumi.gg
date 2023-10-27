@@ -39,7 +39,8 @@ urlpatterns = [
     path('champions/', views.champions, name='champions'),
     path('champions/champions_tier/<str:position>/<str:region>/<str:tier>', views.champion_tier_list, name='champion_tier'),
     path('champions/lotation/', views.lotation_list, name='lotation'),
-    path('champions/statistics_champions/<str:position>/<str:region>/<str:tier>/<str:period>/<str:mode>', views.statistics_champions_list, name='statistics_champions'),
+    # path('champions/statistics_champions/<str:position>/<str:region>/<str:tier>/<str:period>/<str:mode>', views.statistics_champions_list, name='statistics_champions'),
+    path('champions/statistics_champions/',views.statisics_champions_list_2, name="statistics_champions" ),
 
     #인게임 정보
     path('ingame/', views.ingame, name='ingame'),

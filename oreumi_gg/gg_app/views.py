@@ -313,10 +313,12 @@ def champion_tier_list(request, position, region, tier):
     else:
         return render(request, 'oreumi_gg/champions.html', {'error': '페이지를 불러올 수 없습니다.'})
     
+def statisics_champions_list_2(request):
+    render(request, 'oreumi_gg/statistics/statistics_champions.html')
 
 def statistics_champions_list(request, position, region, tier, period, mode):
     #OP.gg URL 생성
-    opgg_url = "https://www.op.gg/champions?region="+region+"&tier="+tier+"&position="+position+"&period="+period+"&mode="+mode
+    opgg_url = "https://www.op.gg/statistics/champions?region="+region+"&tier="+tier+"&position="+position+"&period="+period+"&mode="+mode
     print(opgg_url)
     # HTTP 요청을 보내서 페이지 내용을 가져옵니다.
     response = requests.get(opgg_url,headers={'User-Agent': 'Mozilla/5.0'})
@@ -328,11 +330,11 @@ def statistics_champions_list(request, position, region, tier, period, mode):
         # <tr> 태그를 찾아서 모든 행을 가져옵니다.
         rows = soup.find_all("tr")
 
-        # 헤더 행 제외하고 각 행에서 챔피언의 티어 정보를 추출합니다.
+        # 헤더 행 제외하고 각 행에서 챔피언의 통계 정보를 추출합니다.
         champion_statistics = []
-        for row in rows[1:]:  
+        for row in rows[6:]:  
             columns = row.find_all("td")
-            rank = columns[0].find('span').text.strip()
+            rank = columns[0].text.strip()
             champion_img = columns[1].find('img')['src']
             champion_name = columns[1].find('strong').text.strip()
             print(champion_name)
@@ -343,7 +345,7 @@ def statistics_champions_list(request, position, region, tier, period, mode):
             ban_rate = columns[6].text.strip()
             cs = columns[7].text.strip()
             gold = columns[8].text.strip()
-        
+            
             champion_statistics.append({
                 'rank' : rank,
                 'champion_img': champion_img,
@@ -357,9 +359,11 @@ def statistics_champions_list(request, position, region, tier, period, mode):
                 'gold': gold,
             })
         print(champion_statistics[0].items())
-        return render(request, 'oreumi_gg/statistics_champions.html', {'champion_statistics': champion_statistics})
+        return render(request, 'oreumi_gg/statistics/statistics_champions.html', {'champion_statistics': champion_statistics})
     else:
-        return render(request, 'oreumi_gg/statistics_champions.html', {'error': '페이지를 불러올 수 없습니다.'})
+        return render(request, 'oreumi_gg/statistics/statistics_champions.html', {'error': '페이지를 불러올 수 없습니다.'})
+
+
 
 def lotation_list(request):
     champion_json_file = champion_file
