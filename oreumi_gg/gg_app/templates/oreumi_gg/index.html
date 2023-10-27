@@ -61,7 +61,7 @@
                                 <span style="width:44px"><img src="{% static 'img/community/tri.png' %}" alt="" width="16"><span>{{post.net_count}}</span></span>
                                 
                                 <div class="">
-                                    <a href="{% url 'gg_app:post_detail' post.id %}"><span>{{post.title}}</span></a><em>{{post.comment_count}}</em>
+                                    <a href="{% url 'gg_app:post_detail' post.id %}"><span>{{post.title}}</span></a><em>[{{post.comment_count}}]</em>
                                     <div class="css-puqfyf ev5eu1p8">
                                         <span>{{post.category}}</span>
                                         <span style="position:relative" class="">{{post.updated_at}}</span>
