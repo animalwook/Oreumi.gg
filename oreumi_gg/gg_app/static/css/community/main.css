@@ -1780,7 +1780,6 @@ input, select, textarea {
 	.button {
 		cursor: pointer;
 		background-color: #5383e8;
-		background-image: url("images/bg01.png");
 		border-radius: 0.4em;
 		text-align: center;
 		box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.15);
@@ -2467,7 +2466,6 @@ input, select, textarea {
 			.button,
 			button {
 				display: inline-block;
-				padding: 0.5em 2em 0.5em 2em;
 			}
 
 				input[type="button"].small,

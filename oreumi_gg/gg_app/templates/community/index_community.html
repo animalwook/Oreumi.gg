@@ -11,64 +11,39 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{% static 'css/community/main.css' %}" />
+		<link rel="stylesheet" href="{% static 'css/community/post_list.css' %}" />
+
 		<link rel="icon" href="{% static 'img\oreumi_gg\favicon.ico'%}" />
-		<title>게시판</title>
+		<title>OREUMI.GG - 커뮤니티</title>
 
 	</head>
 	<body class="is-preload">
 
 		<!-- Content -->
-			<div id="content">
-				<div class="inner">
+		<div id="content">
+			<div class="inner">
 
-					<!-- Post -->
-						<article class="box post post-excerpt">
-							<header>
+				<!-- Post -->
+				{% block content %}
 
-								<h2><a href="#">1</a></h2>
-								<h2><a href="#">2</a></h2>
-
-								<h2><a href="#">3</a></h2>
-
-								<h2><a href="#">4</a></h2>
-
-								<h2><a href="#">4</a></h2>
-
-								<h2><a href="#">5</a></h2>
-
-								<h2><a href="#">6</a></h2>
-
-								<h2><a href="#">7</a></h2>
-
-								<h2><a href="#">7</a></h2>
-
-								<h2><a href="#">8</a></h2>
-
-								<h2><a href="#">9</a></h2>
-
-							</header>
-
-						</article>
-
-					<!-- Post -->
-
-
-					<!-- Pagination -->
-						<div class="pagination">
-							<!--<a href="#" class="button previous">Previous Page</a>-->
-							<div class="pages">
-								<a href="#" class="active">1</a>
-								<a href="#">2</a>
-								<a href="#">3</a>
-								<a href="#">4</a>
-								<span>&hellip;</span>
-								<a href="#">20</a>
-							</div>
-							<a href="#" class="button next">Next Page</a>
+				{% endblock %}
+				<!-- Pagination -->
+					<div class="pagination">
+						<!--<a href="#" class="button previous">Previous Page</a>-->
+						<div class="pages">
+							<a href="#" class="active">1</a>
+							<a href="#">2</a>
+							<a href="#">3</a>
+							<a href="#">4</a>
+							<span>&hellip;</span>
+							<a href="#">20</a>
 						</div>
+						<a href="#" class="button next">Next Page</a>
+					</div>
 
-				</div>
 			</div>
+		</div>
+
 			<!-- 사이드부분 -->
 			{% include 'community/sidebar.html'%}
 			
