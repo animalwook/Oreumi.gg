@@ -5,42 +5,49 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="{% static 'css/header.css' %}">
+        <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+        <link rel="stylesheet" href="{% static 'css/footer_gray.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static "css/reset.css" %}?{% now 'U' %}">
+        <link rel="stylesheet" href="{% static 'css/summoners.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static "css/matches.css" %}?{% now 'U' %}">
-        <link rel="stylesheet" href="{% static 'css/sommoners.css' %}">
+        <link rel="icon" href="{%static 'img\oreumi_gg\favicon.ico'%}">
         <title>소환사 정보</title>
     </head>
     <body>
         {% include 'oreumi_gg/header.html' %}
+        {% include 'oreumi_gg/nav.html' %}
+        
+        <section class="summoner_section" style="margin-top: 150px;">
         {% include 'oreumi_gg/summoners/summoners_article_1.html' %}
         {% include 'oreumi_gg/summoners/summoners_rank.html' %}
-        <div class="section">
             <div class="game-queue">
                 <ul>
-                    <li class="first-type game-type" selected="SELECTED">
+                    <li class="first-type game-type selected">
                         <button value="TOTAL">전체</button>
                     </li>
-                    <li class="game-type"> 
+                    <li class="game-type notselected"> 
                         <button value="SOLORANKED">솔로랭크</button>
                     </li>
-                    <li class="game-type"> 
+                    <li class="game-type notselected"> 
                         <button value="FLEXRANKED">자유랭크</button>
                     </li>
-                    <li class="game-type"> 
+                    <li class="game-type notselected"> 
                         <button value="NORMAL">일반 (비공개 선택)</button>
                     </li>
-                    <li class="game-type"> 
+                    <li class="game-type notselected"> 
                         <button value="ARAM">칼바람 나락</button>
                     </li>
                 </ul>
             </div>
             <div class="match_statics">
                 <div id="win_lose">
-                    <span id="total_matchcount">20전</span>
+                    <span id="total_matchcount">{{ total_calculate.total_match_count }}전</span>
                     <span id="total_wincount">{{ total_calculate.win_count }}승</span>
                     <span id="total_losecount">{{ total_calculate.lose_count }}패</span>
                     <div id="kda">
                         <div class="chart">
+                            <span>승률</span>
                             <div class="text">
                                 <strong id="total_winrate">{{ total_calculate.win_rate }}%</strong>
                             </div>
@@ -80,7 +87,9 @@
                                             <div class="champion">
                                                 <div class="icon">
                                                     <a href="" rel="noreferrer">
-                                                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{ match.search_player_champ }}.png" width="48" height="48">
+                                                        {% with champ_image="img/champion_square/"|add:match.search_player_champ|add:".png" %}
+                                                            <img src="{% static champ_image %}" width="48" height="48">
+                                                        {% endwith %}
                                                         <span class="champion-level">{{ match.search_player_champlevel }}</span>
                                                     </a>  
                                                 </div>
@@ -98,14 +107,23 @@
                                                 </div>
                                                 <div class="runes">
                                                     <div class="rune">
-                                                        <div class style="position: relative;">
-                                                            <img src="https://ddragon.canisback.com/img/{{ match.search_player_main_rune }}" width="22" height="22">
-                                                        </div>
+                                                        {% if match.search_player_main_rune %}
+                                                            <div class style="position: relative;">
+                                                                    <img src="https://ddragon.canisback.com/img/{{ match.search_player_main_rune }}" width="22" height="22">
+                                                            </div>
+                                                        {% else %}
+                                                            <div class="augment augment--empty"></div>
+                                                        {% endif %} 
                                                     </div>
                                                     <div class="rune">
-                                                        <div class style="position: relative;">
-                                                            <img src="https://ddragon.canisback.com/img/perk-images/Styles/{{ match.search_player_sub_rune }}.png" width="22" height="22">
-                                                        </div>
+                                                        {% if match.search_player_sub_rune %}
+                                                            <div class style="position: relative;">
+                                                                <img src="https://ddragon.canisback.com/img/perk-images/Styles/{{ match.search_player_sub_rune }}.png" width="22" height="22">
+                                                            </div>
+                                                        {% else %}
+                                                            <div class="augment augment--empty"></div>
+                                                        {% endif %}
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -140,13 +158,15 @@
                                             <div class="items">
                                                 <ul>
                                                     {% for item in match.search_player_item %}
-                                                        <li style="list-style-type: none;">
-                                                            <div class style="position: relative;">
-                                                                {% if item %}
-                                                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/{{ item }}.png" width="22" height="22">
-                                                                {% endif %}
-                                                            </div>
-                                                        </li>
+                                                        {% if item %}
+                                                            <li style="list-style-type: none;">
+                                                                <div class style="position: relative;">
+                                                                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/{{ item }}.png" width="22" height="22">
+                                                                </div>
+                                                            </li>
+                                                        {% else %}
+                                                            <li></li>
+                                                        {% endif %}
                                                     {% endfor %}
                                                 </ul>
                                             </div>
@@ -158,7 +178,9 @@
                                                 {% if forloop.counter <= 5 %}
                                                     <li class="team" style="list-style-type: none;">
                                                         <div class="team_icon" style="position: relative;">
-                                                            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{ value.0.championname }}.png" width="16" height="16">
+                                                            {% with champ_image="img/champion_square/"|add:value.0.championname|add:".png" %}
+                                                                <img src="{% static champ_image %}" width="16" height="16">
+                                                            {% endwith %}
                                                         </div>
                                                         <div class="name">
                                                             <a href="/summoners/kr/{{ value.0.summonername }}" rel="noreferrer">
@@ -175,7 +197,9 @@
                                                     {% if value.0.championname %}
                                                         <li class="team" style="list-style-type: none;">
                                                             <div class="team_icon" style="position: relative;">
-                                                                <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{ value.0.championname }}.png" width="16" height="16">
+                                                                {% with champ_image="img/champion_square/"|add:value.0.championname|add:".png" %}
+                                                                    <img src="{% static champ_image %}" width="16" height="16">
+                                                                {% endwith %}
                                                             </div>
                                                             <div class="name">
                                                                 <a href="/summoners/kr/{{ value.0.summonername }}" rel="noreferrer">
@@ -207,11 +231,15 @@
             </div>
             <div id="addmatch">
             </div>
-            <button id="addmatch_btn">더보기</button>
-        </div>
+            {% if total_calculate.total_match_count|divisibleby:20 %}
+                <button id="addmatch_btn">더보기</button>
+            {% endif %}
+            
+        </section>
+        {% include 'oreumi_gg/footer.html' %}
     </body>
     <script src="{% static "js/matches.js" %}"></script>
     <script src="{% static "js/detail_match.js" %}"></script>
-    
+    <script src="{% static "js/tap_match.js" %}"></script>
     
 </html>

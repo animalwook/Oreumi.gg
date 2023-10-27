@@ -70,7 +70,7 @@ a {
     color: #202d37;
 }
 
-.section {
+section {
     display: inline-block;
     font-size: 12px;
     width: 740px;
@@ -179,6 +179,10 @@ a {
     display: block;
     width: 48px;
     height: 48px;
+}
+
+.game-match .info > div:nth-of-type(1) .champion .runes .rune .augment--empty {
+    background-color: #b3cdff;
 }
 
 .game-match .info > div:nth-of-type(1) .champion .icon img{
@@ -310,6 +314,14 @@ a {
 .game-match .info > div:nth-of-type(2) .items ul {
     display: flex;
     list-style: none;
+}
+
+.game-match .info > div:nth-of-type(2) .items ul li {
+    width: 22px;
+    height: 22px;
+    margin-left: 2px;
+    background-color: #9aa4af;
+    border-radius: 4px;
 }
 
 .game-match .info > div:nth-of-type(2) .items ul li img {
@@ -449,6 +461,17 @@ a {
     position: relative;
     width: 88px;
     height: 88px;
+}
+
+.match_statics #win_lose #kda .chart span {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 88px;
+    height: 88px;
+    text-align: center;
+    font-weight: bolder;
+    color: black;
 }
 
 .match_statics #win_lose #kda .chart .text {
@@ -717,6 +740,11 @@ a {
     background-color: #fff;
 }
 
+.overview-player td.damage .progress .fill {
+    height: 100%;
+    background-color: #e84057;
+}
+
 .overview-player td.damage .taken {
     text-align: center;
     color: #758592;
@@ -730,6 +758,11 @@ a {
     height: 6px;
     margin: 4px auto 0px 8px;
     background-color: #fff;
+}
+
+.overview-player td.damage .taken_progress .fill {
+    height: 100%;
+    background-color: #9aa4af;
 }
 
 .overview-player td.ward {
@@ -842,6 +875,11 @@ a {
     border-bottom-color: #ffd8d9;
 }
 
+.teamblue thead th .result {
+    margin-right: 4px;
+    font-weight: bold;
+}
+
 .teamred thead th .result {
     margin-right: 4px;
     font-weight: bold;
@@ -882,16 +920,11 @@ a {
     height: 28px;
 }
 
-.first-type:nth-of-type(1) {
+.game-type:nth-of-type(1) {
     margin-left: 0;
 }
 
-.first-type {
-    margin-left: 4px;
-    vertical-align: top;
-}
-
-.first-type button {
+.selected button {
     display: block;
     padding: 4px 12px;
     border-radius: 4px;
@@ -910,7 +943,7 @@ a {
     vertical-align: top;
 }
 
-.game-type button {
+.notselected button {
     display: block;
     padding: 4px 12px;
     border-radius: 4px;
@@ -923,4 +956,183 @@ a {
     color: #202d37;
     box-sizing: border-box;
     height: 28px;
+}
+
+.overview-arena {
+    width: 100%;
+    table-layout: fixed;
+    background-color: #fff;
+}
+
+.overview-arena:first-of-type {
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+.overview-arena thead {
+    height: 32px;
+    color: #9aa4af;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+    border-bottom: 1px solid;
+}
+
+.overview-arena.overview-arena--result-1 thead th {
+    border-bottom-color: #d5e3ff;
+}
+
+.overview-arena.overview-arena--result-1 thead th.placement b {
+    margin-right: 8px;
+}
+
+.overview-arena.overview-arena--result-1 thead th b {
+    color: #4171d6;
+    font-weight: bold;
+}
+
+.overview-arena thead th {
+    height: 32px;
+    color: #9aa4af;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+    border-bottom: 1px solid;
+    padding: 0px 4px;
+}
+
+.overview-arena thead th:last-of-type {
+    padding-right: 8px;
+}
+
+.overview-arena thead th:first-of-type {
+    text-align: left;
+    padding-left: 8px;
+}
+
+.overview-arena.overview-arena.overview-arena--result-1 td {
+    background-color: #ecf2ff;
+}
+
+.overview-arena.overview-arena.overview-arena--result-2 td {
+    background-color: #ecf2ff;
+}
+
+.overview-arena.overview-arena.overview-arena--result-3 td {
+    background-color: #fff1f3;
+}
+
+.overview-arena.overview-arena.overview-arena--result-4 td {
+    background-color: #fff1f3;
+}
+
+.overview-arena td.augments > div {
+    display: flex;
+    flex-flow: column wrap;
+    gap: 2px;
+    height: 32px;
+}
+
+.overview-arena td.augments > div .augment {
+    width: 15px;
+    height: 15px;
+    background: black;
+    border: 50%;
+}
+
+.overview-arena td.augments > div .augment--empty {
+    background-color: #b3cdff;
+    border-radius: 50%;
+}
+
+.overview-player td.gold {
+    text-align: center;
+    color: #758592;
+    font-size: 11px;
+    font-family: Roboto, sans-serif;
+}
+
+.overview-arena-other {
+    width: 100%;
+    table-layout: fixed;
+    background-color: #fff;
+}
+
+.overview-arena-other:not(:first-of-type) {
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: #ebeef1;
+}
+
+.overview-arena-other thead {
+    height: 32px;
+    color: #9aa4af;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+    border-bottom: 1px solid;
+}
+
+.overview-arena-other.overview-arena--result-2 thead th {
+    border-bottom-color: #d5e3ff;
+}
+
+.overview-arena-other thead th:first-of-type {
+    text-align: left;
+    padding-left: 8px;
+}
+
+.overview-arena-other thead th {
+    height: 32px;
+    color: #9aa4af;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+    border-bottom: 1px solid;
+    padding: 0px 4px;
+}
+
+.overview-arena-other.overview-arena--result-2 thead th b {
+    color: #4171d6;
+    font-weight: bold;
+}
+
+.overview-arena-other thead th.placement b {
+    margin-right: 8px;
+}
+
+.overview-arena-other thead th:last-of-type {
+    padding-right: 8px;
+}
+
+.overview-arena-other.overview-arena--result-3 thead th {
+    border-bottom-color: #ffd8d9;
+}
+
+.overview-arena-other.overview-arena--result-3 thead th b {
+    color: #d31a45;
+    font-weight: bold;
+}
+
+.overview-arena-other.overview-arena--result-4 thead th {
+    border-bottom-color: #ffd8d9;
+}
+
+.overview-arena-other.overview-arena--result-4 thead th b {
+    color: #d31a45;
+    font-weight: bold;
+}
+
+section .no-data {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    padding: 96px 0 40px;
+    text-align: center;
+    background-image: url(https://s-lol-web.op.gg/images/icon/icon-nodata.svg);
+    -webkit-background-position: 50% 40px;
+    background-position: 50% 40px;
+    background-repeat: no-repeat;
+    background-color: #fff;
+    font-size: 14px;
+    color: #9aa4af;
 }

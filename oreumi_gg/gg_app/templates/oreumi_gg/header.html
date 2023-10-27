@@ -13,7 +13,7 @@
 
     <!-- index에서 표시되지 않는 검색창 -->
 
-    {% if request.path == '/champions/' or request.path == '/community/' or request.path == '/statistics/' or request.path == '/leaderboards/' %}
+    {% if request.path != '/' %}
     <form method="POST" name="search_form" action="{% url 'gg_app:summoners_info_form' %}">
         {% csrf_token %}
         <div class="input_group">
