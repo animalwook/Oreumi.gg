@@ -23,16 +23,17 @@ urlpatterns = [
     #커뮤니티, 글 작성
     #post_list가 첫화면이고 base_community는 block을 이용한 템플릿제공
     path('community/', views.community, name='community'),
-    path('write/', views.post_write, name='post_write'), 
-    path('post/<int:post_id>/', views.post_detail, name='post_detail'),      # 새로 추가한 URL 패턴), <int:post_id> 부분은 URL 패턴에서 변수를 캡처하는 부분
-    path('post_edit/<int:post_id>/', views.post_edit, name='post_edit'),     # post_edit 수정 부분
-    path('post_delete/<int:post_id>/',views.post_delete, name="post_delete"),
+    path('community/<str:category>/<str:order_by>/', views.community, name='community'),
 
-    path('post/<int:post_id>/add_comment/', views.add_comment, name='add_comment'),
-    path('posts/<str:category>/<str:order_by>/', views.post_list, name='post_list'),
-    path("search/", views.post_search, name="post_search"),
-    path('post/<int:post_id>/like/', views.post_like, name='post_like'),            #추천 비추천
-    path('post/<int:post_id>/dislike/', views.post_dislike, name='post_dislike'),
+    path('community/post/<int:post_id>/', views.post_detail, name='post_detail'),      # 새로 추가한 URL 패턴), <int:post_id> 부분은 URL 패턴에서 변수를 캡처하는 부분
+    path('community/write/', views.post_write, name='post_write'), 
+    path('community/post_edit/<int:post_id>/', views.post_edit, name='post_edit'),     # post_edit 수정 부분
+    path('community/post_delete/<int:post_id>/',views.post_delete, name="post_delete"),
+
+    path('community/post/<int:post_id>/add_comment/', views.add_comment, name='add_comment'),
+    path('community/post/<int:post_id>/like/', views.post_like, name='post_like'),            #추천 비추천
+    path('community/post/<int:post_id>/dislike/', views.post_dislike, name='post_dislike'),
+    path("community/search/", views.post_search, name="post_search"),
 
     
     #챔피언 티어 및 로테이션 정보

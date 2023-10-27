@@ -20,14 +20,14 @@
 			<!-- Nav -->
 				<nav id="nav">
 					<ul>
-						<li class="current"><a data-active="false" href="{% url 'gg_app:post_list' 'default' 'default' %}">전체</a></li>
-						<li><a data-active="false" href="{% url 'gg_app:post_list' 's' 'default' %}">공지사항</a></li>
-						<li><a data-active="false" href="{% url 'gg_app:post_list' 'tip' 'default' %}">팁과 노하우</a></li>
-						<li><a data-active="false" href="{% url 'gg_app:post_list' 'free' 'default' %}">자유게시판</a></li>
-						<li><a data-active="false" href="{% url 'gg_app:post_list' 'art' 'default' %}">팬 아트</a></li>
-						<li><a data-active="false" href="{% url 'gg_app:post_list' 'lfg' 'default' %}">소환사의 협곡</a></li>
-						<li><a data-active="false" href="{% url 'gg_app:post_list' 'aram' 'default' %}">칼바람 나락</a></li>
-						<li><a data-active="false" href="{% url 'gg_app:post_list' 'tft' 'default' %}">전략적 팀 전투</a></li>
+						<li class="current"><a data-active="false" href="{% url 'gg_app:community' 'default' 'default' %}">전체</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:community' 's' 'default' %}">공지사항</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:community' 'tip' 'default' %}">팁과 노하우</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:community' 'free' 'default' %}">자유게시판</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:community' 'art' 'default' %}">팬 아트</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:community' 'lfg' 'default' %}">소환사의 협곡</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:community' 'aram' 'default' %}">칼바람 나락</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:community' 'tft' 'default' %}">전략적 팀 전투</a></li>
 					</ul>
 				</nav>
 
@@ -57,7 +57,7 @@
 						<f2>Recent Posts</f2>
 					</header>
 					<ul>
-					{% for post in posts|slice:":4" %}
+					{% for post in recent_posts|slice:":4" %}
 						<li><a href="{% url 'gg_app:post_detail' post.id %}">{{post.title}}</a></li>
 					{%endfor%}
 				</ul>
