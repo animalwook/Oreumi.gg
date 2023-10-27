@@ -241,7 +241,7 @@ function display(data) {
     total_matchcount.textContent = `${document.querySelectorAll('.game-item').length}전`
     let winCount = parseInt(total_wincount.textContent) + data.total_calculate.win_count;
     let loseCount = parseInt(total_losecount.textContent) + data.total_calculate.lose_count;
-    let winRate = (winCount / (winCount + loseCount)).toFixed(2) * 100;
+    let winRate = ((winCount / (winCount + loseCount))* 100).toFixed(2);
     let killCount = parseFloat(total_kill.textContent) + data.total_calculate.total_kill;
     let assistCount = parseFloat(total_assist.textContent) + data.total_calculate.total_assist;
     let deathCount = parseFloat(total_death.textContent) + data.total_calculate.total_death;
@@ -249,7 +249,7 @@ function display(data) {
     let killPart = parseInt((total_killpart.textContent).split(" ")[1]) + data.total_calculate.total_kill_part;
     total_wincount.textContent = winCount + "승";
     total_losecount.textContent = loseCount + "패";
-    total_winrate.textContent = winRate + "%";
+    total_winrate.textContent = parseInt(winRate) + "%";
     total_kill.textContent = (killCount / 2).toFixed(1);
     total_death.textContent = (deathCount / 2).toFixed(1);
     total_assist.textContent = (assistCount / 2).toFixed(1);
