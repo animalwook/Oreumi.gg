@@ -42,7 +42,8 @@ urlpatterns = [
     path('champions/statistics_champions/<str:position>/<str:region>/<str:tier>/<str:period>/<str:mode>', views.statistics_champions_list, name='statistics_champions'),
 
     #인게임 정보
-    path('ingame/', views.ingame_info, name='ingame'),
+    path('ingame/', views.ingame, name='ingame'),
+    path('ingame/<str:nickname>', views.ingame_info, name='ingame_info'),
     
     # 전적 검색
     path('summoners_form', views.summoners_info_form, name='summoners_info_form'),
