@@ -65,13 +65,13 @@
             <span style="color: #f65c1f;">[  나  ]{{ comment.author }} : </span>
             <span class="text">{{ comment.text }}</span>
           {% else %}
-            <span class="author"> {{ comment.author }} : </span>
+            <span > {{ comment.author }} : </span>
             <span class="text">{{ comment.text }}</span>
           {% endif%}
           
         </li>
         {% empty %}
-        <li>댓글이 없습니다.</li>
+        <li style="  list-style-type: none; ">댓글이 없습니다.</li>
         {% endfor %}
       </ul>
     </div>
@@ -89,7 +89,7 @@
   <div class="info">
     <span class="date"><span class="month">{{post.updated_at|date:"F"}}<span>y</span></span> <span class="day">{{post.updated_at|date:"d"}}</span><span class="year">, {{post.updated_at|date:"y"}}</span></span>
     <ul class="stats">
-      <li><a href="#" class="icon fa-comment">댓글</a></li>
+      <li><a href="#" class="icon fa-comment">{{post.comment_count}}</a></li>
       <li><a href="{% url 'gg_app:post_like' post.id %}" class="icon fa-heart">{{ post.up }}</a></li>
       <li><a href="{% url 'gg_app:post_dislike' post.id %}" class="fas fa-heart-broken">{{ post.down }}</a></li>
       <li><a href="#" class="icon fa-eye" style="pointer-events: none;">{{ post.view }}</a></li>

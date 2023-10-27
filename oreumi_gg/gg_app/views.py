@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.db.models import Q
 
-from .models import BlogPost, Comment, UserLiked
+from .models import BlogPost, Comment
 from .forms import BlogPostForm, CommentForm
 from .lol_match import match
 from .ingame_data import find_id, find_league_info, find_spectator_info
@@ -99,8 +99,7 @@ def community(request,category="default", order_by="default"):
             category_tag='칼바람 나락'
         elif category == 'tft':
             category_tag='전략적 팀 전투'
-        print(11111111111111)
-        print(category_tag)
+
         posts = posts.filter(Q(category__icontains=category_tag))
 
     context = {'posts': posts, 'recent_posts':recent_posts,'category':category, 'tag_on':tag_on }
@@ -108,7 +107,7 @@ def community(request,category="default", order_by="default"):
     return render(request,"community/post_list.html", context)
 
 # 게시글 작정
-# @login_required
+@login_required
 def post_write(request):
 
     if request.method == 'POST':
@@ -116,6 +115,7 @@ def post_write(request):
         if form.is_valid(): # 유효성 검사(필수과정)
             # 현재 로그인한 사용자를 게시물의 저자로 설정
             post = form.save(commit=False)
+            post.category = request.POST['category']
             post.author = request.user.nickname  # 사용자의 닉네임으로 설정
             post.save()
             post_id = post.id
@@ -131,7 +131,7 @@ def post_write(request):
 
 
 # 게시글 수정
-# @login_required
+@login_required
 def post_edit(request, post_id):        
     post = get_object_or_404(BlogPost, pk=post_id)
 
@@ -143,10 +143,10 @@ def post_edit(request, post_id):
     else:
         form = BlogPostForm(instance=post)
 
-    return render(request, 'community/post_edit.html', {'form': form, 'post_id': post.id})
+    return render(request, 'community/post_write.html', {'form': form, 'category':post.category, 'post_id': post.id})
 
 # 게시글 삭제
-# @login_required
+@login_required
 def post_delete(request, post_id):
     post = get_object_or_404(BlogPost, pk=post_id)
     if request.method == 'GET':
@@ -161,7 +161,8 @@ def post_detail(request, post_id):
     try:
         post = get_object_or_404(BlogPost, pk=post_id)  # 게시물 가져오기, 없으면 404 에러 발생
         comments = Comment.objects.filter(post=post_id).order_by('-created_date')
-
+        post.view +=1
+        post.save()
         context = {
             'post': post, 
             'comments':comments,
@@ -174,6 +175,10 @@ def post_detail(request, post_id):
         if post_id == 0 :
                 return  redirect('gg_app:community')
         comments = Comment.objects.filter(post=post_id).order_by('-created_date')
+        post = get_object_or_404(BlogPost, pk=post_id)
+        post.view +=1
+        post.save()
+
         context = {
             'post': post, 
             'comments':comments,
@@ -188,6 +193,8 @@ def add_comment(request, post_id):
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
+            post.comment_count +=1
+            post.save()
             comment = form.save(commit=False)
             comment.post = post
             comment.author = request.user.nickname      # 댓글작성자: 닉네임으로 표시하기
@@ -209,16 +216,29 @@ def post_search(request):
 # 추천, 비추천 기능
 @login_required
 def post_like(request, post_id):
-    post = BlogPost.objects.get(pk=post_id)
-    post.up += 1
-    post.save()
+    post = get_object_or_404(BlogPost, id=post_id)
+    if request.user in post.up_list.all():
+        post.up_list.remove(request.user)
+        post.up -= 1
+        post.save()
+    else:
+        post.up_list.add(request.user)
+        post.up += 1
+        post.save()
     return redirect('gg_app:post_detail', post_id=post_id)
+
 
 @login_required
 def post_dislike(request, post_id):
-    post = BlogPost.objects.get(pk=post_id)
-    post.down += 1
-    post.save()
+    post = get_object_or_404(BlogPost, id=post_id)
+    if request.user in post.down_list.all():
+        post.down_list.remove(request.user)
+        post.down -= 1
+        post.save()
+    else:
+        post.down_list.add(request.user)
+        post.down += 1
+        post.save()
     return redirect('gg_app:post_detail', post_id=post_id)
 
 

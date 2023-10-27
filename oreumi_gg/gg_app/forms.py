@@ -9,8 +9,13 @@ class BlogPostForm(forms.ModelForm):
         self.fields["content"].required = False        
     class Meta:
         model = BlogPost
-        fields = ("title", "content",'category')
+        fields = ("title", "content")
+        labels = {
+            'title':'',
+            'content':''
+        } 
         widgets = {
+            "title":forms.TextInput(attrs={'class': 'form-control', 'placeholder':'제목을 입력해주세요.'}),
             "content": CKEditor5Widget(
                 attrs={"class": "django_ckeditor_5"}, config_name="extends",
             )
