@@ -92,9 +92,14 @@ def find_spectator_info(user_id):
     banned_champion_names = []
     for banned_champion in banned_champions:
         champion_id = banned_champion["championId"]
-        for data in champion_data["data"]:
-            if champion_id == champion_data["data"][data]["key"]:
-                banned_champion_names.append(data)
+        champion_id = str(champion_id)
+        if champion_id == "-1":
+            banned_champion_names.append("")  # 빈 문자열 추가
+        else:
+            for data in champion_data["data"]:
+                if champion_data["data"][data]["key"] == champion_id:
+                    champion_name = data
+                    banned_champion_names.append(champion_name)
 
     return user_spectator_info_arr, banned_champion_names
         

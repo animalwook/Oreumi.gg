@@ -34,7 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for user_spectator_info in user_spectator_info_arr|slice:":5" %}
+                        {% for user_spectator_info, banned_champion in blue_data %}
                             <tr class="overview-player">
                                 <td class="champion">
                                     <a rel="noreferrer">
@@ -60,19 +60,20 @@
                                     </div>
                                 </td>
                                 <td class="name">
-                                    <a href="/summoners/kr/user_spectator_info.nickname}">{{user_spectator_info.nickname}}</a>
+                                    <a href="/summoners/kr/{{ user_spectator_info.nickname }}">{{ user_spectator_info.nickname }}</a>
                                 </td>
-                
                                 <td class = "tier">
-                                    <p>{{user_spectator_info.tier}}</p>
-                                    <p>{{user_spectator_info.rank}}</p>
+                                    <p>{{ user_spectator_info.tier }}</p>
+                                    <p>{{ user_spectator_info.rank }}</p>
                                 </td>
-                
                                 <td class = "rank_odds">
-                                    <p>{{user_spectator_info.rank_odds}}</p>
+                                    <p>{{ user_spectator_info.rank_odds }}</p>
+                                </td>
+                                <td class = "banned_champion">
+                                    <img src="{% static 'img/champion_square/' %}{{ banned_champion }}.png" alt="{{ banned_champion }}" width="24" style="display: block; margin: 0 auto;">
                                 </td>
                             </tr>
-                        {%endfor%}
+                        {% endfor %}
                     </tbody>
                 </table>
                 <div class="summary">
@@ -97,7 +98,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for user_spectator_info in user_spectator_info_arr|slice:"5:10" %}
+                        {% for user_spectator_info, banned_champion in red_data %}
                             <tr class="overview-player">
                                 <td class="champion">
                                     <a rel="noreferrer">
@@ -123,19 +124,20 @@
                                     </div>
                                 </td>
                                 <td class="name">
-                                    <a href="/summoners/kr/user_spectator_info.nickname}">{{user_spectator_info.nickname}}</a>
+                                    <a href="/summoners/kr/{{ user_spectator_info.nickname }}">{{ user_spectator_info.nickname }}</a>
                                 </td>
-                
                                 <td class = "tier">
-                                    <p>{{user_spectator_info.tier}}</p>
-                                    <p>{{user_spectator_info.rank}}</p>
+                                    <p>{{ user_spectator_info.tier }}</p>
+                                    <p>{{ user_spectator_info.rank }}</p>
                                 </td>
-                
                                 <td class = "rank_odds">
-                                    <p>{{user_spectator_info.rank_odds}}</p>
+                                    <p>{{ user_spectator_info.rank_odds }}</p>
+                                </td>
+                                <td class = "banned_champion">
+                                    <img src="{% static 'img/champion_square/' %}{{ banned_champion }}.png" alt="{{ banned_champion }}" width="24" style="display: block; margin: 0 auto;">
                                 </td>
                             </tr>
-                        {%endfor%}
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
