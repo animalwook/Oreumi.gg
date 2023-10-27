@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+{% load static %}
+
+<!--
+	Striped by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'css/community/main.css' %}" />
+		<link rel="stylesheet" href="{% static 'css/community/post_list.css' %}" />
+
+		<link rel="icon" href="{% static 'img\oreumi_gg\favicon.ico'%}" />
+		<title>OREUMI.GG - 커뮤니티</title>
+
+	</head>
+	<!-- 여기가 아니라 post_list가 메인 -->
+		<!-- 여기가 아니라 post_list가 메인 -->
+			<!-- 여기가 아니라 post_list가 메인 -->
+				<!-- 여기가 아니라 post_list가 메인 -->
+	<body class="is-preload">
+
+		<!-- Content -->
+		<div id="content">
+			<div class="inner">
+
+				<!-- Post -->
+				{% block content %}
+
+				{% endblock %}
+				<!-- Pagination -->
+
+
+			</div>
+		</div>
+
+			<!-- 사이드부분 -->
+			{% include 'community/sidebar.html'%}
+			
+			<!-- 헤더 로고와 로그인부분 -->
+			<div class="communtityTitle">
+				<a class="main_link" href="{% url 'gg_app:index' %}"><img class="main_logo" src="{% static 'img/oreumi_gg/main_logo.png' %}" alt="logo_button" /></a>
+				
+				{% if user.is_authenticated %}
+				<form action="{%url 'account_login' %}" method="post">
+					{% csrf_token %}
+					<a class="auth_link" href="{% url 'account_logout'%}">로그아웃</a>
+				</form>
+			
+				{% else %}
+				<li class="nav-item">
+					<a class="auth_link" href="#" data-toggle="modal" data-target="#login"> 로그인 </a>
+					<div class="modal" id="login" style="display: none">
+						<div class="modal-dialog-xl">
+							<div class="modal-body">{% include 'account/login.html' %}</div>
+						</div>
+					</div>
+				</li>
+			
+				{% endif %}
+				<div class="modal-background" id="modal-background" style="display: none"></div>
+			</div>
+
+	<!-- Scripts -->
+	<script src="{% static  'js/community/jquery.min.js' %}"></script>
+	<script src="{% static  'js/community/browser.min.js' %}"></script>
+	<script src="{% static  'js/community/breakpoints.min.js' %}"></script>
+	<script src="{% static  'js/community/util.js' %}"></script>
+	<script src="{% static  'js/community/main.js' %}"></script>
+	</body>
+	
+</html>

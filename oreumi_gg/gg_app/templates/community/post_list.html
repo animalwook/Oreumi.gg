@@ -1,42 +1,91 @@
 <!-- 커뮤니티 첫 페이지 -->
+{% extends 'community/base_community.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block content %}
+<!-- 포스 위쪽 정렬 메뉴 -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OREUMI.GG - 커뮤니티</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-</head>
-
-<body>
-    <main>
+<article class="box post post-excerpt">
+    <header>
         <div class="board_wrap">
             <div class="board_title">
-                <strong>전체</strong>
-                <!-- <p>리그오브레전드</p> -->
-                <div class="posting_write">
-                    <a href="{% url 'gg_app:post_write' %}" class="write_button">글쓰기</a> <!-- 글쓰기 누르면 로그인 후 글 작성 -->
-                </div>
-            </div>
-            <div class="board_list_wrap">
-                {% for post in posts %} <!-- views 에서 넘겨 받은 변수 -->
-                <ul>
-                    <span>{{post.net_count}}</span> <!-- 추천과 비추천 합산 -->
-                    <span><a href="{% url 'gg_app:post_detail' post.id %}">{{post.title}}</a></span>
-                    <!-- 임시 버튼 누르면 상세 페이지(post_content.html) 이동하기, 상세페이지 안에서 up, down 기능 -->
-                    <span>{{post.author}}</span>
-                    <span>{{post.updated_at}}</span>
-                    <span>{{post.view}}</span>
-                </ul>
-                {% endfor %}
+                <div class="tag-group">
+                    <div class="post-tag ">
+                        <a data-active="true" href="{% url 'gg_app:post_list' category 'update' %}">
+                            {% if tag_on == 'update' %}
+                            <img src="{% static 'img/community/sun_on.png'%}" alt="" height="24">최신</a>                            
+                            {% else %}
+                            <img src="{% static 'img/community/sun.png'%}" alt="" height="24">최신</a>
+                            {% endif %}
+                        <a data-active="false" href="{% url 'gg_app:post_list' category 'view' %}">
+                            {% if tag_on == 'view' %}
+                            <img src="{% static 'img/community/fire_on.png'%}" alt="" height="24">인기</a>
+                            {% else %}
+                            <img src="{% static 'img/community/fire.png'%}" alt="" height="24">인기</a>
+                            {% endif %}
+                        <div class="top_tag">
+                            <a data-active="false" href="{% url 'gg_app:post_list' category 'top' %}">
+                            {% if tag_on == 'top' %}
+                            <img src="{% static 'img/community/top_on.png'%}" alt="" height="24">TOP</a>
+                            {% else %}
+                            <img src="{% static 'img/community/top.png'%}" alt="" height="24">TOP</a>
+                            {% endif %}
+
+                            <select data-active="false" class="post-top-option">
+                                <option value="top-day">지난 1일</option>
+                                <option value="top-week">지난 1주</option>
+                                <option value="top-month" selected="">지난 1개월</option>
+                                <option value="top-year">지난 1년</option>
+                                <option value="top">전체</option>
+                            </select></div>
+                    </div>
+
+                    <form class="post_search_form" method="GET" action="{% url 'gg_app:post_search' %}" >
+                        <div class="input_group">
+                            <input type="text" class="post_search" placeholder="제목+텍스트" name="search_post">
+                            <span class="input_group_button">
+                                <button class="search_post" type="submit" stytle="padding:'0em';"><img class="search_logo" src="{% static 'img/community/search.png'%}" alt="search_button" /></button>
+                            </span>
+                        </div>
+                    </form>
+                </div> 
             </div>
         </div>
+    </header>
+</article>
 
-    </main>
-
-</body>
-
-</html>
+<!-- post -->
+<article>
+    <header>
+        <div class="board_list_wrap">
+            {% for post in posts %} <!-- views 에서 넘겨 받은 변수 -->
+            <li class="post_list">
+                <span style="width:44px"><img src="{% static 'img/community/tri.png' %}" alt="" width="16"><span>{{post.net_count}}</span></span>
+                
+                <div class="">
+                    <a href="{% url 'gg_app:post_detail' post.id %}"><span>{{post.title}}</span></a><em>[댓글수]</em>
+                    <div class="css-puqfyf ev5eu1p8">
+                        <span>{{post.category}}</span>
+                        <span style="position:relative" class="">{{post.updated_at}}</span>
+                        <span><a href=""><em style="position:relative" class="levelTooltip"><img src="" alt="" height="24"></em>
+                        <span class="post_nickname">{{post.author}}</span></a></span>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </div>
+    </header>
+</article>
+<div class="pagination">
+    <!--<a href="#" class="button previous">Previous Page</a>-->
+    <div class="pages">
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <span>&hellip;</span>
+        <a href="#">10</a>
+    </div>
+    <a href="#" class="button next">| Next |</a>
+</div>
+{% endblock %}

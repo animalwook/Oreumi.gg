@@ -1,0 +1,136 @@
+{% load static %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="{% static 'js/login.js' %}"></script>
+<style>
+
+</style>
+  		<!-- Sidebar -->
+		<div id="sidebar">
+
+			<!-- Logo -->
+			{% if user.is_authenticated %}
+				<f1 id="logo"><a href="{%url 'gg_app:post_write'%}">글쓰기</a></f1>
+			{% else %}
+				<f1 id="logo"><a href="{%url 'account_login' %}">로그인</a></f1>
+			{% endif %}
+			<!-- Nav -->
+				<nav id="nav">
+					<ul>
+						<li class="current"><a data-active="false" href="{% url 'gg_app:post_list' 'default' 'default' %}">전체</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:post_list' 's' 'default' %}">공지사항</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:post_list' 'tip' 'default' %}">팁과 노하우</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:post_list' 'free' 'default' %}">자유게시판</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:post_list' 'art' 'default' %}">팬 아트</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:post_list' 'lfg' 'default' %}">소환사의 협곡</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:post_list' 'aram' 'default' %}">칼바람 나락</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:post_list' 'tft' 'default' %}">전략적 팀 전투</a></li>
+					</ul>
+				</nav>
+
+			<!-- Search -->
+				<section class="box search">
+                    <form class="post" method="GET" action="{% url 'gg_app:post_search' %}" >
+                        <div class="">
+                            <input type="text" class="text" placeholder="검색" name="search_post">
+                        </div>
+                    </form>
+
+				</section>
+
+			<!-- Text -->
+				<section class="box text-style1">
+					<div class="inner">
+						<p>
+							<strong>Google:</strong> AdSense 광고
+							
+						</p>
+					</div>
+				</section>
+
+			<!-- Recent Posts -->
+				<section class="box recent-posts">
+					<header>
+						<f2>Recent Posts</f2>
+					</header>
+					<ul>
+					{% for post in posts|slice:":4" %}
+						<li><a href="{% url 'gg_app:post_detail' post.id %}">{{post.title}}</a></li>
+					{%endfor%}
+				</ul>
+				</section>
+
+			<!-- Recent Comments -->
+			<!-- Calendar -->
+				<section class="box calendar">
+					<div class="inner">
+						<table>
+							<caption>2023 11</caption>
+							<thead>
+								<tr>
+									<th scope="col" title="Sunday" style="color: red;">S</th>
+									<th scope="col" title="Monday">M</th>
+									<th scope="col" title="Tuesday">T</th>
+									<th scope="col" title="Wednesday">W</th>
+									<th scope="col" title="Thursday">T</th>
+									<th scope="col" title="Friday">F</th>
+									<th scope="col" title="Saturday" style="color:bisque;">S</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td colspan="3" class="pad"><span>&nbsp;</span></td>
+									<td><span>1</span></td>
+									<td><span>2</span></td>
+									<td><a title="오르미 발표">3</span></td>
+									<td><span>4</span></td>
+								</tr>
+								<tr>
+									<td><span>5</span></td>
+									<td><span>6</span></td>
+									<td><span>7</span></td>
+									<td><span>8</span></td>
+									<td><span>9</span></td>
+									<td><span>10</span></td>
+									<td><span>11</span></td>
+								</tr>
+								<tr>
+									<td><span>12</span></td>
+									<td><span>13</span></td>
+									<td><span>14</span></td>
+									<td><span>15</span></td>
+									<td><span>16</span></td>
+									<td><span>17</span></td>
+									<td><span>18</span></td>
+								</tr>
+								<tr>
+									<td><span>19</span></td>
+									<td><span>20</span></td>
+									<td><span>21</span></td>
+									<td><span>22</span></td>
+									<td><span>23</span></td>
+									<td><span>24</span></td>
+									<td><span>25</span></td>
+								</tr>
+								<tr>
+									<td><span>26</span></td>
+									<td><span>27</span></td>
+									<td><span>28</span></td>
+									<td><span>29</span></td>
+									<td><span>30</span></td>
+									<td class="pad" colspan="4"><span>&nbsp;</span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+
+			<!-- Copyright -->
+				<ul id="copyright">
+					<li>&copy; 오르미.gg</li><li>github : <a href="https://github.com/animalwook/Oreumi.gg">Oruemi.gg</a></li>
+				</ul>
+
+</div>

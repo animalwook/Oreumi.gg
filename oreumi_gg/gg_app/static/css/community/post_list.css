@@ -13,7 +13,10 @@
     display: flex;
     gap: 16px;
     overflow-x: auto;
-    height: 48px;
+    height: 55px;
+    overflow: hidden;
+    text-size-adjust: auto;
+    white-space: nowrap;
 }
 
 .post-top-option {
@@ -77,14 +80,32 @@
     .search_post {
         border: none;
         cursor: pointer;
-        width: 40px;
+        width: 43px;
         height: 31.99px;
         background-color: #fff;
     }
     
     .search_logo {
-        width: 40px;
+        width: 30px;
         height: 18px;
 
     }
     
+
+
+    /* 포스트리스트부분 */
+    .post_list {
+        display: flex;
+        height:77px;
+        align-items:center;
+        border-top:1px solid #e7e6e6
+    }
+
+    .post_list div em { 
+        font-style: normal;
+        margin-left: 5px;
+        color: #31bd6ed0;
+    }
+    .post_list span {
+        margin-right:12px
+    }
