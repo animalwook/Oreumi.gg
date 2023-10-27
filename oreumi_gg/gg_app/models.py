@@ -1,6 +1,7 @@
 from django.db import models
 from django_ckeditor_5.fields import CKEditor5Field
-
+from django.contrib.auth.models import User  # User 모델을 임포트
+from django.conf import settings
 # Create your models here.
 
 
@@ -24,6 +25,8 @@ class BlogPost(models.Model):
     def net_count(self):
         return self.up - self.down
 
+    
+
 class Comment(models.Model):
     post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
     author = models.CharField(max_length=255, default="User")
@@ -31,3 +34,11 @@ class Comment(models.Model):
     created_date = models.DateTimeField(auto_now_add=True) 
 
 
+# 추천 중복방지
+class UserLiked(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
+    liked = models.BooleanField(default=False)  # True for 추천, False for 비추천
+
+    class Meta:
+        unique_together = ('user', 'post')  # 중복 방지
