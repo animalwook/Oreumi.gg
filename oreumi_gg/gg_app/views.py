@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
-from .models import BlogPost, Comment
+from .models import BlogPost, Comment, UserLiked
 from .forms import BlogPostForm, CommentForm
 from .lol_match import match
 from selenium import webdriver
@@ -44,7 +44,10 @@ def post_write(request):
     if request.method == 'POST':
         form = BlogPostForm(request.POST) 
         if form.is_valid(): # 유효성 검사(필수과정)
-            post = form.save()
+            # 현재 로그인한 사용자를 게시물의 저자로 설정
+            post = form.save(commit=False)
+            post.author = request.user.nickname  # 사용자의 닉네임으로 설정
+            post.save()
             post_id = post.id
             return redirect('gg_app:post_detail', post_id=post_id)
         
@@ -76,12 +79,59 @@ def post_edit(request, post_id):
 # 상세 페이지
 def post_detail(request, post_id):
     post = get_object_or_404(BlogPost, pk=post_id)  # 게시물 가져오기, 없으면 404 에러 발생
-
     comments = Comment.objects.filter(post=post_id).order_by('-created_date')
     
+    post.view += 1                  # 게시물 상세페이지 접근시 조회수 변화
+    post.save()
 
     return render(request, 'community/post_detail.html', {'post': post, 'comments':comments,'form': CommentForm()})
 
+#--------------------------------------------------------------------------------------------------------------------
+
+def add_comment(request, post_id):
+    post = get_object_or_404(BlogPost, pk=post_id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user.nickname      # 댓글작성자: 닉네임으로 표시하기
+            comment.save()
+            return redirect('gg_app:post_detail', post_id=post_id)
+
+    return redirect('gg_app:post_detail', post_id=post_id)  # 실패 시 동일한 페이지로 리디렉션
+
+def post_list(request, order_by):
+    if order_by == 'author':
+        posts = BlogPost.objects.order_by('author')
+    elif order_by == 'date':
+        posts = BlogPost.objects.order_by('-created_at')
+    elif order_by == 'view':
+        posts = BlogPost.objects.order_by('-view')
+    else:
+        posts = BlogPost.objects.all()  # 기본적으로 모든 게시물을 가져옵니다.
+
+    context = {'posts': posts}
+    return render(request, 'community/community.html', context)
+
+
+# 추천, 비추천 기능
+@login_required
+def post_like(request, post_id):
+    post = BlogPost.objects.get(pk=post_id)
+    post.up += 1
+    post.save()
+    return redirect('gg_app:post_detail', post_id=post_id)
+
+@login_required
+def post_dislike(request, post_id):
+    post = BlogPost.objects.get(pk=post_id)
+    post.down += 1
+    post.save()
+    return redirect('gg_app:post_detail', post_id=post_id)
+
+#--------------------------------------------------------------------------------------------------------------------
   
 def summoners_info_form(request):
     if request.method == "POST":
@@ -214,46 +264,3 @@ def ingame_info(request):
 
 
 
-def add_comment(request, post_id):
-    post = get_object_or_404(BlogPost, pk=post_id)
-
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.author = request.user.nickname      # 댓글작성자: 닉네임으로 표시하기
-            comment.save()
-            return redirect('gg_app:post_detail', post_id=post_id)
-
-    return redirect('gg_app:post_detail', post_id=post_id)  # 실패 시 동일한 페이지로 리디렉션
-
-def post_list(request, order_by):
-    if order_by == 'author':
-        posts = BlogPost.objects.order_by('author')
-    elif order_by == 'date':
-        posts = BlogPost.objects.order_by('-created_at')
-    elif order_by == 'view':
-        posts = BlogPost.objects.order_by('-view')
-    else:
-        posts = BlogPost.objects.all()  # 기본적으로 모든 게시물을 가져옵니다.
-
-    context = {'posts': posts}
-    return render(request, 'community/community.html', context)
-
-
-
-# 추천, 비추천 기능
-@login_required
-def post_like(request, post_id):
-    post = BlogPost.objects.get(pk=post_id)
-    post.up += 1
-    post.save()
-    return redirect('gg_app:post_detail', post_id=post_id)
-
-@login_required
-def post_dislike(request, post_id):
-    post = BlogPost.objects.get(pk=post_id)
-    post.down += 1
-    post.save()
-    return redirect('gg_app:post_detail', post_id=post_id)
