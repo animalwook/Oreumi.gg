@@ -1,3 +1,7 @@
+html {
+    background-color: #d2d9e1;
+}
+
 img {
     overflow-clip-margin: content-box;
     overflow: clip;
