@@ -410,11 +410,15 @@ def ingame(request):
 def ingame_info(request,nickname):
     user_id = find_id(nickname)
     user_spectator_info_arr, banned_champion_names = find_spectator_info(user_id)
+    blue_data = list(zip(user_spectator_info_arr[:5], banned_champion_names[:5]))
+    red_data = list(zip(user_spectator_info_arr[5:], banned_champion_names[5:]))
+    print(banned_champion_names[:5])
+    print(banned_champion_names[5:])
     context = {
-        'user_spectator_info_arr': user_spectator_info_arr,
-        'banned_champion_names': banned_champion_names,
+        'blue_data': blue_data,
+        'red_data': red_data,
     }
-    return render(request, 'oreumi_gg/ingame.html', context)
+    return render(request, 'oreumi_gg/ingame.html',context)
 
 # 더보기 를 위한 함수
 # def summoners_info_api(request, country, summoner_name, start):
