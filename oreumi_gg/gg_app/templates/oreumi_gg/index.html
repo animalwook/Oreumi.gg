@@ -56,16 +56,21 @@
                     <div class="community_new_posts">
                         <ul>
                             <!-- 최신 게시물부터 5개 불러오기 -->
-                            {% comment %} {% for post in posts|slice:":5" %}
-                              <li>
-                                <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
-                              </li>
-                            {% endfor %} {% endcomment %}
-                            <li>test 1</li>
-                            <li>test 1</li>
-                            <li>test 1</li>
-                            <li>test 1</li>
-                            <li>test 1</li>
+                            {% for post in posts|slice:":5" %}
+                            <li class="post_list">
+                                <span style="width:44px"><img src="{% static 'img/community/tri.png' %}" alt="" width="16"><span>{{post.net_count}}</span></span>
+                                
+                                <div class="">
+                                    <a href="{% url 'gg_app:post_detail' post.id %}"><span>{{post.title}}</span></a><em>[댓글수]</em>
+                                    <div class="css-puqfyf ev5eu1p8">
+                                        <span>{{post.category}}</span>
+                                        <span style="position:relative" class="">{{post.updated_at}}</span>
+                                        <span><a href=""><em style="position:relative" class="levelTooltip"><img src="" alt="" height="24"></em>
+                                        <span class="post_nickname">{{post.author}}</span></a></span>
+                                    </div>
+                                </div>
+                            </li>
+                            {%endfor%}
                           </ul>
                     </div>
                 </div>

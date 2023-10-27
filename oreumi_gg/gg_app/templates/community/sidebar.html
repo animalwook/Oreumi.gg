@@ -12,36 +12,41 @@
 		<div id="sidebar">
 
 			<!-- Logo -->
-				<f1 id="logo"><a href="#">로그인</a></f1>
-
+			{% if user.is_authenticated %}
+				<f1 id="logo"><a href="{%url 'gg_app:post_write'%}">글쓰기</a></f1>
+			{% else %}
+				<f1 id="logo"><a href="{%url 'account_login' %}">로그인</a></f1>
+			{% endif %}
 			<!-- Nav -->
 				<nav id="nav">
 					<ul>
-						<li class="current"><a href="#">전체</a></li>
-						<li><a href="#">공지사항</a></li>
-						<li><a href="#">팁과 노하우</a></li>
-						<li><a href="#">커뮤니티</a></li>
-						<li><a href="#">자유게시판</a></li>
-						<li><a href="#">팬 아트</a></li>
-						<li><a href="#">소환사의 협곡</a></li>
-						<li><a href="#">칼바람 나락</a></li>
-						<li><a href="#">전략적 팀 전투</a></li>
+						<li class="current"><a data-active="false" href="{% url 'gg_app:post_list' 'default' 'default' %}">전체</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:post_list' 's' 'default' %}">공지사항</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:post_list' 'tip' 'default' %}">팁과 노하우</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:post_list' 'free' 'default' %}">자유게시판</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:post_list' 'art' 'default' %}">팬 아트</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:post_list' 'lfg' 'default' %}">소환사의 협곡</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:post_list' 'aram' 'default' %}">칼바람 나락</a></li>
+						<li><a data-active="false" href="{% url 'gg_app:post_list' 'tft' 'default' %}">전략적 팀 전투</a></li>
 					</ul>
 				</nav>
 
 			<!-- Search -->
 				<section class="box search">
-					<form method="post" action="#">
-						<input type="text" class="text" name="search" placeholder="Search" />
-					</form>
+                    <form class="post" method="GET" action="{% url 'gg_app:post_search' %}" >
+                        <div class="">
+                            <input type="text" class="text" placeholder="검색" name="search_post">
+                        </div>
+                    </form>
+
 				</section>
 
 			<!-- Text -->
 				<section class="box text-style1">
 					<div class="inner">
 						<p>
-							<strong>Striped:</strong> A free and fully responsive HTML5 site
-							template designed by <a href="http://twitter.com/ajlkn">AJ</a> for <a href="http://html5up.net/">HTML5 UP</a>
+							<strong>Google:</strong> AdSense 광고
+							
 						</p>
 					</div>
 				</section>
@@ -52,26 +57,13 @@
 						<f2>Recent Posts</f2>
 					</header>
 					<ul>
-						<li><a href="#">Lorem ipsum dolor</a></li>
-						<li><a href="#">Feugiat nisl aliquam</a></li>
-						<li><a href="#">Sed dolore magna</a></li>
-						<li><a href="#">Malesuada commodo</a></li>
-						<li><a href="#">Ipsum metus nullam</a></li>
-					</ul>
+					{% for post in posts|slice:":4" %}
+						<li><a href="{% url 'gg_app:post_detail' post.id %}">{{post.title}}</a></li>
+					{%endfor%}
+				</ul>
 				</section>
 
 			<!-- Recent Comments -->
-				<section class="box recent-comments">
-					<header>
-						<f2>Recent Comments</f2>
-					</header>
-					<ul>
-						<li>case on <a href="#">Lorem ipsum dolor</a></li>
-						<li>molly on <a href="#">Sed dolore magna</a></li>
-						<li>case on <a href="#">Sed dolore magna</a></li>
-					</ul>
-				</section>
-
 			<!-- Calendar -->
 				<section class="box calendar">
 					<div class="inner">
@@ -138,7 +130,7 @@
 
 			<!-- Copyright -->
 				<ul id="copyright">
-					<li>&copy; Untitled.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					<li>&copy; 오르미.gg</li><li>github : <a href="https://github.com/animalwook/Oreumi.gg">Oruemi.gg</a></li>
 				</ul>
 
 </div>
