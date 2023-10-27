@@ -29,6 +29,7 @@ function changematch_display(data) {
     
     let totalHTML = '';
     let matchHTML = '';
+    totalmatch.innerHTML = '';
     const matches = data.matches;
     if (data.total_calculate.total_match_count != 0) {
         totalHTML += `
@@ -311,7 +312,7 @@ const buttons = document.querySelectorAll('.game-type button');
                 });
             });
             match_20_info.innerHTML = '';
-            totalmatch.innerHTML = '';
+            totalmatch.innerHTML = '<img src="/static/img/oreumi_gg/loading.gif" width="22" height="22">';
             fetchButton.style.display="none";
         });
     });
