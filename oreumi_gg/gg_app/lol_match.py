@@ -200,7 +200,7 @@ def summoner_info(country, myinfo):
     return search_player_info_dict
 
 
-def match(country, summonername, start):
+def match(country, summonername, start, queue):
     my_region = country
     lower_summoner_name = summonername.lower().replace(' ', '')
     myinfo = watcher.summoner.by_name(my_region, lower_summoner_name)
@@ -210,7 +210,10 @@ def match(country, summonername, start):
 
     puuid = myinfo['puuid']
     # 사용자 puuid와 country를 이용하여 최근 20경기 정보를 가져옴
-    match_20 = watcher.match.matchlist_by_puuid(country, puuid, start)
+    if queue == 9999:
+        match_20 = watcher.match.matchlist_by_puuid(country, puuid, start)
+    else:
+        match_20 = watcher.match.matchlist_by_puuid(country, puuid, start, None, queue)
     result_match = []
     win_count = 0
     lose_count = 0

@@ -863,3 +863,64 @@ a {
 .overview-player td:first-of-type {
     padding-top: 4px;
 }
+
+.game-queue {
+    position: relative;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 4px;
+    background-color: #fff;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom: 1px solid;
+    border-color: #ebeef1;
+}
+
+.game-queue > ul {
+    display: flex;
+    height: 28px;
+}
+
+.first-type:nth-of-type(1) {
+    margin-left: 0;
+}
+
+.first-type {
+    margin-left: 4px;
+    vertical-align: top;
+}
+
+.first-type button {
+    display: block;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 14px;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+    background-color: #ecf2ff;
+    color: #4171D6;
+    box-sizing: border-box;
+    height: 28px;
+}
+
+.game-type {
+    margin-left: 4px;
+    vertical-align: top;
+}
+
+.game-type button {
+    display: block;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: normal;
+    font-size: 14px;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+    background: #FFF;
+    background-color: #fff;
+    color: #202d37;
+    box-sizing: border-box;
+    height: 28px;
+}
