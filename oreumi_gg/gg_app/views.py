@@ -99,6 +99,8 @@ def community(request,category="default", order_by="default"):
             category_tag='칼바람 나락'
         elif category == 'tft':
             category_tag='전략적 팀 전투'
+        print(11111111111111)
+        print(category_tag)
         posts = posts.filter(Q(category__icontains=category_tag))
 
     context = {'posts': posts, 'recent_posts':recent_posts,'category':category, 'tag_on':tag_on }

@@ -22,8 +22,8 @@ urlpatterns = [
 
     #커뮤니티, 글 작성
     #post_list가 첫화면이고 base_community는 block을 이용한 템플릿제공
-    path('community/', views.community, name='community'),
-    path('community/<str:category>/<str:order_by>/', views.community, name='community'),
+    path('community/main/', views.community, name='community'),
+    path('community/main/<str:category>/<str:order_by>/', views.community, name='community'),
 
     path('community/post/<int:post_id>/', views.post_detail, name='post_detail'),      # 새로 추가한 URL 패턴), <int:post_id> 부분은 URL 패턴에서 변수를 캡처하는 부분
     path('community/write/', views.post_write, name='post_write'), 
