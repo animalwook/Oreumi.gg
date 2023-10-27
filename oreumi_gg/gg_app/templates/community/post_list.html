@@ -11,20 +11,20 @@
             <div class="board_title">
                 <div class="tag-group">
                     <div class="post-tag ">
-                        <a data-active="true" href="{% url 'gg_app:post_list' category 'update' %}">
+                        <a data-active="true" href="{% url 'gg_app:community' category 'update' %}">
                             {% if tag_on == 'update' %}
                             <img src="{% static 'img/community/sun_on.png'%}" alt="" height="24">최신</a>                            
                             {% else %}
                             <img src="{% static 'img/community/sun.png'%}" alt="" height="24">최신</a>
                             {% endif %}
-                        <a data-active="false" href="{% url 'gg_app:post_list' category 'view' %}">
+                        <a data-active="false" href="{% url 'gg_app:community' category 'view' %}">
                             {% if tag_on == 'view' %}
                             <img src="{% static 'img/community/fire_on.png'%}" alt="" height="24">인기</a>
                             {% else %}
                             <img src="{% static 'img/community/fire.png'%}" alt="" height="24">인기</a>
                             {% endif %}
                         <div class="top_tag">
-                            <a data-active="false" href="{% url 'gg_app:post_list' category 'top' %}">
+                            <a data-active="false" href="{% url 'gg_app:community' category 'top' %}">
                             {% if tag_on == 'top' %}
                             <img src="{% static 'img/community/top_on.png'%}" alt="" height="24">TOP</a>
                             {% else %}

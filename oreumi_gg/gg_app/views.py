@@ -65,12 +65,45 @@ def type_level(request):
 #######################################
 '''
 
-def community(request):
-    blog_post = BlogPost.objects.all().order_by('-created_at')  # 가장 최근에 생성된 게시글 먼저 나타남
-    
-    context = {"posts": blog_post,"category":'default',"tag_on":'default'}      
-    return render(request,"community/post_list.html",context)
+def community(request,category="default", order_by="default"):
+    posts = BlogPost.objects.all().order_by("-created_at")
+    recent_posts=posts    
+    tag_on = 'default'
+    if order_by !='default':
+        if order_by == 'author':
+            posts = posts.order_by('author')
+            tag_on = 'author'
+        elif order_by == 'update':
+            posts = posts.order_by('-created_at')
+            tag_on = 'update'
+        elif order_by == 'view':
+            posts = posts.order_by('-view')
+            tag_on = 'view'
+        elif order_by == 'top':
+            posts = posts.order_by('-up')
+            tag_on = 'top'
 
+
+    if category !='default':
+        if category == 's':
+            category_tag='공지사항'
+        elif category == 'tip':
+            category_tag='팁과노하우'
+        elif category == 'free':
+            category_tag='자유게시판'
+        elif category == 'art':
+            category_tag='팬 아트'
+        elif category == 'lfg':
+            category_tag='소환사의 협곡'            
+        elif category == 'aram':
+            category_tag='칼바람 나락'
+        elif category == 'tft':
+            category_tag='전략적 팀 전투'
+        posts = posts.filter(Q(category__icontains=category_tag))
+
+    context = {'posts': posts, 'recent_posts':recent_posts,'category':category, 'tag_on':tag_on }
+
+    return render(request,"community/post_list.html", context)
 
 # 게시글 작정
 # @login_required
@@ -160,46 +193,6 @@ def add_comment(request, post_id):
             return redirect('gg_app:post_detail', post_id=post_id)
 
     return redirect('gg_app:post_detail', post_id=post_id)  # 실패 시 동일한 페이지로 리디렉션
-
-def post_list(request, category, order_by):
-    
-    posts = BlogPost.objects.filter(Q(category__icontains=category))
-
-    if order_by == 'author':
-        posts = BlogPost.objects.order_by('author')
-        tag_on = 'author'
-    elif order_by == 'update':
-        posts = BlogPost.objects.order_by('-created_at')
-        tag_on = 'update'
-    elif order_by == 'view':
-        posts = BlogPost.objects.order_by('-view')
-        tag_on = 'view'
-    elif order_by == 'top':
-        posts = BlogPost.objects.order_by('-up')
-        tag_on = 'top'
-    else:
-        posts = BlogPost.objects.all()  # 기본적으로 모든 게시물을 가져옵니다.
-        tag_on = 'default'
-
-    if category !='default':
-        if category == 's':
-            category_tag='공지사항'
-        elif category == 'tip':
-            category_tag='팁과노하우'
-        elif category == 'free':
-            category_tag='자유게시판'
-        elif category == 'art':
-            category_tag='팬 아트'
-        elif category == 'lfg':
-            category_tag='소환사의 협곡'            
-        elif category == 'aram':
-            category_tag='칼바람 나락'
-        elif category == 'tft':
-            category_tag='전략적 팀 전투'
-        posts = posts.filter(Q(category__icontains=category_tag))
-
-    context = {'posts': posts, 'tag_on':tag_on, 'category':category}
-    return render(request, 'community/post_list.html', context)
 
 # 검색
 def post_search(request):
