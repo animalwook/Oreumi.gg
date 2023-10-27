@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="{% static 'css/header.css' %}" />
         <link rel="stylesheet" href="{% static 'css/nav.css' %}" />
         <link rel="stylesheet" href="{% static 'css/leaderboards.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/footer.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/footer_gray.css' %}" />
         <link rel="icon" href="{% static 'img\oreumi_gg\favicon.ico' %}" />
         <title>Oreumi.gg/champions</title>
     </head>
@@ -67,23 +67,15 @@
                         </tr>
                     </thead>
                     <tbody class="summoners_info_display">
-                        {% block leaderboards_content %}
-                        {% if selected_type == "type_ladder" %}
-                            <!-- 솔로랭크 -->
-                            {% include "oreumi_gg/leaderboards/type_ladder.html" %}
-                        {% elif selected_type == "type_ladder_flex" %}
-                            <!-- 자유랭크 -->
-                            {% include "oreumi_gg/leaderboards/type_ladder_flex.html" %}
-                        {% elif selected_type == "type_champions" %}
-                            <!-- 챔피언 -->
-                            {% include "oreumi_gg/leaderboards/type_champions.html" %}
-                        {% elif selected_type == "type_level" %}
-                            <!-- 레벨 -->
-                            {% include "oreumi_gg/leaderboards/type_level.html" %}
-                        {% else %}
-                        {% include "oreumi_gg/leaderboards/type_ladder.html" %}
-                        {% endif %}
-                    {% endblock %}
+                        {% block leaderboards_content %} {% if selected_type == "type_ladder" %}
+                        <!-- 솔로랭크 -->
+                        {% include "oreumi_gg/leaderboards/type_ladder.html" %} {% elif selected_type == "type_ladder_flex" %}
+                        <!-- 자유랭크 -->
+                        {% include "oreumi_gg/leaderboards/type_ladder_flex.html" %} {% elif selected_type == "type_champions" %}
+                        <!-- 챔피언 -->
+                        {% include "oreumi_gg/leaderboards/type_champions.html" %} {% elif selected_type == "type_level" %}
+                        <!-- 레벨 -->
+                        {% include "oreumi_gg/leaderboards/type_level.html" %} {% else %} {% include "oreumi_gg/leaderboards/type_ladder.html" %} {% endif %} {% endblock %}
                     </tbody>
                 </div>
             </article>

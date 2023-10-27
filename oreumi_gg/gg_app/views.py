@@ -4,48 +4,85 @@ from django.urls import reverse
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.db.models import Q
 
-from .models import BlogPost, Comment
+from .models import BlogPost, Comment, UserLiked
 from .forms import BlogPostForm, CommentForm
 from .lol_match import match
 from .ingame_data import find_id, find_league_info, find_spectator_info
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 import requests
-from bs4 import BeautifulSoup
 
-import os, json
-from django.core.exceptions import ImproperlyConfigured
-from pathlib import Path
+from bs4 import BeautifulSoup
+import json
 from oreumi_gg.settings import get_secret, champion_file
 # Create your views here.
 
+
 def index(request):
-    return render(request, "oreumi_gg/index.html")
+    posts=BlogPost.objects.all().order_by('-created_at')
+    context = {
+        'posts': posts, 
+        }
+    return render(request, "oreumi_gg/index.html",context)
   
 def champions(request):
     return render(request, "oreumi_gg/champions.html")
 
+def modes(request):
+    return render(request, "oreumi_gg/modes.html")
+
+# 통계
+
+def statistics_champions(request):
+    return render(request, "oreumi_gg/statistics/statistics_champions.html")
+
+def statistics_tier(request):
+    return render(request, "oreumi_gg/statistics/statistics_tier.html")
+
+# 랭킹
+
+def leaderboards(request):
+    return render(request, "oreumi_gg/leaderboards/leaderboards.html")
+
+def type_champions(request):
+    return render(request, "oreumi_gg/leaderboards/type_champions.html")
+
+def type_ladder_flex(request):
+    return render(request, "oreumi_gg/leaderboards/type_ladder_flex.html")
+
+def type_ladder(request):
+    return render(request, "oreumi_gg/leaderboards/type_ladder.html")
+
+def type_level(request):
+    return render(request, "oreumi_gg/leaderboards/type_level.html")
+
+
+
+
+'''
+#######################################
+커뮤니티 부분
+#######################################
+'''
+
 def community(request):
-    blog_post = BlogPost.objects.all()
-    return render(request,"community/community.html",{"posts":blog_post})
-
-# 게시판 목록
-def post(request):
     blog_post = BlogPost.objects.all().order_by('-created_at')  # 가장 최근에 생성된 게시글 먼저 나타남
-    context = {"posts": blog_post}      
-    return render(request, 'community/post_list.html', context)
-
+    
+    context = {"posts": blog_post,"category":'default',"tag_on":'default'}      
+    return render(request,"community/post_list.html",context)
 
 
 # 게시글 작정
-@login_required
+# @login_required
 def post_write(request):
 
     if request.method == 'POST':
         form = BlogPostForm(request.POST) 
         if form.is_valid(): # 유효성 검사(필수과정)
-            post = form.save()
+            # 현재 로그인한 사용자를 게시물의 저자로 설정
+            post = form.save(commit=False)
+            post.author = request.user.nickname  # 사용자의 닉네임으로 설정
+            post.save()
             post_id = post.id
             return redirect('gg_app:post_detail', post_id=post_id)
         
@@ -58,32 +95,139 @@ def post_write(request):
     return render(request,"community/post_write.html", context)
 
 
-
 # 게시글 수정
+# @login_required
 def post_edit(request, post_id):        
-    post = BlogPost.objects.get(pk=post_id)
+    post = get_object_or_404(BlogPost, pk=post_id)
 
     if request.method == 'POST':
         form = BlogPostForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
-            return redirect('gg_app:post')  # 수정 후 게시물 목록 페이지로 리디렉션
+            return redirect('gg_app:post_detail', post_id=post_id)  # 수정 후 게시물 목록 페이지로 리디렉션
     else:
         form = BlogPostForm(instance=post)
 
-    return render(request, 'community/post_write_2.html', {'form': form, 'post': post})
+    return render(request, 'community/post_edit.html', {'form': form, 'post_id': post.id})
 
+# 게시글 삭제
+# @login_required
+def post_delete(request, post_id):
+    post = get_object_or_404(BlogPost, pk=post_id)
+    if request.method == 'GET':
+        post.delete()
+    return redirect('gg_app:community')  # 수정 후 게시물 목록 페이지로 리디렉션
 
 # 상세 페이지
 def post_detail(request, post_id):
-    post = get_object_or_404(BlogPost, pk=post_id)  # 게시물 가져오기, 없으면 404 에러 발생
+    last_record=BlogPost.objects.all().order_by('-id').first().id+1
+    if (-1<post_id<last_record) is not True : #혹시나 게시글 번호가 넘어갔을경우
+        return  redirect('gg_app:community')
+    try:
+        post = get_object_or_404(BlogPost, pk=post_id)  # 게시물 가져오기, 없으면 404 에러 발생
+        comments = Comment.objects.filter(post=post_id).order_by('-created_date')
 
-    comments = Comment.objects.filter(post=post_id).order_by('-created_date')
+        context = {
+            'post': post, 
+            'comments':comments,
+            'form': CommentForm(), 
+            'last_record':last_record,
+            }
+        return render(request, 'community/post_detail.html', context)
+    except:
+        post_id -=1
+        if post_id == 0 :
+                return  redirect('gg_app:community')
+        comments = Comment.objects.filter(post=post_id).order_by('-created_date')
+        context = {
+            'post': post, 
+            'comments':comments,
+            'form': CommentForm(), 
+            'last_record':last_record,
+            }
+        return render(request, 'community/post_detail.html', context)
+
+def add_comment(request, post_id):
+    post = get_object_or_404(BlogPost, pk=post_id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user.nickname      # 댓글작성자: 닉네임으로 표시하기
+            comment.save()
+            return redirect('gg_app:post_detail', post_id=post_id)
+
+    return redirect('gg_app:post_detail', post_id=post_id)  # 실패 시 동일한 페이지로 리디렉션
+
+def post_list(request, category, order_by):
     
+    posts = BlogPost.objects.filter(Q(category__icontains=category))
 
-    return render(request, 'community/post_detail.html', {'post': post, 'comments':comments,'form': CommentForm()})
+    if order_by == 'author':
+        posts = BlogPost.objects.order_by('author')
+        tag_on = 'author'
+    elif order_by == 'update':
+        posts = BlogPost.objects.order_by('-created_at')
+        tag_on = 'update'
+    elif order_by == 'view':
+        posts = BlogPost.objects.order_by('-view')
+        tag_on = 'view'
+    elif order_by == 'top':
+        posts = BlogPost.objects.order_by('-up')
+        tag_on = 'top'
+    else:
+        posts = BlogPost.objects.all()  # 기본적으로 모든 게시물을 가져옵니다.
+        tag_on = 'default'
 
-  
+    if category !='default':
+        if category == 's':
+            category_tag='공지사항'
+        elif category == 'tip':
+            category_tag='팁과노하우'
+        elif category == 'free':
+            category_tag='자유게시판'
+        elif category == 'art':
+            category_tag='팬 아트'
+        elif category == 'lfg':
+            category_tag='소환사의 협곡'            
+        elif category == 'aram':
+            category_tag='칼바람 나락'
+        elif category == 'tft':
+            category_tag='전략적 팀 전투'
+        posts = posts.filter(Q(category__icontains=category_tag))
+
+    context = {'posts': posts, 'tag_on':tag_on, 'category':category}
+    return render(request, 'community/post_list.html', context)
+
+# 검색
+def post_search(request):
+    search_data = request.GET.get("search_post")
+    search_list = BlogPost.objects.filter(
+        Q(title__icontains=search_data) | Q(content__icontains=search_data)
+    )
+    context = {"posts": search_list,"category":'default',"tag_on":'default'}      
+    return render(request,"community/post_list.html",context)
+
+
+# 추천, 비추천 기능
+@login_required
+def post_like(request, post_id):
+    post = BlogPost.objects.get(pk=post_id)
+    post.up += 1
+    post.save()
+    return redirect('gg_app:post_detail', post_id=post_id)
+
+@login_required
+def post_dislike(request, post_id):
+    post = BlogPost.objects.get(pk=post_id)
+    post.down += 1
+    post.save()
+    return redirect('gg_app:post_detail', post_id=post_id)
+
+
+
 def summoners_info_form(request):
     if request.method == "POST":
         # 소환사명을 검색결과로 받아온다
@@ -107,7 +251,7 @@ def summoners_info(request, country, summoner_name):
         "total_calculate": total_calculate,
         "search_player_info_dict" : search_player_info_dict
     }
-    return render(request, "oreumi_gg/summoners.html", context)
+    return render(request, "oreumi_gg/summoners/summoners.html", context)
 
 
 
@@ -170,12 +314,59 @@ def champion_tier_list(request, position, region, tier):
         return render(request, 'oreumi_gg/champions.html', {'error': '페이지를 불러올 수 없습니다.'})
     
 
+def statistics_champions_list(request, position, region, tier, period, mode):
+    #OP.gg URL 생성
+    opgg_url = "https://www.op.gg/champions?region="+region+"&tier="+tier+"&position="+position+"&period="+period+"&mode="+mode
+    print(opgg_url)
+    # HTTP 요청을 보내서 페이지 내용을 가져옵니다.
+    response = requests.get(opgg_url,headers={'User-Agent': 'Mozilla/5.0'})
+    response.encoding = 'utf-8'
+    print(response)
+    if response.status_code == 200:
+        # BeautifulSoup를 사용하여 HTML 파싱
+        soup = BeautifulSoup(response.text, 'html.parser',from_encoding='utf-8')
+        # <tr> 태그를 찾아서 모든 행을 가져옵니다.
+        rows = soup.find_all("tr")
+
+        # 헤더 행 제외하고 각 행에서 챔피언의 티어 정보를 추출합니다.
+        champion_statistics = []
+        for row in rows[1:]:  
+            columns = row.find_all("td")
+            rank = columns[0].find('span').text.strip()
+            champion_img = columns[1].find('img')['src']
+            champion_name = columns[1].find('strong').text.strip()
+            print(champion_name)
+            num_of_plays = columns[2].text.strip()
+            rating = columns[3].find('span').text.strip()
+            win_rate = columns[4].text.strip()
+            pick_rate = columns[5].text.strip()
+            ban_rate = columns[6].text.strip()
+            cs = columns[7].text.strip()
+            gold = columns[8].text.strip()
+        
+            champion_statistics.append({
+                'rank' : rank,
+                'champion_img': champion_img,
+                'champion_name': champion_name,
+                'num_of_plays': num_of_plays,
+                'rating' : rating,
+                'win_rate': win_rate,
+                'pick_rate': pick_rate,
+                'ban_rate': ban_rate,
+                'cs': cs,
+                'gold': gold,
+            })
+        print(champion_statistics[0].items())
+        return render(request, 'oreumi_gg/statistics_champions.html', {'champion_statistics': champion_statistics})
+    else:
+        return render(request, 'oreumi_gg/statistics_champions.html', {'error': '페이지를 불러올 수 없습니다.'})
+
 def lotation_list(request):
     champion_json_file = champion_file
     with open(champion_json_file, 'r',encoding='utf-8') as json_file:
         parsed_data = json.load(json_file)  # JSON 파일을 파싱해서 파이썬 딕셔너리로 읽음
     print(parsed_data["data"]["Aatrox"]["key"])
-    url = "https://kr.api.riotgames.com/lol/platform/v3/champion-rotations?api_key="+getattr(settings,"LOL_API" ,"LOL_API")
+    url = "https://kr.api.riotgames.com/lol/platform/v3/champion-rotations?api_key="+get_secret("LOL_API")
     response = requests.get(url,headers={'User-Agent': 'Mozilla/5.0'})
     print(response)
     if response.status_code == 200:
@@ -224,15 +415,3 @@ def ingame_info(request,nickname):
 
 
 
-def add_comment(request, post_id):
-    post = get_object_or_404(BlogPost, pk=post_id)
-
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.save()
-            return redirect('gg_app:post_detail', post_id=post_id)
-
-    return redirect('gg_app:post_detail', post_id=post_id)  # 실패 시 동일한 페이지로 리디렉션

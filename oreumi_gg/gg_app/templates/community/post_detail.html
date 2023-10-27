@@ -1,34 +1,146 @@
+<!-- 커뮤니티 첫 페이지 -->
+{% extends 'community/base_community.html' %}
+{% load static %}
+
+
 {% block content %}
-<h1>{{ post.title }}</h1>
-<p>작성자: {{ post.author }}</p>
-<p>게시일: {{ post.created_at }}</p>
-<div class="ck ck-content">{{ post.content | safe }}</div>
-<a href="{% url 'gg_app:post' %}">뒤로 가기</a>
-{% comment %}  <a href="{% url 'gg_app:post_edit' post.id %}">수정</a> {% endcomment %}
+<style>
+  .edit:hover{
+    background: rgb(255, 238, 238);
+      }
+  .del:hover{
+    background: #dbcccc;
+  }
+  .comments{
+    border-top:1px solid #e7e6e6
 
+  }
+  .form-comment{
+    resize:none;
+  }
+  /* 스타일링을 위한 CSS */
+  .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1;
+  }
+  
+  .modal-content {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 300px;
+      padding: 20px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+  }
+</style>
+<article class="box post post-excerpt">
+  <header>
+    <h1>{{ post.title }}</h1>
+    <t>작성자 : {{ post.author }}</t>
+    <t>| {{ post.category }} | </t>
+    <t>{{ post.created_at }}</t>
 
-<div class="comments">
-    <h3>댓글</h3>
-    <ul>
-      {% for comment in comments %}
-        <li>
-          <p class="author">{{ comment.author }}:</p>
-          <p class="text">{{ comment.text }}</p>
+    <a class="edit" href="{% url 'gg_app:post_edit' post.id %}" style="border: 1px solid #ef2222ee; color:#ef2222ee; padding:0 5px;">수정</a>
+    <a class="del" href="#" onclick="openModal()" style="border: 1px solid #dbcccc; color:#dbcccc; padding:0 5px;">삭제</a>
+    <div class="ck ck-content" style="border-top:1px solid #e7e6e6;">{{ post.content | safe }}</div>
+
+    <div class="comments">
+      <h3>댓글</h3>
+      <ul>
+        {% for comment in comments %}
+        <li style="  list-style-type: none; ">
+          {% if comment.author == post.author %}
+            <span style="color: #1f63f6;">[작성자]{{ comment.author }} : </span>
+            <span class="text">{{ comment.text }}</span>
+          {% elif comment.author == user.nickname %} 
+            <span style="color: #f65c1f;">[  나  ]{{ comment.author }} : </span>
+            <span class="text">{{ comment.text }}</span>
+          {% else %}
+            <span class="author"> {{ comment.author }} : </span>
+            <span class="text">{{ comment.text }}</span>
+          {% endif%}
+          
         </li>
-      {% empty %}
+        {% empty %}
         <li>댓글이 없습니다.</li>
-      {% endfor %}
+        {% endfor %}
+      </ul>
+    </div>
+    {% if user.is_authenticated %}
+    <form method="post" action="{% url 'gg_app:add_comment' post_id=post.id %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class='comment-button' type="submit">댓글 작성</button>
+    </form>
+    {% else %}
+    <span>댓글을 작성하려면 로그인이 필요합니다.</span>
+    {% endif %}
+
+  </header>
+  <div class="info">
+    <span class="date"><span class="month">{{post.updated_at|date:"F"}}<span>y</span></span> <span class="day">{{post.updated_at|date:"d"}}</span><span class="year">, {{post.updated_at|date:"y"}}</span></span>
+    <ul class="stats">
+      <li><a href="#" class="icon fa-comment">댓글</a></li>
+      <li><a href="{% url 'gg_app:post_like' post.id %}" class="icon fa-heart">{{ post.up }}</a></li>
+      <li><a href="{% url 'gg_app:post_dislike' post.id %}" class="fas fa-heart-broken">{{ post.down }}</a></li>
+      <li><a href="#" class="icon fa-eye" style="pointer-events: none;">{{ post.view }}</a></li>
     </ul>
   </div>
-  {% if user.is_authenticated %}
-  <form method="post" action="{% url 'gg_app:add_comment' post_id=post.id %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class='comment-button' type="submit">댓글 작성</button>
-  </form>
-  {% else %}
-    <p>댓글을 작성하려면 로그인이 필요합니다.</p>
-  {% endif %} 
+</article>
+
+<div class="pagination">
+  <!--<a href="#" class="button previous">Previous Page</a>-->
+  <div class="pages">
+    {% if post.id|add:'-1' != 0 %}
+      <a href="{% url 'gg_app:post_detail' post.id|add:'-1' %}" class="active">이전</a>
+    {% endif %}
+
+    {% if post.id|add:'1' < last_record %}
+      <a href="{% url 'gg_app:post_detail' post.id|add:'1' %}">다음</a>
+    {% endif %}
+  </div>
+</div>
 
 
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <h1>게시물 삭제</h1>
+        <p>정말로 삭제하시겠습니까?</p>
+        <span><a href="{% url 'gg_app:post_delete' post.id %}">예</a></span><span onclick="closeModal()" style="float: right; cursor: pointer;">아니요</span>
+
+        
+    </div>
+</div>
+
+<script>
+  // 팝업 열기 함수
+  function openModal() {
+      document.getElementById("myModal").style.display = "block";
+  }
+  
+  // 팝업 닫기 함수
+  function closeModal() {
+      document.getElementById("myModal").style.display = "none";
+  }
+  
+  // 팝업 외부 클릭 시 닫기
+  window.onclick = function(event) {
+      var modal = document.getElementById("myModal");
+      if (event.target == modal) {
+          modal.style.display = "none";
+      }
+  }
+  </script>
+  
 {% endblock %}
+
+

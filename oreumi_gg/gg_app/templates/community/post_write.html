@@ -1,19 +1,8 @@
+<!-- 커뮤니티 첫 페이지 -->
+{% extends 'community/base_community.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>write</title>
-</head>
-
-<body>
-    {% include 'oreumi_gg/header.html' %} 
-    {% include 'oreumi_gg/nav.html' %}
-    <aside></aside>
+{% block conttent %}
     <div>
-        <main>
             <h1>게시글 작성</h1>
             <form method="POST" action="{% url 'gg_app:post_write' %}" enctype="multipart/form-data">
                
@@ -52,9 +41,6 @@
                     <button type="submit" class="">작성완료</button>
                 </div>
             </form>
-            {% comment %} {% include 'oreumi_gg/footer.html' %} {% endcomment %}
-        </main>
     </div>
-</body>
 
-</html>
+{% endblock %}
