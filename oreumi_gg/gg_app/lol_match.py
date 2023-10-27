@@ -311,7 +311,9 @@ def match(country, summonername, start, queue):
                 search_player_sub_rune = ''
                 for item in rune_data:
                     if item.get("id") == search_player_firstrune:
-                        search_player_main_rune = item.get("iconPath").split("v1/")[1]
+                        part_split = item.get("iconPath").split("/")
+                        search_player_main_rune = '/'.join(part_split[4:])
+                        search_player_main_rune = search_player_main_rune.split('.')[0]
                         break
                 
                 for key, value in rune.items():
@@ -346,7 +348,9 @@ def match(country, summonername, start, queue):
             sub_rune = 'none'
             for item in rune_data:
                 if item.get("id") == first_rune:
-                    main_rune = item.get("iconPath").split("v1/")[1]
+                    part_split = item.get("iconPath").split("/")
+                    main_rune = '/'.join(part_split[4:])
+                    main_rune = main_rune.split('.')[0]
                     break
             
             for key, value in rune.items():

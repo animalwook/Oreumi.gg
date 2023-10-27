@@ -70,7 +70,7 @@ function display(data) {
                 itemsHTML += `
                 <li style="list-style-type: none;">
                     <div class style="position: relative">
-                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/${ item }.png" width="22" height="22">
+                        <img src="/static/img/item/${ item }.webp" width="22" height="22">
                     </div>
                 </li>
                 `;
@@ -84,7 +84,7 @@ function display(data) {
                 runesHTML += `
                 <div class="rune">
                     <div class style="position: relative;">
-                        <img src="https://ddragon.canisback.com/img/${match.search_player_main_rune}" width="22" height="22">
+                        <img src="/static/img/${data[player][0].main_rune}.webp" width="22" height="22">
                     </div>
                 </div>
                 <div class="rune">
@@ -114,7 +114,7 @@ function display(data) {
                         bluechampHTML += `
                         <li class="team" style="list-style-type: none;">
                             <div class="team_icon" style="position: relative">
-                                <img src="/static/img/champion_square/${item.championname}.png" width="16" height="16">
+                                <img src="/static/img/champion_square_test/${item.championname}.webp" width="16" height="16">
                             </div>
                             <div class="name">
                                 <a href="/summoners/kr/${item.summonername}" rel="noreferrer">
@@ -129,7 +129,7 @@ function display(data) {
                             redchampHTML += `
                             <li class="team" style="list-style-type: none;">
                                 <div class="team_icon" style="position: relative">
-                                    <img src="/static/img/champion_square/${item.championname}.png" width="16" height="16">
+                                    <img src="/static/img/champion_square_test/${item.championname}.webp" width="16" height="16">
                                 </div>
                                 <div class="name">
                                     <a href="/summoners/kr/${item.summonername}" rel="noreferrer">
@@ -162,7 +162,7 @@ function display(data) {
                             <div class="champion">
                                 <div class="icon">
                                     <a href="" rel="noreferrer">
-                                        <img src="/static/img/champion_square/${match.search_player_champ}.png" width="48" height="48">
+                                        <img src="/static/img/champion_square_test/${match.search_player_champ}.webp" width="48" height="48">
                                         <span class="champion-level">${match.search_player_champlevel}</span>
                                     </a>
                                 </div>
@@ -241,7 +241,7 @@ function display(data) {
     total_matchcount.textContent = `${document.querySelectorAll('.game-item').length}전`
     let winCount = parseInt(total_wincount.textContent) + data.total_calculate.win_count;
     let loseCount = parseInt(total_losecount.textContent) + data.total_calculate.lose_count;
-    let winRate = (winCount / (winCount + loseCount)).toFixed(2) * 100;
+    let winRate = ((winCount / (winCount + loseCount))* 100).toFixed(2);
     let killCount = parseFloat(total_kill.textContent) + data.total_calculate.total_kill;
     let assistCount = parseFloat(total_assist.textContent) + data.total_calculate.total_assist;
     let deathCount = parseFloat(total_death.textContent) + data.total_calculate.total_death;
@@ -249,7 +249,7 @@ function display(data) {
     let killPart = parseInt((total_killpart.textContent).split(" ")[1]) + data.total_calculate.total_kill_part;
     total_wincount.textContent = winCount + "승";
     total_losecount.textContent = loseCount + "패";
-    total_winrate.textContent = winRate + "%";
+    total_winrate.textContent = parseInt(winRate) + "%";
     total_kill.textContent = (killCount / 2).toFixed(1);
     total_death.textContent = (deathCount / 2).toFixed(1);
     total_assist.textContent = (assistCount / 2).toFixed(1);

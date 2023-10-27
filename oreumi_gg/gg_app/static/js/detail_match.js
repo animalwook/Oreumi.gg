@@ -33,7 +33,7 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                     itemhtml += `
                         <div class="item">
                             <div class style="position: relative;">
-                                <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/${item}.png" width="22">
+                                <img src="/static/img/item/${item}.webp" width="22">
                             </div>
                         </div>
                     `;
@@ -51,7 +51,7 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                     <td class="champion">
                         <a rel="noreferrer">
                             <div class style="position: relative;">
-                                <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/${data[player][0].championname}.png" width="32">
+                                <img src="/static/img/champion_square_test/${data[player][0].championname}.webp" width="32">
                                 <div class="level">${data[player][0].champlevel}</div>
                             </div>
                         </a>
@@ -66,7 +66,7 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                     </td>
                     <td class="runes">
                         <div class style="position: relative;">
-                            <img src="https://ddragon.canisback.com/img/${data[player][0].main_rune}" width="22" height="22">
+                            <img src="/static/img/${data[player][0].main_rune}.webp" width="22" height="22">
                         </div>
                         <div class style="position: relative;">
                             <img src="https://ddragon.canisback.com/img/perk-images/Styles/${data[player][0].sub_rune}.png" width="22" height="22">
@@ -89,14 +89,16 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                     </td>
                     <td class="damage">
                         <div>
-                            <div class style="position: relative;">
+                            <div class="deal_box" style="position: relative;">
                                 <div class="dealt">${data[player][0].totalDamageDealtToChampions}</div>
+                                <span class="dealt_tooltip dealt_tooltiptop">챔피언에게 가한 피해량:${data[player][0].totalDamageDealtToChampions}</span>
                                 <div class="progress">
                                     <div class="fill" style="width: ${Math.round((data[player][0].totalDamageDealtToChampions / maxdealt) * 100)}%"></div>
                                 </div>
                             </div>
-                            <div class style="position: relative;">
+                            <div class="taken_box" style="position: relative;">
                                 <div class="taken">${data[player][0].totalDamageTaken}</div>
+                                <span class="taken_tooltip taken_tooltiptop">받은 피해량:${data[player][0].totalDamageTaken}</span>
                                 <div class="taken_progress">
                                     <div class="fill" style="width: ${Math.round((data[player][0].totalDamageTaken / maxtaken) * 100)}%"></div>
                                 </div>
@@ -107,7 +109,12 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                         <div class="ward_info" style="position: relative;">
                             <div>${data[player][0].visionWardsBoughtInGame}</div>
                             <div>${data[player][0].wardsPlaced} / ${data[player][0].wardsKilled}</div>
-                        </div>  
+                        </div>
+                        <span class="ward_tooltip">
+                                제어와드:${data[player][0].visionWardsBoughtInGame}
+                                와드설치:${data[player][0].wardsPlaced}
+                                와드제거:${data[player][0].wardsKilled}
+                            </span>
                     </td>
                     <td class="cs">
                         <div>${data[player][0].totalminions_kill}</div>
@@ -131,7 +138,7 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                     reditemhtml += `
                         <div class="item">
                             <div class style="position: relative;">
-                                <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/${item}.png" width="22">
+                                <img src="/static/img/item/${item}.webp" width="22">
                             </div>
                         </div>
                     `;
@@ -150,7 +157,7 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                     <td class="champion">
                         <a>
                             <div class style="position: relative;">
-                                <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/${data[player][0].championname}.png" width="32">
+                                <img src="/static/img/champion_square_test/${data[player][0].championname}.webp" width="32">
                                 <div class="level">${data[player][0].champlevel}</div>
                             </div>
                         </a>
@@ -166,7 +173,7 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                     </td>
                     <td class="runes">
                         <div class style="position: relative;">
-                            <img src="https://ddragon.canisback.com/img/${data[player][0].main_rune}" width="22" height="22">
+                            <img src="/static/img/${data[player][0].main_rune}.webp" width="22" height="22">
                         </div>
                         <div class style="position: relative;">
                             <img src="https://ddragon.canisback.com/img/perk-images/Styles/${data[player][0].sub_rune}.png" width="22" height="22">
@@ -189,14 +196,16 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                     </td>
                     <td class="damage">
                         <div>
-                            <div class style="position: relative;">
+                            <div class="deal_box" style="position: relative;">
                                 <div class="dealt">${data[player][0].totalDamageDealtToChampions}</div>
+                                <span class="dealt_tooltip dealt_tooltiptop">챔피언에게 가한 피해량:${data[player][0].totalDamageDealtToChampions}</span>
                                 <div class="progress">
                                     <div class="fill" style="width: ${Math.round((data[player][0].totalDamageDealtToChampions / maxdealt) * 100)}%"></div>
                                 </div>
                             </div>
-                            <div class style="position: relative;">
+                            <div class="taken_box" style="position: relative;">
                                 <div class="taken">${data[player][0].totalDamageTaken}</div>
+                                <span class="taken_tooltip taken_tooltiptop">받은 피해량:${data[player][0].totalDamageTaken}</span>
                                 <div class="taken_progress">
                                     <div class="fill" style="width: ${Math.round((data[player][0].totalDamageTaken / maxtaken) * 100)}%"></div>
                                 </div>
@@ -204,10 +213,15 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                         </div>
                     </td>
                     <td class="ward">
-                        <div class style="position: relative;">
+                        <div class="ward_info" style="position: relative;">
                             <div>${data[player][0].visionWardsBoughtInGame}</div>
                             <div>${data[player][0].wardsPlaced} / ${data[player][0].wardsKilled}</div>
                         </div>
+                        <span class="ward_tooltip">
+                                제어와드:${data[player][0].visionWardsBoughtInGame}
+                                와드설치:${data[player][0].wardsPlaced}
+                                와드제거:${data[player][0].wardsKilled}
+                            </span>
                     </td>
                     <td class="cs">
                         <div>${data[player][0].totalminions_kill}</div>
@@ -310,7 +324,7 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                         itemhtml += `
                             <div class="item">
                                 <div class style="position: relative;">
-                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/${item}.png" width="22">
+                                    <img src="/static/img/item/${item}.webp" width="22">
                                 </div>
                             </div>
                         `;
@@ -328,7 +342,7 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                         <td class="champion">
                             <a>
                                 <div class style="position: relative;">
-                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/${data[player][0].championname}.png" width="32">
+                                    <img src="/static/img/champion_square_test/${data[player][0].championname}.webp" width="32">
                                     <div class="level">${data[player][0].champlevel}</div>
                                 </div>
                             </a>
@@ -386,7 +400,7 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                         seconditemhtml += `
                             <div class="item">
                                 <div class style="position: relative;">
-                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/${item}.png" width="22">
+                                    <img src="/static/img/item/${item}.webp" width="22">
                                 </div>
                             </div>
                         `;
@@ -404,7 +418,7 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                         <td class="champion">
                             <a>
                                 <div class style="position: relative;">
-                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/${data[player][0].championname}.png" width="32">
+                                    <img src="/static/img/champion_square_test/${data[player][0].championname}.webp" width="32">
                                     <div class="level">${data[player][0].champlevel}</div>
                                 </div>
                             </a>
@@ -463,7 +477,7 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                         thirditemhtml += `
                             <div class="item">
                                 <div class style="position: relative;">
-                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/${item}.png" width="22">
+                                    <img src="/static/img/item/${item}.webp" width="22">
                                 </div>
                             </div>
                         `;
@@ -481,7 +495,7 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                         <td class="champion">
                             <a>
                                 <div class style="position: relative;">
-                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/${data[player][0].championname}.png" width="32">
+                                    <img src="/static/img/champion_square_test/${data[player][0].championname}.webp" width="32">
                                     <div class="level">${data[player][0].champlevel}</div>
                                 </div>
                             </a>
@@ -539,7 +553,7 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                         fourthitemhtml += `
                             <div class="item">
                                 <div class style="position: relative;">
-                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/item/${item}.png" width="22">
+                                    <img src="/static/img/item/${item}.webp" width="22">
                                 </div>
                             </div>
                         `;
@@ -557,7 +571,7 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                         <td class="champion">
                             <a>
                                 <div class style="position: relative;">
-                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/${data[player][0].championname}.png" width="32">
+                                    <img src="/static/img/champion_square_test/${data[player][0].championname}.webp" width="32">
                                     <div class="level">${data[player][0].champlevel}</div>
                                 </div>
                             </a>
