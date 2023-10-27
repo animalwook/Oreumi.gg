@@ -22,7 +22,8 @@ urlpatterns = [
     path('champions/lotation/', views.lotation_list, name='lotation'),
     
     #인게임 정보
-    path('ingame/', views.ingame_info, name='ingame'),
+    path('ingame/', views.ingame, name='ingame'),
+    path('ingame/<str:nickname>', views.ingame_info, name='ingame_info'),
     
     # 전적 검색
     path('summoners_form', views.summoners_info_form, name='summoners_info_form'),

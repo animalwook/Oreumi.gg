@@ -1,0 +1,146 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ingame.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="icon" href="{%static 'img\oreumi_gg\favicon.ico'%}">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="match_20">
+        <div result="${result}" class="match_detail">
+            <div class="totalteam">
+                <table class="teamblue">
+                    <colgroup>
+                        <col width="44">
+                        <col width="18">
+                        <col width="18">
+                        <col width="98">
+                        <col width="98">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th colspan="4"><span>블루팀</span></th>
+                            <th>S2023</th>
+                            <th>랭크 승률</th>
+                            <th>밴</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user_spectator_info in user_spectator_info_arr|slice:":5" %}
+                            <tr class="overview-player">
+                                <td class="champion">
+                                    <a rel="noreferrer">
+                                        <div class style="position: relative;">
+                                            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{user_spectator_info.champion_eng_name}}.png" width="32">
+                                        </div>
+                                    </a>
+                                </td>
+                                <td class="spells">
+                                    <div class style="position: relative;">
+                                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{user_spectator_info.spell1Id}}.png">
+                                    </div>
+                                    <div class style="position: relative;">
+                                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{user_spectator_info.spell2Id}}.png">
+                                    </div>
+                                </td>
+                                <td class="runes">
+                                    <div class style="position: relative;">
+                                        <img src="https://ddragon.canisback.com/img/{{user_spectator_info.perkStyle}}" width="22" height="22">
+                                    </div>
+                                    <div class style="position: relative;">
+                                        <img src="https://ddragon.canisback.com/img/perk-images/Styles/{{user_spectator_info.perkSubStyle}}.png" width="22" height="22">
+                                    </div>
+                                </td>
+                                <td class="name">
+                                    <a href="/summoners/kr/user_spectator_info.nickname}">{{user_spectator_info.nickname}}</a>
+                                </td>
+                
+                                <td class = "tier">
+                                    <p>{{user_spectator_info.tier}}</p>
+                                    <p>{{user_spectator_info.rank}}</p>
+                                </td>
+                
+                                <td class = "rank_odds">
+                                    <p>{{user_spectator_info.rank_odds}}</p>
+                                </td>
+                            </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+                <div class="summary">
+                    <div class="team"></div>
+                    <div class="summary-graph"></div>
+                    <div class="team"></div>
+                </div>
+                <table class="teamred">
+                    <colgroup>
+                        <col width="44">
+                        <col width="18">
+                        <col width="18">
+                        <col width="98">
+                        <col width="98">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th colspan="4"><span class="result">레드팀</span></th>
+                            <th>S2023</th>
+                            <th>랭크 승률</th>
+                            <th>밴</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user_spectator_info in user_spectator_info_arr|slice:"5:10" %}
+                            <tr class="overview-player">
+                                <td class="champion">
+                                    <a rel="noreferrer">
+                                        <div class style="position: relative;">
+                                            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{user_spectator_info.champion_eng_name}}.png" width="32">
+                                        </div>
+                                    </a>
+                                </td>
+                                <td class="spells">
+                                    <div class style="position: relative;">
+                                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{user_spectator_info.spell1Id}}.png">
+                                    </div>
+                                    <div class style="position: relative;">
+                                        <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{user_spectator_info.spell2Id}}.png">
+                                    </div>
+                                </td>
+                                <td class="runes">
+                                    <div class style="position: relative;">
+                                        <img src="https://ddragon.canisback.com/img/{{user_spectator_info.perkStyle}}" width="22" height="22">
+                                    </div>
+                                    <div class style="position: relative;">
+                                        <img src="https://ddragon.canisback.com/img/perk-images/Styles/{{user_spectator_info.perkSubStyle}}.png" width="22" height="22">
+                                    </div>
+                                </td>
+                                <td class="name">
+                                    <a href="/summoners/kr/user_spectator_info.nickname}">{{user_spectator_info.nickname}}</a>
+                                </td>
+                
+                                <td class = "tier">
+                                    <p>{{user_spectator_info.tier}}</p>
+                                    <p>{{user_spectator_info.rank}}</p>
+                                </td>
+                
+                                <td class = "rank_odds">
+                                    <p>{{user_spectator_info.rank_odds}}</p>
+                                </td>
+                            </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
