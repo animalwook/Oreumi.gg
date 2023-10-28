@@ -1,0 +1,22 @@
+FROM python:3.10
+
+ENV PYTHONUNBUFFERED = 1
+
+RUN apt-get -y update
+RUN apt-get -y install vim
+
+RUN useradd -r nginx
+RUN usermod -a -G root nginx
+
+RUN mkdir /srv/django			
+ADD . /srv/django			
+
+WORKDIR /srv/django			
+
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt	
+
+EXPOSE 8000
+# django를 단독으로 실행할때 사용 명령어
+# 단, nginx를 이용해서 django를 실행할때는 주석처리!!
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
