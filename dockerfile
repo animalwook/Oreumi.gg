@@ -9,6 +9,7 @@ WORKDIR /app
 
 COPY requirements.txt /app/
 
+RUN python3 -m venv ggvenv
 RUN source ggvenv/bin/activate
 
 RUN pip install -r requirements.txt
