@@ -9,9 +9,9 @@ from django.db.models import Q
 from .models import BlogPost, Comment
 from .forms import BlogPostForm, CommentForm
 from .lol_match import match
-from .ingame_data import find_id, find_league_info, find_spectator_info
+from .ingame_data import find_id, find_league_info, find_spectator_info, IngameDataNotFoundError
 import requests
-
+from django.http import HttpResponseRedirect
 from bs4 import BeautifulSoup
 import json
 from oreumi_gg.settings import get_secret, champion_file
@@ -418,16 +418,19 @@ def ingame(request):
     return render(request, "oreumi_gg/ingame_test.html")
 
 def ingame_info(request,nickname):
-    user_id = find_id(nickname)
-    user_spectator_info_arr, banned_champion_names = find_spectator_info(user_id)
-    blue_data = list(zip(user_spectator_info_arr[:5], banned_champion_names[:5]))
-    red_data = list(zip(user_spectator_info_arr[5:], banned_champion_names[5:]))
-    print(banned_champion_names[:5])
-    print(banned_champion_names[5:])
-    context = {
-        'blue_data': blue_data,
-        'red_data': red_data,
-    }
+    try:
+        user_id = find_id(nickname)
+        user_spectator_info_arr, banned_champion_names = find_spectator_info(user_id)
+        blue_data = list(zip(user_spectator_info_arr[:5], banned_champion_names[:5]))
+        red_data = list(zip(user_spectator_info_arr[5:], banned_champion_names[5:]))
+        print(banned_champion_names[:5])
+        print(banned_champion_names[5:])
+        context = {
+            'blue_data': blue_data,
+            'red_data': red_data,
+        }
+    except IngameDataNotFoundError:
+        return render(request, 'oreumi_gg/404_error.html')
     return render(request, 'oreumi_gg/ingame.html',context)
 
 # 더보기 를 위한 함수
