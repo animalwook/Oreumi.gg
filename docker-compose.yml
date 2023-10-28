@@ -9,16 +9,16 @@ services:
         ports:
           - "80:80"
         volumes:
-          - ./sdn:/srv/wsgi_params:z
+          - ./sdn:/srv/oreumi_app:z
           - ./log:/var/log/nginx:z
         depends_on:
-          - django
-    django:
-        container_name: wsgi_params
-        build: ./oreumi_gg
-        image: docker/wsgi_params
+          - oreumi_app
+    oreumi_app:
+        container_name: oreumi_app
+        build: ./oreumi_app
+        image: docker/oreumi_app
         restart: always
-        command: uwsgi --ini /srv/wsgi_params/uwsgi.ini
+        command: uwsgi --ini /srv/oreumi_app/uwsgi.ini
         volumes:
-          - ./wsgi_params:/srv/wsgi_params:z
-          - ./wsgi_params:/var/log/uwsgi:z
+          - ./oreumi_app:/srv/oreumi_app:z
+          - ./oreumi_app:/var/log/uwsgi:z
