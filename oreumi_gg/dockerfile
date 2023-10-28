@@ -8,10 +8,10 @@ RUN apt-get -y install vim
 RUN useradd -r nginx
 RUN usermod -a -G root nginx
 
-RUN mkdir /srv/django			
-ADD . /srv/django			
+RUN mkdir /srv/oreumi_gg			
+ADD . /srv/oreumi_gg			
 
-WORKDIR /srv/django			
+WORKDIR /srv/oreumi_gg	
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt	
