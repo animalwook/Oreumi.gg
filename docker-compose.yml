@@ -15,7 +15,7 @@ services:
           - django
     django:
         container_name: django
-        build: ./django
+        build: ./oreumi_gg
         image: docker/django
         restart: always
         command: uwsgi --ini /srv/django/uwsgi.ini
