@@ -11,7 +11,7 @@ from .forms import BlogPostForm, CommentForm
 from .lol_match import match
 from .ingame_data import find_id, find_league_info, find_spectator_info
 import requests
-
+from django.core.paginator import Paginator
 from bs4 import BeautifulSoup
 import json
 from oreumi_gg.settings import get_secret, champion_file
@@ -101,8 +101,12 @@ def community(request,category="default", order_by="default"):
             category_tag='전략적 팀 전투'
 
         posts = posts.filter(Q(category__icontains=category_tag))
-
-    context = {'posts': posts, 'recent_posts':recent_posts,'category':category, 'tag_on':tag_on }
+    
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get('page')
+    page_posts = paginator.get_page(page_number)
+    
+    context = {'posts': posts, 'recent_posts':recent_posts,'category':category, 'tag_on':tag_on, 'page_posts': page_posts}
 
     return render(request,"community/post_list.html", context)
 
