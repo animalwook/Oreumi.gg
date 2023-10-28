@@ -21,7 +21,7 @@ class BlogPost(models.Model):
     down = models.PositiveIntegerField(default=0)
     comment_count = models.PositiveIntegerField(default=0)
 
-    thumnail = models.ImageField(upload_to='images/',null=True,blank=True)  # 이미지 필드 추가
+    thumbnail = models.ImageField(upload_to='',null=True,blank=True)  # 이미지 필드 추가
 
     up_list = models.ManyToManyField(User, related_name='likes',blank=True)
     down_list = models.ManyToManyField(User, related_name='dislikes',blank=True)

@@ -117,15 +117,22 @@ def post_write(request):
             post = form.save(commit=False)
             post.category = request.POST['category']
             post.author = request.user.nickname  # 사용자의 닉네임으로 설정
+   
+            #bs4로 파싱해서 경로 가져오기
+            img_tag = BeautifulSoup(post.content,'html.parser').find('img')
+            if img_tag :
+                post.thumbnail = img_tag.get('src')[6:]
+
             post.save()
             post_id = post.id
             return redirect('gg_app:post_detail', post_id=post_id)
         
     # get요청시
     post = BlogPostForm()
+    #에디터의 이미지경로 설정
     context = {
         'form':post,
-        'MEDIA_URL':settings.MEDIA_URL
+        'MEDIA_URL':settings.MEDIA_URL,
     }
     return render(request,"community/post_write.html", context)
 
@@ -138,11 +145,14 @@ def post_edit(request, post_id):
     if request.method == 'POST':
         form = BlogPostForm(request.POST, instance=post)
         if form.is_valid():
+            #bs4로 파싱해서 경로 가져오기
+            img_tag = BeautifulSoup(form.content,'html.parser').find('img')
+            if img_tag :
+                post.thumbnail = img_tag.get('src')[6:]
             form.save()
             return redirect('gg_app:post_detail', post_id=post_id)  # 수정 후 게시물 목록 페이지로 리디렉션
     else:
         form = BlogPostForm(instance=post)
-
     return render(request, 'community/post_write.html', {'form': form, 'category':post.category, 'post_id': post.id})
 
 # 게시글 삭제
@@ -160,7 +170,7 @@ def post_detail(request, post_id):
         return  redirect('gg_app:community')
     try:
         post = get_object_or_404(BlogPost, pk=post_id)  # 게시물 가져오기, 없으면 404 에러 발생
-        comments = Comment.objects.filter(post=post_id).order_by('-created_date')
+        comments = Comment.objects.filter(post=post_id).order_by('created_date')
         post.view +=1
         post.save()
         context = {
@@ -174,7 +184,7 @@ def post_detail(request, post_id):
         post_id -=1
         if post_id == 0 :
                 return  redirect('gg_app:community')
-        comments = Comment.objects.filter(post=post_id).order_by('-created_date')
+        comments = Comment.objects.filter(post=post_id).order_by('created_date')
         post = get_object_or_404(BlogPost, pk=post_id)
         post.view +=1
         post.save()

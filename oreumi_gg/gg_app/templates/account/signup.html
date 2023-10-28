@@ -1,0 +1,38 @@
+{% extends "account/base.html" %}
+{% load static %}
+
+{% load i18n %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/account/signup.css' %}">
+{% endblock extra_head %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock head_title %}
+
+{% block content %}
+
+<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+  <div class="wrap">
+    <div class="">
+      <a class="" href="{% url 'gg_app:community' %}"> <img src="{% static 'img\logo_with_avatar.png' %}" style="width:245px; height:125px;"></a>
+    </div>
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+
+    <div class="submit">
+      <input type="submit" value="인증메일 보내기" style="cursor: pointer;">
+      <div style="display: flex; justify-content: space-between;">
+        <div class="checkbox">
+          <a href="{% url 'account_login' %}" class="return-atag">로그인으로 돌아가기</a>
+        </div>
+        <div class="forgot_pw">
+          <a href="{% url 'account_reset_password' %}" class="return-atag" >비밀번호 찾기</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+{% endblock %}

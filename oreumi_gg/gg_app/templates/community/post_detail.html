@@ -49,8 +49,10 @@
     <t>| {{ post.category }} | </t>
     <t>{{ post.created_at }}</t>
 
+    {% if post.author == user.nickname %}
     <a class="edit" href="{% url 'gg_app:post_edit' post.id %}" style="border: 1px solid #ef2222ee; color:#ef2222ee; padding:0 5px;">수정</a>
     <a class="del" href="#" onclick="openModal()" style="border: 1px solid #dbcccc; color:#dbcccc; padding:0 5px;">삭제</a>
+    {%endif%}
     <div class="ck ck-content" style="border-top:1px solid #e7e6e6;">{{ post.content | safe }}</div>
 
     <div class="comments">
