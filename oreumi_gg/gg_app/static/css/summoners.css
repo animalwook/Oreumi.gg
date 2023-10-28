@@ -4,12 +4,40 @@
 }
 .node2 {
     float: left;
-    width: 200px;
+    width: 300px;
+    height: 300px;
     border: 2px solid grey;
-    background-color: orange;
+    position: relative;
 }
 .node3 {
     float: left;
     width: calc(100% - 220px);
     border: 2px solid grey;
+}
+
+/* 유저 정보 */
+
+.header-profile-info {
+    display: flex;
+    text-align: center;
+}
+
+.tier-list {
+    background-color: magenta;
+    display: flex;
+}
+
+.more-tier {
+    display: flex;
+}
+
+.summoner-name-container {
+    background-color: aqua;
+    display: flex;
+    font-size: 24px;
+}
+
+.favorite-icon img {
+    width: 24px;
+    height: 24px;
 }
