@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
     node2.style.marginBottom = marginHeight + "px";
 });
 
+// 즐겨찾기 아이콘 이미지 변경
+
 var favoriteButton = document.getElementById("favorite-button");
 var image = document.querySelector(".favorite-icon-image");
 
