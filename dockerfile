@@ -1,11 +1,19 @@
 FROM python:3.10
 
-WORKDIR /app/
+ENV PYTHONUNBUFFERED = 1
+
+
+RUN mkdir /app
+
+WORKDIR /app
+
+COPY requirements.txt /app/
+
+RUN source ggvenv/bin/activate
+
+RUN pip install -r requirements.txt
 
 COPY . /app/
-
-RUN python3 -m venv ggvenv && . ggvenv/bin/activate
-RUN pip install -r requirements.txt
 
 EXPOSE 8000
 
