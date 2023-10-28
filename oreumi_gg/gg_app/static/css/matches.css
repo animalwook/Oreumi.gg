@@ -1,3 +1,7 @@
+html {
+    background-color: #d2d9e1;
+}
+
 img {
     overflow-clip-margin: content-box;
     overflow: clip;
@@ -71,7 +75,7 @@ a {
     color: #202d37;
 }
 
-.section {
+.main-info {
     display: inline-block;
     font-size: 12px;
     width: 740px;
@@ -177,6 +181,8 @@ a {
 .game-match .info > div:nth-of-type(1) .champion .icon a {
     position: relative;
     display: block;
+    pointer-events: none;
+    cursor: default;
     width: 48px;
     height: 48px;
 }
@@ -441,10 +447,10 @@ a {
 }
 
 .match_statics #win_lose {
-    width: 222px;
+    width: 240px;
 }
 
-.match_statics #win_lose span {
+.match_statics #win_lose > span {
     line-height: 16px;
     font-size: 12px;
     color: #758592;
@@ -488,10 +494,17 @@ a {
 }
 
 .match_statics #win_lose #kda .info {
-    margin-left: 32px;
+    margin-left: 25px;
 }
 
 .match_statics #win_lose #kda .info .k-d-a {
+    line-height: 16px;
+    font-size: 12px;
+    color: #758592;
+    font-family: Roboto, sans-serif;
+}
+
+.match_statics #win_lose #kda .info .k-d-a > span {
     line-height: 16px;
     font-size: 12px;
     color: #758592;
@@ -519,7 +532,7 @@ a {
 }
 
 .match_statics .champions {
-    width: 222px;
+    width: 200px;
     margin-left: 16px;
 }
 
@@ -557,7 +570,7 @@ a {
     font-weight: bold;
     border-radius: 4px;
     color: rgb(65, 113, 214);
-    background-color: #758592;
+    background-color: #a5adb3;
 }
 
 .teamblue:nth-of-type(1) {
@@ -903,6 +916,7 @@ a {
 }
 
 .game-queue {
+    width: 100%;
     position: relative;
     display: flex;
     -webkit-box-pack: justify;
@@ -1121,4 +1135,131 @@ a {
 .overview-arena-other.overview-arena--result-4 thead th b {
     color: #d31a45;
     font-weight: bold;
+}
+
+.main-info .no-data {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    padding: 96px 0 40px;
+    text-align: center;
+    background-image: url(https://s-lol-web.op.gg/images/icon/icon-nodata.svg);
+    -webkit-background-position: 50% 40px;
+    background-position: 50% 40px;
+    background-repeat: no-repeat;
+    background-color: #fff;
+    font-size: 14px;
+    color: #9aa4af;
+}
+
+.summoner_section {
+    width: 1080px;
+    margin: 0px auto;
+}
+
+.deal_box {
+    display: block;
+}
+
+.taken_box {
+    display: block;
+}
+
+.ward_info {
+    display: block;
+}
+
+.deal_box .dealt_tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.taken_box .taken_tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.ward .ward_tooltip {
+    visibility: hidden;
+    width: 60px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.deal_box:hover .dealt_tooltip {
+    visibility: visible;
+}
+
+.taken_box:hover .taken_tooltip {
+    visibility: visible;
+}
+
+.ward:hover .ward_tooltip {
+    visibility: visible;
+}
+
+.deal_box .dealt_tooltip::after {
+    content: " ";
+    position: absolute;
+    border-style: solid;
+    border-width: 5px;
+}
+
+.taken_box .taken_tooltip::after {
+    content: " ";
+    position: absolute;
+    border-style: solid;
+    border-width: 5px;
+}
+
+.deal_box .dealt_tooltiptop {
+    width: 170px;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -80px;
+}
+
+.taken_box .taken_tooltiptop {
+    width: 120px;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -50px;
+}
+
+.ward .ward_tooltiptop {
+    width: 120px;
+    left: 60%;
+    margin-left: -40px;
+}
+
+.deal_box .dealt_tooltiptop::after {
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-color: black transparent transparent transparent;
+}
+
+.taken_box .taken_tooltiptop::after {
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-color: black transparent transparent transparent;
 }

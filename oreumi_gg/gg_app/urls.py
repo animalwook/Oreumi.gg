@@ -21,26 +21,30 @@ urlpatterns = [
     path('type_level/', views.type_level, name='type_level'),
 
     #커뮤니티, 글 작성
-    path('community/', views.community, name='community'),
-    path('post/', views.post, name='post'),
-    path('write/', views.post_write, name='post_write'), 
-    path('post/<int:post_id>/', views.post_detail, name='post_detail'),      # 새로 추가한 URL 패턴), <int:post_id> 부분은 URL 패턴에서 변수를 캡처하는 부분
-    path('post_edit/<int:post_id>/', views.post_edit, name='post_edit'),     # post_edit 수정 부분
+    #post_list가 첫화면이고 base_community는 block을 이용한 템플릿제공
+    path('community/main/', views.community, name='community'),
+    path('community/main/<str:category>/<str:order_by>/', views.community, name='community'),
 
-    path('post/<int:post_id>/add_comment/', views.add_comment, name='add_comment'),
-    path('posts/<str:order_by>/', views.post_list, name='post_list'),
+    path('community/post/<int:post_id>/', views.post_detail, name='post_detail'),      # 새로 추가한 URL 패턴), <int:post_id> 부분은 URL 패턴에서 변수를 캡처하는 부분
+    path('community/write/', views.post_write, name='post_write'), 
+    path('community/post_edit/<int:post_id>/', views.post_edit, name='post_edit'),     # post_edit 수정 부분
+    path('community/post_delete/<int:post_id>/',views.post_delete, name="post_delete"),
 
-    path('post/<int:post_id>/like/', views.post_like, name='post_like'),            #추천 비추천
-    path('post/<int:post_id>/dislike/', views.post_dislike, name='post_dislike'),
+    path('community/post/<int:post_id>/add_comment/', views.add_comment, name='add_comment'),
+    path('community/post/<int:post_id>/like/', views.post_like, name='post_like'),            #추천 비추천
+    path('community/post/<int:post_id>/dislike/', views.post_dislike, name='post_dislike'),
+    path("community/search/", views.post_search, name="post_search"),
 
     
     #챔피언 티어 및 로테이션 정보
     path('champions/', views.champions, name='champions'),
     path('champions/champions_tier/<str:position>/<str:region>/<str:tier>', views.champion_tier_list, name='champion_tier'),
     path('champions/lotation/', views.lotation_list, name='lotation'),
-    
+    path('champions/statistics_champions/<str:position>/<str:region>/<str:tier>/<str:period>/<str:mode>', views.statistics_champions_list, name='statistics_champions'),
+
     #인게임 정보
-    path('ingame/', views.ingame_info, name='ingame'),
+    path('ingame/', views.ingame, name='ingame'),
+    path('ingame/<str:nickname>', views.ingame_info, name='ingame_info'),
     
     # 전적 검색
     path('summoners_form', views.summoners_info_form, name='summoners_info_form'),

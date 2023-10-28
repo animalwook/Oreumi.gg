@@ -1,0 +1,892 @@
+img {
+    overflow-clip-margin: content-box;
+    overflow: clip;
+    border: 0;
+    vertical-align: middle;
+    max-width: 100%;
+}
+
+button {
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    background: transparent;
+}
+
+div {
+    display: block;
+}
+
+strong {
+    font-weight: bold;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+colgroup {
+    display: table-column-group;
+}
+
+col {
+    display: table-column;
+}
+
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+th, td {
+    padding: 0px;
+    margin: 0px;
+}
+
+th {
+    display: table-cell;
+    vertical-align: inherit;
+    font-weight: bold;
+    text-align: -internal-center;
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+a {
+    cursor: pointer;
+    text-decoration: none;
+    color: #202d37;
+}
+
+.section {
+    display: inline-block;
+    font-size: 12px;
+    width: 740px;
+    margin-top: 8px;
+    margin-left: 8px;
+    vertical-align: top;
+}
+
+.match_20 {
+    margin-top: 8px;
+}
+
+#addmatch {
+    margin-top: 8px;
+}
+
+.game-item{
+    position: relative;
+    margin-bottom: 8px;
+    list-style: none;
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+.game-match {
+    display: flex;
+    height: 96px;
+    border-radius: 4px;
+    border-left-width: 6px;
+    border-left-style: solid;
+}
+
+.game-match[result="defeat"] {
+    border-color: #E84057;
+    background-color: #FFF1F3;
+}
+
+.game-match[result="victory"] {
+    border-color: #5383e8;
+    background-color: #ecf2ff;
+}
+
+.game-match[result="repeat"] {
+    border-color: #758592;
+    background-color: #f7f7f9;
+}
+
+
+.game-match .content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+}
+
+.game-match .game-content {
+    display: flex;
+    height: 96px;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0px 8px 0px 12px;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.game-match .game {
+    width: 108px;
+    color: #758592;
+    line-height: 16px;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+
+.game-match[result="defeat"] .game .type {
+    font-weight: bold;
+    color: #d31a45;
+}
+
+.game-match[result="victory"] .game .type {
+    font-weight: bold;
+    color: #4171d6;
+}
+
+.game-match[result="repeat"] .game .type {
+    font-weight: bold;
+    color: #57646f;
+}
+
+.game-match .info > div:nth-of-type(1) {
+    display: flex;
+}
+
+.game-match .info > div:nth-of-type(1) .champion{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.game-match .info > div:nth-of-type(1) .champion .icon a {
+    position: relative;
+    display: block;
+    width: 48px;
+    height: 48px;
+}
+
+.game-match .info > div:nth-of-type(1) .champion .icon img{
+    display: block;
+    border-radius: 50%;
+}
+
+.game-match .info > div:nth-of-type(1) .champion .icon .champion-level {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+    border-radius: 50%;
+    color: rgb(255, 255, 255);
+    background: rgb(32, 45, 55);
+    font-family: Roboto, sans-serif;
+}
+
+.game-match .info > div:nth-of-type(1) .champion .spells {
+    margin-left: 4px;
+}
+
+.game-match .info > div:nth-of-type(1) .champion .spells .spell:nth-of-type(1) {
+    width: 22px;
+    height: 22px;
+    margin-bottom: 2px;
+}
+
+.game-match .info > div:nth-of-type(1) .champion .spells .spell img {
+    display: block;
+    border-radius: 4px;
+}
+
+.game-match .info > div:nth-of-type(1) .champion .runes {
+    margin-left: 2px;
+}
+
+.game-match .info > div:nth-of-type(1) .champion .runes .rune:nth-of-type(1) {
+    margin-bottom: 2px;
+    background-color: rgb(0, 0, 0);
+    border-radius: 50%;
+}
+
+.game-match .info > div:nth-of-type(1) .champion .runes .rune img {
+    border-radius: 50%;
+    display: block;
+}
+
+.game-match .info > div:nth-of-type(1) .kill_death_assist {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 107px;
+    padding-right: 12px;
+    margin-left: 12px;
+}
+
+.game-match .info > div:nth-of-type(1) .kill_death_assist .k-d-a {
+    line-height: 22px;
+    font-size: 15px;
+    color: #9aa4af;
+    font-family: Roboto, sans-serif;
+}
+
+.game-match .info > div:nth-of-type(1) .kill_death_assist .k-d-a span {
+    font-weight: bold;
+    color: #202d37;
+}
+
+.game-match .info > div:nth-of-type(1) .kill_death_assist .k-d-a .d {
+    color: #d31a45
+}
+
+.game-match .info > div:nth-of-type(1) .kill_death_assist .ratio {
+    line-height: 16px;
+    color: #758592;
+}
+
+.game-match .info > div:nth-of-type(1) .stats {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 140px;
+    color: #758592;
+    padding-left: 8px;
+    font-size: 11px;
+}
+
+.game-match .info > div:nth-of-type(1) .stats::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1px;
+    height: 100%;
+    background-color: #ffd8d9;
+}
+
+.game-match .info > div:nth-of-type(1) .stats .p-kill {
+    color: #d31a45;
+}
+
+.game-match .info > div:nth-of-type(1) .stats .average-tier {
+    font-weight: bold;
+    text-transform: capitalize;
+    font-family: Roboto, sans-serif;
+}
+
+.game-match .info > div:nth-of-type(2) {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.game-match .info > div:nth-of-type(2) .items {
+    display: flex;
+}
+
+.game-match .info > div:nth-of-type(2) .items ul {
+    display: flex;
+    list-style: none;
+}
+
+.game-match .info > div:nth-of-type(2) .items ul li img {
+    border-radius: 4px;
+    border: 0;
+    vertical-align: middle;
+    max-width: 100%;
+}
+
+.game-match .participants {
+    display: flex;
+}
+
+.game-match .participants ul:nth-of-type(1) {
+    margin-right: 8px;
+}
+
+.team {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 88px;
+    height: 18px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.team .team_icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+.team .team_icon img {
+    display: block;
+    border-radius: 4px;
+}
+
+.team .name {
+    display: inline-block;
+    max-width: 60px;
+    vertical-align: middle;
+    color: #758592;
+}
+
+.team .name a {
+    font-size: 12px;
+    color: inherit;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#addmatch_btn {
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    border-color: #dbe0e4;
+    background-color: #fff;
+    border-radius: 4px;
+    display: block;
+    width: 100%;
+    height: 40px;
+    padding: 8px 0px;
+    color: #202d37;
+    font-size: 13px;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.game-match .action {
+    position: relative;
+    width: 40px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    overflow: hidden;
+}
+
+.game-match[result="defeat"] .action .detail {
+    width: 40px;
+    height: 96px;
+    background-color: #ffd8d9;
+}
+
+.game-match[result="victory"] .action .detail {
+    width: 40px;
+    height: 96px;
+    background-color: #d5e3ff;
+}
+
+.game-match[result="repeat"] .action .detail {
+    width: 40px;
+    height: 96px;
+    background-color: #dbe0e4;
+}
+
+
+.game-match .action .detail img {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    width: 24px;
+    height: 24px;
+    transform: rotate( 0deg );
+}
+
+.match_statics {
+    display: flex;
+    text-align: left;
+    background-color: #fff;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    padding: 8px 12px;
+    box-sizing: border-box;
+}
+
+.match_statics #win_lose {
+    width: 222px;
+}
+
+.match_statics #win_lose span {
+    line-height: 16px;
+    font-size: 12px;
+    color: #758592;
+}
+
+.match_statics #win_lose #kda {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.match_statics #win_lose #kda .chart {
+    position: relative;
+    width: 88px;
+    height: 88px;
+}
+
+.match_statics #win_lose #kda .chart .text {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 88px;
+    height: 88px;
+    line-height: 88px;
+    text-align: center;
+    font-size: 14px;
+    color: #5383e8;
+    font-family: Roboto, sans-serif;
+}
+
+.match_statics #win_lose #kda .info {
+    margin-left: 32px;
+}
+
+.match_statics #win_lose #kda .info .k-d-a {
+    line-height: 16px;
+    font-size: 12px;
+    color: #758592;
+    font-family: Roboto, sans-serif;
+}
+
+.match_statics #win_lose #kda .info .k-d-a #total_death {
+    color: #d31a45;
+}
+
+.match_statics #win_lose #kda .info #total_kda {
+    margin-top: 2px;
+    line-height: 26px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #202d37;
+    font-family: Roboto, sans-serif;
+}
+
+.match_statics #win_lose #kda .info #total_killpart {
+    line-height: 16px;
+    margin-top: 2px;
+    font-size: 12px;
+    color: #d31a45;
+}
+
+.match_statics .champions {
+    width: 222px;
+    margin-left: 16px;
+}
+
+.match_statics .positions {
+    width: 222px;
+    margin-left: 16px;
+}
+
+.match_detail {
+    margin-top: 4px;
+}
+
+.match_detail > ul {
+    display: flex;
+    height: 36px;
+    margin: 4px 0px;
+    padding: 4px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+.match_detail .total {
+    margin-left: 0px;
+    width: 25%;
+}
+
+.match_detail .total button {
+    display: block;
+    width: 100%;
+    height: 28px;
+    padding: 0px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    color: rgb(65, 113, 214);
+    background-color: #758592;
+}
+
+.teamblue:nth-of-type(1) {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.teamblue {
+    width: 100%;
+    table-layout: fixed;
+    background-color: #fff;
+}
+
+.teamblue thead th:nth-of-type(1) {
+    padding-left: 15px;
+    text-align: left;
+}
+
+.teamblue thead th {
+    height: 32px;
+    color: #9aa4af;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #d5e3ff;
+}
+
+.teamblue thead th:nth-of-type(1) span {
+    font-size: 12px;
+    color: #4171d6;
+}
+
+.teamblue tbody {
+    background-color: #ecf2ff;
+    border-top: 1px solid rgb(213, 227, 255);
+    border-right-color: rgb(213, 227, 255);
+    border-bottom-color: rgb(213, 227, 255);
+    border-left-color: rgb(213, 227, 255);
+}
+
+.overview-player td.champion {
+    padding-left: 10px;
+    padding-right: 4px;
+}
+
+.overview-player td.champion a {
+    position: relative;
+    display: block;
+}
+
+.overview-player td.champion a > div {
+    width: 32px;
+}
+
+.overview-player td.champion a img {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.overview-player td.champion a .level {
+    position: absolute;
+    left: -3px;
+    bottom: -3px;
+    width: 15px;
+    height: 15px;
+    background: rgb(32, 45, 55);
+    border-radius: 50%;
+    color: rgb(255, 255, 255);
+    font-size: 10px;
+    text-align: center;
+    line-height: 15px;
+    font-family: Roboto, sans-serif;
+}
+
+.overview-player td {
+    padding: 4px 0px 3px;
+    vertical-align: middle;
+}
+
+.overview-player td.spells div:nth-of-type(1) {
+    margin-bottom: 2px;
+}
+
+.overview-player td.spells div {
+    width: 16px;
+    height: 16px;
+}
+
+.overview-player td.spells div img {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.overview-player td.runes div:nth-of-type(1) {
+    margin-bottom: 2px;
+    background: rgb(0, 0, 0);
+    border-radius: 50%;
+}
+
+.overview-player td.runes div {
+    width: 16px;
+    height: 16px;
+}
+
+.overview-player td.runes div img {
+    display: block;
+    width: 16px;
+    height: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+
+
+
+.overview-player td.tier{ 
+    padding-left: 5px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+}
+
+.overview-player td.tier p{ 
+    line-height: 16px;
+    color: #202d37;
+    font-size: 12px;
+    text-decoration: none;
+    margin-right: 3px;
+}
+
+.overview-player td.rank_odds { 
+    text-align: center;
+}
+
+.overview-player td.name {
+    padding-left: 5px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.overview-player td.name a {
+    line-height: 16px;
+    color: #202d37;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.overview-player td.name .tier {
+    color: #9aa4af;
+    font-size: 11px;
+    line-height: 14px;
+}
+
+.overview-player td.killdeathassist {
+    text-align: center;
+    white-space: nowrap;
+    font-family: Roboto, sans-serif;
+}
+
+.overview-player td.killdeathassist .k-d-a {
+    color: #758592;
+    line-height: 14px;
+    font-size: 11px;
+}
+
+.overview-player td.killdeathassist .k-d-a div {
+    display: inline;
+}
+
+.overview-player td.killdeathassist .kda {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.overview-player td.damage {
+    font-family: Roboto, sans-serif;
+}
+
+.overview-player td.damage > div {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+
+.overview-player td.damage .dealt {
+    text-align: center;
+    color: #758592;
+    font-size: 11px;
+    line-height: 14px;
+}
+
+.overview-player td.damage .progress {
+    width: 50px;
+    height: 6px;
+    margin: 4px auto 0px;
+    background-color: #fff;
+}
+
+.overview-player td.damage .taken {
+    text-align: center;
+    color: #758592;
+    font-size: 11px;
+    line-height: 14px;
+    margin-left: 8px;
+}
+
+.overview-player td.damage .taken_progress {
+    width: 50px;
+    height: 6px;
+    margin: 4px auto 0px 8px;
+    background-color: #fff;
+}
+
+.overview-player td.ward {
+    text-align: center;
+    color: #758592;
+    font-size: 11px;
+    font-family: Roboto, sans-serif;
+}
+
+.overview-player td.cs {
+    text-align: center;
+    color: #758592;
+    font-size: 11px;
+}
+
+.overview-player td.items {
+    text-align: center;
+    font-size: 0px;
+}
+
+.overview-player td.items .item:nth-of-type(1) {
+    margin-left: 0px;
+}
+
+.overview-player td.items img {
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+}
+
+.overview-player td.items .item {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    margin-left: 1px;
+    vertical-align: middle;
+}
+
+.overview-player td.items .item .no-item {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    background-color: #b3cdff;
+}
+
+.totalteam .summary {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: #f7f7f9;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: #ebeef1;
+    font-family: Roboto, sans-serif;
+}
+
+.totalteam .summary .team {
+    display: table-cell;
+    height: 30px;
+    vertical-align: middle;
+    padding-right: 10px;
+    text-align: right;
+    line-height: 30px;
+}
+
+.totalteam .summary .team:nth-of-type(1) {
+    padding-right: 0px;
+    padding-left: 16px;
+    text-align: left;
+    border-left: 1px solid transparent;
+}
+
+.totalteam .summary .summary-graph {
+    flex: 0 1 405px;
+}
+.totalteam .summary .team:nth-of-type(3) {
+    padding-right: 16px;
+    border-right: 1px solid transparent;
+    border-top: 1px solid transparent;
+}
+
+.teamred:nth-of-type(2) {
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-color: #ebeef1;
+    overflow: hidden;
+}
+
+.teamred {
+    width: 100%;
+    table-layout: fixed;
+    background-color: #fff;
+}
+
+.teamred thead th:nth-of-type(1) {
+    padding-left: 15px;
+    text-align: left;
+}
+
+.teamred thead th {
+    height: 32px;
+    color: #9aa4af;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #ffd8d9;
+}
+
+.teamred thead th .result {
+    margin-right: 4px;
+    font-weight: bold;
+}
+
+.teamred thead th:nth-of-type(1) span {
+    font-size: 12px;
+    color: #d31a45;
+}
+
+.teamred tbody {
+    background-color: #fff1f3;
+    border-top: 1px solid rgb(255, 216, 217);
+    border-right-color: rgb(255, 216, 217);
+    border-bottom-color: rgb(255, 216, 217);
+    border-left-color: rgb(255, 216, 217);
+}
+
+.overview-player td:first-of-type {
+    padding-top: 4px;
+}
+
+.banned_champion{
+    
+}
