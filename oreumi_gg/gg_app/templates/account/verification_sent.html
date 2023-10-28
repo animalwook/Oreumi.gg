@@ -1,0 +1,22 @@
+{% extends "account/base.html" %}
+{% load static %}
+
+{% load i18n %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/account/verification_sent.css' %}">
+{% endblock extra_head %}
+{% block head_title %}{% trans "Verify Your Email Address" %}{% endblock head_title %}
+
+{% block content %}
+<div class="wrap">
+    <div class="">
+        <a class="" href="{% url 'gg_app:community' %}"> <img src="{% static 'img\logo_with_avatar.png' %}" style="width:245px; height:125px;"></a>
+    </div>
+    <h1>이메일을 확인해주세요</h1>
+
+    <p >인증메일을 성공적으로 보냈습니다. 메일을 확인해주세요.</p>
+    <p><a href="{% url 'account_login' %}" class="return-atag">로그인으로 돌아가기</a></p>
+    
+</div>
+
+{% endblock content %}

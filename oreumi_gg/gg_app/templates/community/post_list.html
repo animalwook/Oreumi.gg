@@ -58,7 +58,7 @@
 <article>
     <header>
         <div class="board_list_wrap">
-            {% for post in posts %} <!-- views 에서 넘겨 받은 변수 -->
+            {% for post in posts|slice:':10' %} <!-- views 에서 넘겨 받은 변수 -->
             <li class="post_list">
                 <span style="width:44px"><img src="{% static 'img/community/tri.png' %}" alt="" width="16"><span>{{post.net_count}}</span></span>
                 
@@ -71,11 +71,15 @@
                         <span class="post_nickname">{{post.author}}</span></a></span>
                     </div>
                 </div>
+                <span style="width: 60px; height: 60px;   margin-left: auto;">
+                    <a href="{% url 'gg_app:post_detail' post.id %}"><img src="/media/{{post.thumbnail}}" alt="" style="width: 60px; height: 60px; object-fit: cover; object-position: center;"></a>
+                </span>
             </li>
             {% endfor %}
         </div>
     </header>
 </article>
+<!-- 나중에 if문으로 포스트 갯수가 11개 이상이면 표시하도록 작성 -->
 <div class="pagination">
     <!--<a href="#" class="button previous">Previous Page</a>-->
     <div class="pages">
