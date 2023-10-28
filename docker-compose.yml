@@ -9,16 +9,16 @@ services:
         ports:
           - "80:80"
         volumes:
-          - ./sdn:/srv/oreumi_app:z
+          - ./sdn:/srv/oreumi_gg:z
           - ./log:/var/log/nginx:z
         depends_on:
-          - oreumi_app
-    oreumi_app:
-        container_name: oreumi_app
-        build: ./oreumi_app
-        image: docker/oreumi_app
+          - oreumi_gg
+    oreumi_gg:
+        container_name: oreumi_gg
+        build: ./oreumi_gg
+        image: docker/oreumi_gg
         restart: always
-        command: uwsgi --ini /srv/oreumi_app/uwsgi.ini
+        command: uwsgi --ini /srv/oreumi_gg/uwsgi.ini
         volumes:
-          - ./oreumi_app:/srv/oreumi_app:z
-          - ./oreumi_app:/var/log/uwsgi:z
+          - ./oreumi_gg:/srv/oreumi_gg:z
+          - ./oreumi_gg:/var/log/uwsgi:z
