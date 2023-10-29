@@ -6,6 +6,43 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
      * 
      */
     if (data[8]) {
+        let blueteambaronkills = 0;
+        let blueteamdragonkills = 0;
+        let blueteamturretkills = 0;
+        let blueteamsummonerkills = 0;
+        let blueteamgoldearned = 0;
+        let redteambaronkills = 0;
+        let redteamdragonkills = 0;
+        let redteamturretkills = 0;
+        let redteamsummonerkills = 0;
+        let redteamgoldearned = 0;
+        let redteamsummonerkills_per;
+        let blueteamsummonerkills_per;
+        let redteamgold_per = 0;
+        let blueteamgold_per = 0;
+        for (let summoner = 0; summoner < 5; summoner++) {
+            blueteambaronkills += data[summoner][0].dragon_kills;
+            blueteamdragonkills += data[summoner][0].baron_kills;
+            blueteamturretkills += data[summoner][0].turret_kills;
+            blueteamgoldearned += data[summoner][0].goldearned;
+            blueteamsummonerkills += data[summoner][0].kills;
+        }
+        for (let summoner = 5; summoner < 10; summoner++) {
+            redteambaronkills += data[summoner][0].dragon_kills;
+            redteamdragonkills += data[summoner][0].baron_kills;
+            redteamturretkills += data[summoner][0].turret_kills;
+            redteamgoldearned += data[summoner][0].goldearned;
+            redteamsummonerkills += data[summoner][0].kills;
+        }
+
+        let totalsummonerkills = redteamsummonerkills + blueteamsummonerkills;
+        redteamsummonerkills_per = Math.round((redteamsummonerkills / totalsummonerkills) * 100);
+        blueteamsummonerkills_per = Math.round((blueteamsummonerkills / totalsummonerkills) * 100);
+        let totalsummonergolds = redteamgoldearned + blueteamgoldearned;
+        redteamgold_per = Math.round((redteamgoldearned / totalsummonergolds) * 100);
+        blueteamgold_per = Math.round((blueteamgoldearned / totalsummonergolds) * 100);
+
+
         let win_or_lose = data[0][0].win;
         let blueteam_win = "";
         let redteam_win = "";
@@ -268,9 +305,60 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                         </tbody>
                     </table>
                     <div class="summary">
-                        <div class="team"></div>
-                        <div class="summary-graph"></div>
-                        <div class="team"></div>
+                        <div class="team">
+                            <div class="object">
+                                <div class style="position: relative;">
+                                    <span>바론: ${blueteambaronkills}</span>
+                                </div>
+                            </div>
+                            <div class="object">
+                                <div class style="position: relative;">
+                                    <span>드래곤: ${blueteamdragonkills}</span>
+                                </div>
+                            </div>
+                            <div class="object">
+                                <div class style="position: relative;">
+                                    <span>타워: ${blueteamturretkills}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="summary-graph">
+                            <div>
+                                <div class="graph">
+                                    <div class="title">Total Kill</div>
+                                    <div class="data-left">${blueteamsummonerkills}</div>
+                                    <div class="data-right">${redteamsummonerkills}</div>
+                                    <div class="win" style="flex: 1 1 ${blueteamsummonerkills_per}%;"></div>
+                                    <div class="lose" style="flex: 1 1 ${redteamsummonerkills_per}%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="graph">
+                                    <div class="title">Total Gold</div>
+                                    <div class="data-left">${blueteamgoldearned}</div>
+                                    <div class="data-right">${redteamgoldearned}</div>
+                                    <div class="win" style="flex: 1 1 ${blueteamgold_per}%;"></div>
+                                    <div class="win" style="flex: 1 1 ${redteamgold_per}%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team">
+                            <div class="object">
+                                <div class style="position: relative;">
+                                    <span>바론: ${redteambaronkills}</span>
+                                </div>
+                            </div>
+                            <div class="object">
+                                <div class style="position: relative;">
+                                    <span>드래곤: ${redteamdragonkills}</span>
+                                </div>
+                            </div>
+                            <div class="object">
+                                <div class style="position: relative;">
+                                    <span>타워: ${redteamturretkills}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <table class="teamred">
                         <colgroup>

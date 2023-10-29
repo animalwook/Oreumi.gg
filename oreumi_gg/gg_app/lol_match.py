@@ -387,7 +387,8 @@ def match(country, summonername, start, queue):
                         "killparticipation" : player_kill_part, "totalDamageDealtToChampions": player_info["totalDamageDealtToChampions"],
                         "totalDamageTaken" : player_info["totalDamageTaken"], "champlevel" : player_info["champLevel"], 
                         "main_rune" : main_rune, "sub_rune" : sub_rune, "minperminions" : minperminions, "placement": placement,
-                        "goldearned" : player_info["goldEarned"], "win":player_info["win"]}]
+                        "goldearned" : player_info["goldEarned"], "win":player_info["win"], "dragon_kills" : player_info["dragonKills"],
+                        "turret_kills" : player_info["turretKills"], "baron_kills" : player_info["baronKills"]}]
             result[num] = player_dict
             num += 1
         result.update({"game_playtime" : game_playtime, "game_type" : game_type, "win_or_not" : win_or_not, "win_or_not_eng" : win_or_not_eng,

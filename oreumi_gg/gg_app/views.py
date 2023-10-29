@@ -434,17 +434,5 @@ def ingame_info(request,nickname):
     }
     return render(request, 'oreumi_gg/ingame.html',context)
 
-# 더보기 를 위한 함수
-# def summoners_info_api(request, country, summoner_name, start):
-#     temp_matches, temp_total_calculate, temp_match_count = match(country, summoner_name, 0)
-#     match_count = temp_match_count
-#     matches, total_calculate, match_count = match(country, summoner_name, match_count)
-#     response_data = {
-#         "matches": matches,
-#         "total_calculate": total_calculate,
-#         "match_count" : match_count
-#     }
-#     return JsonResponse(response_data)
-
 
 
