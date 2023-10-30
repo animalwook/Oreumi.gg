@@ -13,14 +13,10 @@ function changematch(queue, callback) {
         .then(response => response.json())
         .then(data => {
             // 데이터 사용
-            console.log(data);
             changematch_display(data);
             callback();
         })
         .catch(error => {
-            console.log(error);
-            console.log(error.stack);
-            console.log(error.message);
             console.error("API 호출 중 오류 발생:", error);
         });
 }

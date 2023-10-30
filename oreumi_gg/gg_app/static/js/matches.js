@@ -8,26 +8,29 @@ const summonerName = decodeURIComponent(spliturl[3]);
 
 
 function addmatch(count, queue, callback) {
-    /**
-     * api를 사용해서 추가로 20경기를 불러오는 함수
-     * @param {int} count
-     * @param {int} queue 
-     * @return {dict}
-     * 
-     */
     fetch(`/api/summoners_info/${country}/${summonerName}/${count}/${queue}`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                if (response.status === 503) {
+                    throw new Error('서비스를 이용할 수 없습니다. 잠시 후 다시 시도해 주세요.');
+                } else if (response.status === 500) {
+                    throw new Error('서버 오류가 발생했습니다. 관리자에게 문의하세요.');
+                } else if (response.status === 429) {
+                    throw new Error('API 사용량 제한 초과. 나중에 다시 시도하세요.');
+                } else {
+                    throw new Error('알 수 없는 오류가 발생했습니다.');
+                }
+            }
+            return response.json();
+        })
         .then(data => {
             // 데이터 사용
-            console.log(data);
             display(data);
             callback();
         })
         .catch(error => {
-            console.log(error);
-            console.log(error.stack);
-            console.log(error.message);
             console.error("API 호출 중 오류 발생:", error);
+
         });
 }
 
