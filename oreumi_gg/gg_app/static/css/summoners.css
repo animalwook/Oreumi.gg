@@ -17,6 +17,12 @@
     background-color: green;
 }
 
+.node1 button {
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+}
+
 .node2 {
     float: left;
     width: 300px;
@@ -25,6 +31,24 @@
     position: relative;
     margin-top: 8px;
 }
+
+/* .node2 .css-1ialdhq,
+.node2 .css-1kw4425 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto; 
+    max-height: 100%;
+} */
+.node3 {
+    float: left;
+    width: calc(100% - 220px);
+    border: 2px solid grey;
+}
+
+/* 유저 정보 */
 
 .user-info {
     display: flex;
@@ -46,34 +70,12 @@
     background-color: beige;
 }
 
-.menu-bar {
-    width: 1080px;
-    height: 50px;
-    display: inline-flex;
-    align-items: flex-end;
-    background-color: grey;
-}
-
-/* .node2 .css-1ialdhq,
-.node2 .css-1kw4425 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow-y: auto; 
-    max-height: 100%;
-} */
-.node3 {
-    float: left;
-    width: calc(100% - 220px);
-    border: 2px solid grey;
-}
-
-/* 유저 정보 */
-
 .header-profile-info {
     display: flex;
+}
+
+.info {
+    margin-left: 20px;
 }
 
 .level {
@@ -103,4 +105,29 @@
 .favorite-icon img {
     width: 24px;
     height: 24px;
+}
+
+/* 메뉴바 */
+
+.menu-bar {
+    width: 1080px;
+    height: 50px;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: grey;
+}
+
+.menu-bar ul {
+    list-style: none;
+}
+
+.menu-bar li {
+    float: left;
+    background-color: moccasin;
+    font-size: 14px;
+    width: 120px;
+    height: 36px;
+    justify-content: center;
+    align-items: center;
 }
