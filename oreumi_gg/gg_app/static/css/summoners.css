@@ -13,15 +13,7 @@
     flex-direction: column;
     width: 100%;
     height: 228px;
-    border: 2px solid grey;
-    background-color: green;
-}
-
-.node1 button {
-    border: 0;
-    outline: 0;
-    cursor: pointer;
-    background-color: transparent;
+    background-color: #fff;
 }
 
 .node2 {
@@ -55,16 +47,32 @@
     display: flex;
     width: 1080px;
     height: 100%;
-    background-color: orange;
     padding: 10px;
 }
 
 .profile-icon {
-    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
 .profile-icon img {
+    border-radius: 25px;
+}
+
+.level {
+    width: 45px;
+    line-height: 20px;
+    font-size: 12px;
     border-radius: 10px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(32, 45, 55);
+    text-align: center;
+    position: absolute;
+    top: 59px;
+    left: 14px;
 }
 
 .header-profile-info {
@@ -75,49 +83,162 @@
     margin-left: 20px;
 }
 
-.level {
-    line-height: 20px;
-    font-size: 12px;
-    border-radius: 10px;
-    color: rgb(255, 255, 255);
-    background-color: rgb(32, 45, 55);
-    text-align: center;
-}
-
 .tier-list {
-    background-color: magenta;
     display: flex;
     margin-bottom: 10px;
+    align-items: center;
+}
+
+.tier-info {
+    font-size: 13px;
+    border-radius: 2px;
+    color: #9aa4af;
+    background-color: #ebeef1;
+    padding: 2px 4px;
+    margin-right: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.tier-season {
+    color: #9aa4bf;
+    font-weight: 700;
 }
 
 .more-tier {
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    background-color: transparent;
+    border-radius: 2px;
+    padding: 0 4px;
+    font-size: 13px;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9aa4af;
+}
+
+.more-tier:hover {
+    background-color: #ebeef1;
+}
+
+#tier-toggle-button.active {
+    background-color: #ebeef1;
+}
+
+.down-arrow-img {
+    margin-top: 2px;
+    margin-left: 4px;
+    width: 10px;
+    height: 6px;
+}
+
+.more-tier-list {
+    width: 125.63px;
+    height: 46px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    border-radius: 4px;
+    background-color: #ebeef1;
+    color: #9aa4af;
+    box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2);
+    font-size: 11px;
+    text-align: center;
+}
+
+.more-tier.active + #more-tier-list {
+    display: flex;
+}
+
+.list-item {
+    margin: 5px 0;
 }
 
 .summoner-name-container {
-    background-color: aqua;
     display: flex;
-    font-size: 24px;
+    font-size: 23px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+#favorite-button {
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    background-color: transparent;
 }
 
 .favorite-icon img {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    border: 1px solid inherit;
+    border-radius: 4px;
 }
 
 .team-and-rank {
-    background-color: maroon;
     margin-top: 10px;
+}
+
+.rank a {
+    font-size: 14px;
+    color: #758590;
+}
+
+.ranking {
+    color: #5383e8;
 }
 
 .user-info-buttons {
-    background-color: purple;
     margin-top: 10px;
 }
 
+.renewal-button {
+    border: 1px solid #5383e8;
+    outline: 0;
+    cursor: pointer;
+    padding: 10px 12px;
+    background-color: #5383e8;
+    color: #fff;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.renewal-button:hover {
+    background-color: #4171d6;
+}
+
+.tier-graph-button {
+    border: 1px solid #5383e8;
+    outline: 0;
+    cursor: pointer;
+    padding: 10px 12px;
+    background-color: #fff;
+    color: #4171d6;
+    border-radius: 5px;
+}
+
 .last-update {
-    background-color: beige;
+    font-size: 12px;
+    color: #9aa4af;
     margin-top: 10px;
+}
+
+/* 구분선 */
+.divide-line {
+    width: 100%;
+    border-bottom: 1px solid #d2d9e1;
+}
+
+.list-item-divide-line {
+    width: 100%;
+    border-bottom: 1px solid #dbe0e4;
 }
 
 /* 메뉴바 */
@@ -128,7 +249,7 @@
     display: inline-flex;
     justify-content: flex-start;
     align-items: center;
-    background-color: grey;
+    background-color: inherit;
 }
 
 .menu-bar ul {
@@ -136,14 +257,25 @@
 }
 
 .menu-bar li {
+    cursor: pointer;
     display: flex;
     float: left;
-    background-color: moccasin;
     font-size: 14px;
     width: 120px;
     height: 36px;
     justify-content: center;
     align-items: center;
+    border: 1px solid inherit;
+    border-radius: 10px;
+}
+
+.menu-bar li:hover {
+    background-color: #f7f7f9;
+}
+
+.menu-synthesis {
+    color: #4171d6;
+    font-weight: bold;
 }
 
 .menu-tft {
