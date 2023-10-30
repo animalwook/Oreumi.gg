@@ -21,6 +21,7 @@
     border: 0;
     outline: 0;
     cursor: pointer;
+    background-color: transparent;
 }
 
 .node2 {
@@ -58,16 +59,12 @@
     padding: 10px;
 }
 
-.team-and-rank {
-    background-color: maroon;
+.profile-icon {
+    margin-top: 15px;
 }
 
-.summoner-buttons {
-    background-color: purple;
-}
-
-.last-update {
-    background-color: beige;
+.profile-icon img {
+    border-radius: 10px;
 }
 
 .header-profile-info {
@@ -90,6 +87,7 @@
 .tier-list {
     background-color: magenta;
     display: flex;
+    margin-bottom: 10px;
 }
 
 .more-tier {
@@ -105,6 +103,21 @@
 .favorite-icon img {
     width: 24px;
     height: 24px;
+}
+
+.team-and-rank {
+    background-color: maroon;
+    margin-top: 10px;
+}
+
+.user-info-buttons {
+    background-color: purple;
+    margin-top: 10px;
+}
+
+.last-update {
+    background-color: beige;
+    margin-top: 10px;
 }
 
 /* 메뉴바 */
@@ -131,4 +144,14 @@
     height: 36px;
     justify-content: center;
     align-items: center;
+}
+
+.menu-tft {
+    display: flex;
+    align-items: center;
+    color: #907659;
+}
+
+.menu-tft span {
+    margin-left: 3px;
 }
