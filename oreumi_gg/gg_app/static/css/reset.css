@@ -90,7 +90,6 @@ video {
     vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article,
 aside,
 details,
 figcaption,
@@ -99,8 +98,7 @@ footer,
 header,
 hgroup,
 menu,
-nav,
-section {
+nav {
     display: flex;
 }
 body {
@@ -124,4 +122,9 @@ q:after {
 table {
     border-collapse: collapse;
     border-spacing: 0;
+}
+
+section,
+article {
+    display: block;
 }
