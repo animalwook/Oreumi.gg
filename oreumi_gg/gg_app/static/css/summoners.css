@@ -123,6 +123,7 @@
 }
 
 .menu-bar li {
+    display: flex;
     float: left;
     background-color: moccasin;
     font-size: 14px;
