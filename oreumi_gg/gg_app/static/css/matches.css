@@ -2,7 +2,7 @@ html {
     background-color: #d2d9e1;
 }
 
-img {
+section img {
     overflow-clip-margin: content-box;
     overflow: clip;
     border: 0;
@@ -10,65 +10,66 @@ img {
     max-width: 100%;
 }
 
-button {
+section button {
     cursor: pointer;
     border: 0;
     padding: 0;
     background: transparent;
 }
 
-div {
+section div {
     display: block;
 }
 
-strong {
+section strong {
     font-weight: bold;
 }
 
-table {
+section table {
     border-collapse: collapse;
     border-spacing: 0px;
 }
 
-colgroup {
+section colgroup {
     display: table-column-group;
 }
 
-col {
+section col {
     display: table-column;
 }
 
-thead {
+section thead {
     display: table-header-group;
     vertical-align: middle;
     border-color: inherit;
 }
 
-tr {
+section tr {
     display: table-row;
     vertical-align: inherit;
     border-color: inherit;
 }
 
-th, td {
+section th,
+section td {
     padding: 0px;
     margin: 0px;
 }
 
-th {
+section th {
     display: table-cell;
     vertical-align: inherit;
     font-weight: bold;
     text-align: -internal-center;
 }
 
-tbody {
+section tbody {
     display: table-row-group;
     vertical-align: middle;
     border-color: inherit;
 }
 
-a {
+section a {
     cursor: pointer;
     text-decoration: none;
     color: #202d37;
@@ -91,7 +92,7 @@ a {
     margin-top: 8px;
 }
 
-.game-item{
+.game-item {
     position: relative;
     margin-bottom: 8px;
     list-style: none;
@@ -108,8 +109,8 @@ a {
 }
 
 .game-match[result="defeat"] {
-    border-color: #E84057;
-    background-color: #FFF1F3;
+    border-color: #e84057;
+    background-color: #fff1f3;
 }
 
 .game-match[result="victory"] {
@@ -121,7 +122,6 @@ a {
     border-color: #758592;
     background-color: #f7f7f9;
 }
-
 
 .game-match .content {
     display: flex;
@@ -172,7 +172,7 @@ a {
     display: flex;
 }
 
-.game-match .info > div:nth-of-type(1) .champion{
+.game-match .info > div:nth-of-type(1) .champion {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -191,7 +191,7 @@ a {
     background-color: #b3cdff;
 }
 
-.game-match .info > div:nth-of-type(1) .champion .icon img{
+.game-match .info > div:nth-of-type(1) .champion .icon img {
     display: block;
     border-radius: 50%;
 }
@@ -267,7 +267,7 @@ a {
 }
 
 .game-match .info > div:nth-of-type(1) .kill_death_assist .k-d-a .d {
-    color: #d31a45
+    color: #d31a45;
 }
 
 .game-match .info > div:nth-of-type(1) .kill_death_assist .ratio {
@@ -426,14 +426,13 @@ a {
     background-color: #dbe0e4;
 }
 
-
 .game-match .action .detail img {
     position: absolute;
     bottom: 8px;
     left: 8px;
     width: 24px;
     height: 24px;
-    transform: rotate( 0deg );
+    transform: rotate(0deg);
 }
 
 .match_statics {
@@ -916,6 +915,7 @@ a {
 }
 
 .game-queue {
+    width: 100%;
     position: relative;
     display: flex;
     -webkit-box-pack: justify;
@@ -946,7 +946,7 @@ a {
     -webkit-text-decoration: none;
     text-decoration: none;
     background-color: #ecf2ff;
-    color: #4171D6;
+    color: #4171d6;
     box-sizing: border-box;
     height: 28px;
 }
@@ -964,7 +964,7 @@ a {
     font-size: 14px;
     -webkit-text-decoration: none;
     text-decoration: none;
-    background: #FFF;
+    background: #fff;
     background-color: #fff;
     color: #202d37;
     box-sizing: border-box;
@@ -1264,6 +1264,7 @@ a {
     border-color: black transparent transparent transparent;
 }
 
+
 .totalteam .summary .team .object:nth-of-type(1) {
     margin-left: 0px;
 }
@@ -1361,3 +1362,4 @@ a {
 .totalteam .summary .summary-graph > div:nth-of-type(2) {
     padding-bottom: 8px;
 }
+
