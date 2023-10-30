@@ -2,15 +2,21 @@ const totalmatch = document.querySelector(".match_statics");
 const match_20_info = document.querySelector(".match_20");
 
 function changematch(queue, callback) {
-    /**
-     * api를 사용해서 추가로 20경기를 불러오는 함수
-     * @param {int} count
-     * @param {int} queue 
-     * @return {dict}
-     * 
-     */
     fetch(`/api/summoners_info/${country}/${summonerName}/${0}/${queue}`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                if (response.status === 503) {
+                    throw new Error('서비스를 이용할 수 없습니다. 잠시 후 다시 시도해 주세요.');
+                } else if (response.status === 500) {
+                    throw new Error('서버 오류가 발생했습니다. 관리자에게 문의하세요.');
+                } else if (response.status === 429) {
+                    throw new Error('API 사용량 제한 초과. 나중에 다시 시도하세요.');
+                } else {
+                    throw new Error('알 수 없는 오류가 발생했습니다.');
+                }
+            }
+            return response.json();
+        })
         .then(data => {
             // 데이터 사용
             changematch_display(data);
@@ -18,6 +24,7 @@ function changematch(queue, callback) {
         })
         .catch(error => {
             console.error("API 호출 중 오류 발생:", error);
+            // 오류 처리 로직을 추가하거나 사용자에게 오류 메시지를 표시하는 등의 작업을 수행합니다.
         });
 }
 
