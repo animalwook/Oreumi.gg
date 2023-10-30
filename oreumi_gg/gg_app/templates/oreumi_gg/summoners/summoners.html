@@ -20,184 +20,166 @@
         {% include 'oreumi_gg/summoners/summoners_article_1.html' %}
         <section class="summoner_section">
             {% include 'oreumi_gg/summoners/summoners_rank.html' %}
-            <div class='main-info'>
-                <div class="game-queue">
-                    <ul>
-                        <li class="first-type game-type selected">
-                            <button value="TOTAL">전체</button>
-                        </li>
-                        <li class="game-type notselected"> 
-                            <button value="SOLORANKED">솔로랭크</button>
-                        </li>
-                        <li class="game-type notselected"> 
-                            <button value="FLEXRANKED">자유랭크</button>
-                        </li>
-                        <li class="game-type notselected"> 
-                            <button value="NORMAL">일반 (비공개 선택)</button>
-                        </li>
-                        <li class="game-type notselected"> 
-                            <button value="ARAM">칼바람 나락</button>
-                        </li>
-                    </ul>
-                </div>
-                <div class="match_statics">
-                    <div id="win_lose">
-                        <span id="total_matchcount">{{ total_calculate.total_match_count }}전</span>
-                        <span id="total_wincount">{{ total_calculate.win_count }}승</span>
-                        <span id="total_losecount">{{ total_calculate.lose_count }}패</span>
-                        <div id="kda">
-                            <div class="chart">
-                                <span>승률</span>
-                                <div class="text">
-                                    <strong id="total_winrate">{{ total_calculate.win_rate }}%</strong>
+            {% if matches %}
+                <div class='main-info'>
+                    <div class="game-queue">
+                        <ul>
+                            <li class="first-type game-type selected">
+                                <button value="TOTAL">전체</button>
+                            </li>
+                            <li class="game-type notselected"> 
+                                <button value="SOLORANKED">솔로랭크</button>
+                            </li>
+                            <li class="game-type notselected"> 
+                                <button value="FLEXRANKED">자유랭크</button>
+                            </li>
+                            <li class="game-type notselected"> 
+                                <button value="NORMAL">일반 (비공개 선택)</button>
+                            </li>
+                            <li class="game-type notselected"> 
+                                <button value="ARAM">칼바람 나락</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="match_statics">
+                        <div id="win_lose">
+                            <span id="total_matchcount">{{ total_calculate.total_match_count }}전</span>
+                            <span id="total_wincount">{{ total_calculate.win_count }}승</span>
+                            <span id="total_losecount">{{ total_calculate.lose_count }}패</span>
+                            <div id="kda">
+                                <div class="chart">
+                                    <span>승률</span>
+                                    <div class="text">
+                                        <strong id="total_winrate">{{ total_calculate.win_rate }}%</strong>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="info">
-                                <div class="k-d-a">
-                                    <span id="total_kill">{{ total_calculate.total_kill }}</span>
-                                    / 
-                                    <span id="total_death">{{ total_calculate.total_death }}</span>
-                                    / 
-                                    <span id="total_assist">{{ total_calculate.total_assist }}</span>
+                                <div class="info">
+                                    <div class="k-d-a">
+                                        <span id="total_kill">{{ total_calculate.total_kill }}</span>
+                                        / 
+                                        <span id="total_death">{{ total_calculate.total_death }}</span>
+                                        / 
+                                        <span id="total_assist">{{ total_calculate.total_assist }}</span>
+                                    </div>
+                                    <div id="total_kda">{{ total_calculate.total_kda }}:1</div>
+                                    <div id="total_killpart">킬관여 {{ total_calculate.total_kill_part }}%</div>
                                 </div>
-                                <div id="total_kda">{{ total_calculate.total_kda }}:1</div>
-                                <div id="total_killpart">킬관여 {{ total_calculate.total_kill_part }}%</div>
                             </div>
                         </div>
+                        <div class="champions"></div>
+                        <div class="positions"></div>
                     </div>
-                    <div class="champions"></div>
-                    <div class="positions"></div>
-                </div>
-                <div class="match_20">
-                    {% for match in matches %}
-                        <li class="game-item">
-                            <div result="{{ match.win_or_not_eng }}" class="game-match result">
-                                <div class="content">
-                                    <div class="game-content">
-                                        <div class="game">
-                                            <div class="type">{{ match.game_type }}</div>
-                                            <div class="time-stamp">
-                                                <div class style="position: relative;">{{ match.game_time }}</div>
-                                            </div>
-                                            <div class="result">{{ match.win_or_not }}</div>
-                                            <div class="length">{{ match.game_playtime }}</div>
-                                        </div>
-                                        <div class="info">
-                                            <div>
-                                                <div class="champion">
-                                                    <div class="icon">
-                                                        <a href="" rel="noreferrer">
-                                                            {% with champ_image="img/champion_square_test/"|add:match.search_player_champ|add:".webp" %}
-                                                                <img src="{% static champ_image %}" width="48" height="48">
-                                                            {% endwith %}
-                                                            <span class="champion-level">{{ match.search_player_champlevel }}</span>
-                                                        </a>  
-                                                    </div>
-                                                    <div class="spells">
-                                                        <div class="spell">
-                                                            <div class style="position: relative;">
-                                                                <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{ match.search_player_summonerspell1 }}.png" width="22" height="22">
-                                                            </div>
-                                                        </div>
-                                                        <div class="spell">
-                                                            <div class style="position: relative;">
-                                                                <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{ match.search_player_summonerspell2 }}.png" width="22" height="22">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="runes">
-                                                        <div class="rune">
-                                                            {% if match.search_player_main_rune %} 
-                                                                <div class style="position: relative;">
-                                                                    {% with search_player_main_rune="img/"|add:match.search_player_main_rune|add:".webp" %}
-                                                                        <img src="{% static search_player_main_rune %}" width="22" height="22">
-                                                                    {% endwith %}
-                                                                </div>
-                                                            {% else %}
-                                                                <div class="augment augment--empty"></div>
-                                                            {% endif %} 
-                                                        </div>
-                                                        <div class="rune">
-                                                            {% if match.search_player_sub_rune %}
-                                                                <div class style="position: relative;">
-                                                                    <img src="https://ddragon.canisback.com/img/perk-images/Styles/{{ match.search_player_sub_rune }}.png" width="22" height="22">
-                                                                </div>
-                                                            {% else %}
-                                                                <div class="augment augment--empty"></div>
-                                                            {% endif %}
-                                                            
-                                                        </div>
-                                                    </div>
+                    <div class="match_20">
+                        {% for match in matches %}
+                            <li class="game-item">
+                                <div result="{{ match.win_or_not_eng }}" class="game-match result">
+                                    <div class="content">
+                                        <div class="game-content">
+                                            <div class="game">
+                                                <div class="type">{{ match.game_type }}</div>
+                                                <div class="time-stamp">
+                                                    <div class style="position: relative;">{{ match.game_time }}</div>
                                                 </div>
-                                                <div class="kill_death_assist">
-                                                    <div class="k-d-a">
-                                                        <span>{{ match.search_player_kill }}</span>
-                                                        <span> / </span>
-                                                        <span class="d">{{ match.search_player_death }}</span>
-                                                        <span> / </span>
-                                                        <span>{{ match.search_player_assist }}</span>
-                                                    </div>
-                                                    <div class="ratio">
-                                                        <span>{{ match.search_player_kda }}:1</span>
-                                                    </div>
-                                                </div>   
-                                                <div class="stats">
-                                                    <div class="p-kill">
-                                                        <div class style="position: relative;">
-                                                            킬관여 {{ match.search_player_killpart }}%
-                                                        </div>
-                                                    </div>
-                                                    <div class="controlward">제어 와드 {{ match.search_player_visionWardsBoughtInGame }}</div>
-                                                    <div class="cs">
-                                                        <div class style="position: relative;">
-                                                            CS {{ match.search_player_totalminions_kill }} ({{ match.search_player_minperminions }})
-                                                        </div>
-                                                    </div>
-                                                    <div class="average-tier"><div class style="position: relative;"></div></div>
-                                                </div>
+                                                <div class="result">{{ match.win_or_not }}</div>
+                                                <div class="length">{{ match.game_playtime }}</div>
                                             </div>
-                                            <div>
-                                                <div class="items">
-                                                    <ul>
-                                                        {% for player_item in match.search_player_item %}
-                                                            {% if player_item %}
-                                                                <li style="list-style-type: none;">
-                                                                    <div class style="position: relative;">
-                                                                        <img src="/static/img/item/{{player_item}}.webp" width="22" height="22">
-                                                                    </div>
-                                                                </li>
-                                                            {% else %}
-                                                                <li></li>
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="participants">
-                                            <ul>
-                                                {% for key, value in match.items %}
-                                                    {% if forloop.counter <= 5 %}
-                                                        <li class="team" style="list-style-type: none;">
-                                                            <div class="team_icon" style="position: relative;">
-                                                                {% with champ_image="img/champion_square_test/"|add:value.0.championname|add:".webp" %}
-                                                                    <img src="{% static champ_image %}" width="16" height="16">
+                                            <div class="info">
+                                                <div>
+                                                    <div class="champion">
+                                                        <div class="icon">
+                                                            <a href="" rel="noreferrer">
+                                                                {% with champ_image="img/champion_square_test/"|add:match.search_player_champ|add:".webp" %}
+                                                                    <img src="{% static champ_image %}" width="48" height="48">
                                                                 {% endwith %}
+                                                                <span class="champion-level">{{ match.search_player_champlevel }}</span>
+                                                            </a>  
+                                                        </div>
+                                                        <div class="spells">
+                                                            <div class="spell">
+                                                                <div class style="position: relative;">
+                                                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{ match.search_player_summonerspell1 }}.png" width="22" height="22">
+                                                                </div>
                                                             </div>
-                                                            <div class="name">
-                                                                <a href="/summoners/kr/{{ value.0.summonername }}" rel="noreferrer">
-                                                                    {{ value.0.summonername }}
-                                                                </a>
+                                                            <div class="spell">
+                                                                <div class style="position: relative;">
+                                                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{ match.search_player_summonerspell2 }}.png" width="22" height="22">
+                                                                </div>
                                                             </div>
-                                                        </li>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </ul>
-                                            <ul>
-                                                {% for key, value in match.items %}
-                                                    {% if 5 < forloop.counter and forloop.counter <= 10 %}
-                                                        {% if value.0.championname %}
-                                                            <li class="team" style="list-style-type: none;">
+                                                        </div>
+                                                        <div class="runes">
+                                                            <div class="rune">
+                                                                {% if match.search_player_main_rune %} 
+                                                                    <div class style="position: relative;">
+                                                                        {% with search_player_main_rune="img/"|add:match.search_player_main_rune|add:".webp" %}
+                                                                            <img src="{% static search_player_main_rune %}" width="22" height="22">
+                                                                        {% endwith %}
+                                                                    </div>
+                                                                {% else %}
+                                                                    <div class="augment augment--empty"></div>
+                                                                {% endif %} 
+                                                            </div>
+                                                            <div class="rune">
+                                                                {% if match.search_player_sub_rune %}
+                                                                    <div class style="position: relative;">
+                                                                        <img src="https://ddragon.canisback.com/img/perk-images/Styles/{{ match.search_player_sub_rune }}.png" width="22" height="22">
+                                                                    </div>
+                                                                {% else %}
+                                                                    <div class="augment augment--empty"></div>
+                                                                {% endif %}
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="kill_death_assist">
+                                                        <div class="k-d-a">
+                                                            <span>{{ match.search_player_kill }}</span>
+                                                            <span> / </span>
+                                                            <span class="d">{{ match.search_player_death }}</span>
+                                                            <span> / </span>
+                                                            <span>{{ match.search_player_assist }}</span>
+                                                        </div>
+                                                        <div class="ratio">
+                                                            <span>{{ match.search_player_kda }}:1</span>
+                                                        </div>
+                                                    </div>   
+                                                    <div class="stats">
+                                                        <div class="p-kill">
+                                                            <div class style="position: relative;">
+                                                                킬관여 {{ match.search_player_killpart }}%
+                                                            </div>
+                                                        </div>
+                                                        <div class="controlward">제어 와드 {{ match.search_player_visionWardsBoughtInGame }}</div>
+                                                        <div class="cs">
+                                                            <div class style="position: relative;">
+                                                                CS {{ match.search_player_totalminions_kill }} ({{ match.search_player_minperminions }})
+                                                            </div>
+                                                        </div>
+                                                        <div class="average-tier"><div class style="position: relative;"></div></div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="items">
+                                                        <ul>
+                                                            {% for player_item in match.search_player_item %}
+                                                                {% if player_item %}
+                                                                    <li style="list-style-type: none;">
+                                                                        <div class style="position: relative;">
+                                                                            <img src="/static/img/item/{{player_item}}.webp" width="22" height="22">
+                                                                        </div>
+                                                                    </li>
+                                                                {% else %}
+                                                                    <li></li>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="participants">
+                                                <ul>
+                                                    {% for key, value in match.items %}
+                                                        {% if forloop.counter <= 5 %}
+                                                            <li class="team_outer" style="list-style-type: none;">
                                                                 <div class="team_icon" style="position: relative;">
                                                                     {% with champ_image="img/champion_square_test/"|add:value.0.championname|add:".webp" %}
                                                                         <img src="{% static champ_image %}" width="16" height="16">
@@ -210,33 +192,82 @@
                                                                 </div>
                                                             </li>
                                                         {% endif %}
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </ul>
+                                                    {% endfor %}
+                                                </ul>
+                                                <ul>
+                                                    {% for key, value in match.items %}
+                                                        {% if 5 < forloop.counter and forloop.counter <= 10 %}
+                                                            {% if value.0.championname %}
+                                                                <li class="team_outer" style="list-style-type: none;">
+                                                                    <div class="team_icon" style="position: relative;">
+                                                                        {% with champ_image="img/champion_square_test/"|add:value.0.championname|add:".webp" %}
+                                                                            <img src="{% static champ_image %}" width="16" height="16">
+                                                                        {% endwith %}
+                                                                    </div>
+                                                                    <div class="name">
+                                                                        <a href="/summoners/kr/{{ value.0.summonername }}" rel="noreferrer">
+                                                                            {{ value.0.summonername }}
+                                                                        </a>
+                                                                    </div>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="action">
+                                        <button class="detail" data-match-info="{{ match|getvalue }}" match-result="{{ match.win_or_not_eng }}" status="open">
+                                            {% if match.win_or_not_eng == "defeat" %}
+                                                <img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down-red.svg?v=1697786050877" width="24" alt="More" height="24">
+                                            {% elif match.win_or_not_eng == "repeat" %}
+                                                <img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down.svg?v=1697786050877" width="24" alt="More" height="24">
+                                            {% else %}
+                                                <img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down-blue.svg?v=1697786050877" width="24" alt="More" height="24">
+                                            {% endif %}
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="action">
-                                    <button class="detail" data-match-info="{{ match|getvalue }}" match-result="{{ match.win_or_not_eng }}" status="open">
-                                        {% if match.win_or_not_eng == "defeat" %}
-                                            <img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down-red.svg?v=1697786050877" width="24" alt="More" height="24">
-                                        {% elif match.win_or_not_eng == "repeat" %}
-                                            <img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down.svg?v=1697786050877" width="24" alt="More" height="24">
-                                        {% else %}
-                                            <img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down-blue.svg?v=1697786050877" width="24" alt="More" height="24">
-                                        {% endif %}
-                                    </button>
-                                </div>
-                            </div>
-                        </li>
-                    {% endfor %}
+                            </li>
+                        {% endfor %}
+                    </div>
+                    <div id="addmatch">
+                    </div>
+                    {% if total_calculate.total_match_count|divisibleby:20 %}
+                        <button id="addmatch_btn">더보기</button>
+                    {% endif %}
                 </div>
-                <div id="addmatch">
+            {% else %}
+                <div class='main-info'>
+                    <div class="game-queue">
+                        <ul>
+                            <li class="first-type game-type selected">
+                                <button value="TOTAL">전체</button>
+                            </li>
+                            <li class="game-type notselected"> 
+                                <button value="SOLORANKED">솔로랭크</button>
+                            </li>
+                            <li class="game-type notselected"> 
+                                <button value="FLEXRANKED">자유랭크</button>
+                            </li>
+                            <li class="game-type notselected"> 
+                                <button value="NORMAL">일반 (비공개 선택)</button>
+                            </li>
+                            <li class="game-type notselected"> 
+                                <button value="ARAM">칼바람 나락</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="match_statics">
+                        <div class="no-data">기록된 전적이 없습니다.</div>
+                    </div>
+                    <div class="match_20"></div>
+                    <button id="addmatch_btn" style="visibility: hidden;">더보기</button>
+                    
                 </div>
-                {% if total_calculate.total_match_count|divisibleby:20 %}
-                    <button id="addmatch_btn">더보기</button>
-                {% endif %}
-            </div>
+            {% endif %}
+            
         </section>
         {% include 'oreumi_gg/footer.html' %}
     </body>

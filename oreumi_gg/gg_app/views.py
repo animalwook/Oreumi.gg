@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseServerError, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.db.models import Q
@@ -11,7 +11,10 @@ from .forms import BlogPostForm, CommentForm
 from .lol_match import match
 from .ingame_data import find_id, find_league_info, find_spectator_info, IngameDataNotFoundError
 import requests
+
+from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
+
 from bs4 import BeautifulSoup
 import json
 from oreumi_gg.settings import get_secret, champion_file
@@ -101,8 +104,12 @@ def community(request,category="default", order_by="default"):
             category_tag='전략적 팀 전투'
 
         posts = posts.filter(Q(category__icontains=category_tag))
-
-    context = {'posts': posts, 'recent_posts':recent_posts,'category':category, 'tag_on':tag_on }
+    
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get('page')
+    page_posts = paginator.get_page(page_number)
+    
+    context = {'posts': posts, 'recent_posts':recent_posts,'category':category, 'tag_on':tag_on, 'page_posts': page_posts}
 
     return render(request,"community/post_list.html", context)
 
@@ -270,23 +277,38 @@ def summoners_info_form(request):
 
 
 def summoners_info(request, country, summoner_name):
-    matches, total_calculate, search_player_info_dict = match(country, summoner_name, 0, None)
-    context = {
-        "matches" : matches, 
-        "total_calculate": total_calculate,
-        "search_player_info_dict" : search_player_info_dict
-    }
-    return render(request, "oreumi_gg/summoners/summoners.html", context)
-
+    try:
+        matches, total_calculate, search_player_info_dict = match(country, summoner_name, 0, None)
+        context = {
+            "matches" : matches, 
+            "total_calculate": total_calculate,
+            "search_player_info_dict" : search_player_info_dict
+        }
+        return render(request, "oreumi_gg/summoners/summoners.html", context)
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 503:
+            return HttpResponseServerError("현재 서비스를 이용할 수 없습니다. 잠시 후 다시 시도해주세요.")
+        elif e.response.status_code == 429:
+            return HttpResponseServerError("너무 많은 요청을 보냈습니다. 잠시 후 다시 시도해주세요.")
+        else:
+            return HttpResponseServerError("알 수 없는 문제가 생겼습니다. 잠시 후 다시 시도해주세요.")
 
 
 def summoners_info_api(request, country, summoner_name, count, queue):
-    matches, total_calculate, search_player_info_dict = match(country, summoner_name, count, queue)
-    response_data = {
-        "matches": matches,
-        "total_calculate": total_calculate,
-    }
-    return JsonResponse(response_data)
+    try:
+        matches, total_calculate, search_player_info_dict = match(country, summoner_name, count, queue)
+        response_data = {
+            "matches": matches,
+            "total_calculate": total_calculate,
+        }
+        return JsonResponse(response_data)
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 503:
+            return HttpResponseServerError("현재 서비스를 이용할 수 없습니다. 잠시 후 다시 시도해주세요.")
+        elif e.response.status_code == 429:
+            return HttpResponseServerError("너무 많은 요청을 보냈습니다. 잠시 후 다시 시도해주세요.")
+        else:
+            return HttpResponseServerError("알 수 없는 문제가 생겼습니다. 잠시 후 다시 시도해주세요.")
   
   
 def champion_tier_list(request, position, region, tier):
@@ -432,18 +454,6 @@ def ingame_info(request,nickname):
     except IngameDataNotFoundError:
         return render(request, 'oreumi_gg/404_error.html')
     return render(request, 'oreumi_gg/ingame.html',context)
-
-# 더보기 를 위한 함수
-# def summoners_info_api(request, country, summoner_name, start):
-#     temp_matches, temp_total_calculate, temp_match_count = match(country, summoner_name, 0)
-#     match_count = temp_match_count
-#     matches, total_calculate, match_count = match(country, summoner_name, match_count)
-#     response_data = {
-#         "matches": matches,
-#         "total_calculate": total_calculate,
-#         "match_count" : match_count
-#     }
-#     return JsonResponse(response_data)
 
 
 
