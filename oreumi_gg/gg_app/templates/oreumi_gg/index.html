@@ -56,7 +56,7 @@
                     <div class="community_new_posts">
                             <!-- 최신 게시물부터 5개 불러오기 -->
                             <div class="board_list_wrap">
-                                {% for post in page_posts|slice:':5' %} <!-- views 에서 넘겨 받은 변수 -->
+                                {% for post in page_posts|slice:':6' %} <!-- views 에서 넘겨 받은 변수 -->
                                 <li class="post_list">
                                     {% if post.thumbnail != "" %}
                                     <span style="width: 60px; height: 60px;   margin-right: 35px;">
