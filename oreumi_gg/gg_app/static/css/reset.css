@@ -72,10 +72,8 @@ embed,
 figure,
 figcaption,
 footer,
-header,
 hgroup,
 menu,
-nav,
 output,
 ruby,
 section,
@@ -103,7 +101,7 @@ hgroup,
 menu,
 nav,
 section {
-    display: block;
+    display: flex;
 }
 body {
     line-height: 1;
