@@ -308,17 +308,20 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                         <div class="team">
                             <div class="object">
                                 <div class style="position: relative;">
-                                    <span>바론: ${blueteambaronkills}</span>
+                                    <img src="/static/img/oreumi_gg/icon-baron.svg">
+                                    <span>${blueteambaronkills}</span>
                                 </div>
                             </div>
                             <div class="object">
                                 <div class style="position: relative;">
-                                    <span>드래곤: ${blueteamdragonkills}</span>
+                                    <img src="/static/img/oreumi_gg/icon-dragon.svg">
+                                    <span>${blueteamdragonkills}</span>
                                 </div>
                             </div>
                             <div class="object">
                                 <div class style="position: relative;">
-                                    <span>타워: ${blueteamturretkills}</span>
+                                    <img src="/static/img/oreumi_gg/icon-tower.svg">
+                                    <span>${blueteamturretkills}</span>
                                 </div>
                             </div>
                         </div>
@@ -338,24 +341,27 @@ function display_detailmatch(data, result, gameItem, gameminute, maxdealt, maxta
                                     <div class="data-left">${blueteamgoldearned}</div>
                                     <div class="data-right">${redteamgoldearned}</div>
                                     <div class="win" style="flex: 1 1 ${blueteamgold_per}%;"></div>
-                                    <div class="win" style="flex: 1 1 ${redteamgold_per}%;"></div>
+                                    <div class="lose" style="flex: 1 1 ${redteamgold_per}%;"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="team">
                             <div class="object">
                                 <div class style="position: relative;">
-                                    <span>바론: ${redteambaronkills}</span>
+                                    <img src="/static/img/oreumi_gg/icon-baron-r.svg">
+                                    <span>${redteambaronkills}</span>
                                 </div>
                             </div>
                             <div class="object">
                                 <div class style="position: relative;">
-                                    <span>드래곤: ${redteamdragonkills}</span>
+                                    <img src="/static/img/oreumi_gg/icon-dragon-r.svg">
+                                    <span>${redteamdragonkills}</span>
                                 </div>
                             </div>
                             <div class="object">
                                 <div class style="position: relative;">
-                                    <span>타워: ${redteamturretkills}</span>
+                                    <img src="/static/img/oreumi_gg/icon-tower-r.svg">
+                                    <span>${redteamturretkills}</span>
                                 </div>
                             </div>
                         </div>

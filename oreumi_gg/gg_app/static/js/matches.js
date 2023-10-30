@@ -84,7 +84,7 @@ function display(data) {
                 runesHTML += `
                 <div class="rune">
                     <div class style="position: relative;">
-                        <img src="/static/img/${data[player][0].main_rune}.webp" width="22" height="22">
+                        <img src="/static/img/${match.search_player_main_rune}.webp" width="22" height="22">
                     </div>
                 </div>
                 <div class="rune">
@@ -112,7 +112,7 @@ function display(data) {
                 match[i].forEach(item => {
                     if (i <= 5) {
                         bluechampHTML += `
-                        <li class="team" style="list-style-type: none;">
+                        <li class="team_outer" style="list-style-type: none;">
                             <div class="team_icon" style="position: relative">
                                 <img src="/static/img/champion_square_test/${item.championname}.webp" width="16" height="16">
                             </div>
@@ -127,7 +127,7 @@ function display(data) {
                     else if (i <= 10) {
                         if (item.championname) {
                             redchampHTML += `
-                            <li class="team" style="list-style-type: none;">
+                            <li class="team_outer" style="list-style-type: none;">
                                 <div class="team_icon" style="position: relative">
                                     <img src="/static/img/champion_square_test/${item.championname}.webp" width="16" height="16">
                                 </div>

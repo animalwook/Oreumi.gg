@@ -130,7 +130,7 @@ function changematch_display(data) {
                     match[i].forEach(item => {
                         if (i <= 5) {
                             bluechampHTML += `
-                            <li class="team" style="list-style-type: none;">
+                            <li class="team_outer" style="list-style-type: none;">
                                 <div class="team_icon" style="position: relative">
                                     <img src="/static/img/champion_square_test/${item.championname}.webp" width="16" height="16">
                                 </div>
@@ -145,7 +145,7 @@ function changematch_display(data) {
                         else if (i <= 10) {
                             if (item.championname) {
                                 redchampHTML += `
-                                <li class="team" style="list-style-type: none;">
+                                <li class="team_outer" style="list-style-type: none;">
                                     <div class="team_icon" style="position: relative">
                                         <img src="/static/img/champion_square_test/${item.championname}.webp" width="16" height="16">
                                     </div>
@@ -312,7 +312,7 @@ const buttons = document.querySelectorAll('.game-type button');
                 });
             });
             match_20_info.innerHTML = '';
-            totalmatch.innerHTML = '<img src="/static/img/oreumi_gg/loading.gif" width="22" height="22">';
+            totalmatch.innerHTML = '<img src="/static/img/oreumi_gg/loading.gif" width="22" height="22" style="margin-left: 320px;">';
             fetchButton.style.display="none";
         });
     });
