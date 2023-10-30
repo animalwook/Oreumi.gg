@@ -391,8 +391,8 @@ LOGOUT_REDIRECT_URL = 'gg_app:index'
 
 # LOGIN_URL = "user_app:login"
 
-ACCOUNT_SESSION_REMEMBER = True  # 브라우저를 닫아도 세션기록 유
-SESSION_COOKIE_AGE = 3600  # 쿠키를 한시간만 저장  
+# ACCOUNT_SESSION_REMEMBER = True  # 브라우저를 닫아도 세션기록 유
+# SESSION_COOKIE_AGE = 3600  # 쿠키를 한시간만 저장  
 # 지우는 명령어  python manage.py clearsessions
 
 

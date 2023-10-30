@@ -24,7 +24,7 @@ from oreumi_gg.settings import get_secret, champion_file
 def index(request):
     posts=BlogPost.objects.all().order_by('-created_at')
     context = {
-        'posts': posts, 
+        'page_posts': posts, 
         }
     return render(request, "oreumi_gg/index.html",context)
   
@@ -80,10 +80,10 @@ def community(request,category="default", order_by="default"):
             posts = posts.order_by('-created_at')
             tag_on = 'update'
         elif order_by == 'view':
-            posts = posts.order_by('-view')
+            posts = posts.order_by('-up')
             tag_on = 'view'
         elif order_by == 'top':
-            posts = posts.order_by('-up')
+            posts = posts.order_by('-view')
             tag_on = 'top'
 
 
