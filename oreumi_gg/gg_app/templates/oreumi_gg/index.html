@@ -53,34 +53,42 @@
                 </div>
             </form>
 
-        </article>
-        <article>
-            <div class="community_container">
-                <div class="community_title">Oreumi 최신 게시글</div>
-                <div class="community_new_posts">
-                    <ul>
-                        <!-- 최신 게시물부터 5개 불러오기 -->
-                        {% for post in posts|slice:":5" %}
-                        <li class="post_list">
-                            <span style="width:44px"><img src="{% static 'img/community/tri.png' %}" alt=""
-                                    width="16"><span>{{post.net_count}}</span></span>
-
-                            <div class="">
-                                <a href="{% url 'gg_app:post_detail' post.id %}">
-                                    <span class="post-counter">{{forloop.counter}}</span>
-                                    <span class="post-title">{{post.title}}</span>
-                                </a><em>[{{post.comment_count}}]</em>
-                                <div class="css-puqfyf ev5eu1p8">
-                                    <span>{{post.category}}</span>
-                                    <span style="position:relative" class="">{{post.updated_at}}</span>
-                                    <span><a href=""><em style="position:relative" class="levelTooltip"><img src=""
-                                                    alt="" height="24"></em>
+            </article>
+            <article>
+                <div class="community_container">
+                    <div class="community_title">Oreumi 최신 게시글</div>
+                    <div class="community_new_posts">
+                            <!-- 최신 게시물부터 5개 불러오기 -->
+                            <div class="board_list_wrap">
+                                {% for post in page_posts|slice:':6' %} <!-- views 에서 넘겨 받은 변수 -->
+                                <li class="post_list">
+                                    {% if post.thumbnail != "" %}
+                                    <span style="width: 60px; height: 60px;   margin-right: 35px;">
+                                        <a href="{% url 'gg_app:post_detail' post.id %}"><img src="/media/{{post.thumbnail}}" alt="" style="width: 60px; height: 60px; object-fit: cover; object-position: center;"></a>
+                                    </span>
+                                    {% else %}
+                                    <span style="width: 60px; height: 60px;   margin-right: 35px;">
+                                     
+                                    </span>
+                                    {% endif %}
+                                    
+                                    <span style="width:44px"><img src="{% static 'img/community/tri.png' %}" alt="" width="16"><span>{{post.net_count}}</span></span>
+                                    
+                                    <div class="">
+                                        <a href="{% url 'gg_app:post_detail' post.id %}"><span>{{post.title}}</span></a><em>[{{post.comment_count}}]</em>
+                                        <div class="css-puqfyf ev5eu1p8">
+                                            <span>{{post.category}}</span>
+                                            <span style="position:relative" class="">{{post.updated_at}}</span>
+                                            <span><a href=""><em style="position:relative" class="levelTooltip"><img src="" alt="" height="24"></em>
                                             <span class="post_nickname">{{post.author}}</span></a></span>
-                                </div>
+                                        </div>
+                                    </div>
+
+                                </li>
+                                {% endfor %}
                             </div>
-                        </li>
-                        {%endfor%}
-                    </ul>
+                    </div>
+
                 </div>
             </div>
         </article>

@@ -1,27 +1,31 @@
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseServerError, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.db.models import Q
-
-from .models import BlogPost, Comment
+from user_app.models import User
+from .models import BlogPost, Comment,Message,ChatRoom
 from .forms import BlogPostForm, CommentForm
 from .lol_match import match
 from .ingame_data import find_id, find_league_info, find_spectator_info, IngameDataNotFoundError
 import requests
+
+from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
+
 from bs4 import BeautifulSoup
 import json
 from oreumi_gg.settings import get_secret, champion_file
+import re
 # Create your views here.
-
+from django.utils import timezone
 
 def index(request):
     posts=BlogPost.objects.all().order_by('-created_at')
     context = {
-        'posts': posts, 
+        'page_posts': posts, 
         }
     return render(request, "oreumi_gg/index.html",context)
   
@@ -65,6 +69,109 @@ def type_level(request):
 #######################################
 '''
 
+
+def chat_room(request, pk):
+    user = request.user
+    chat_room = get_object_or_404(ChatRoom, pk=pk)
+
+    # 내 ID가 포함된 방만 가져오기
+    chat_rooms = ChatRoom.objects.filter(
+            Q(receiver_id=user) | Q(starter_id=user)
+        ).order_by('-latest_message_time')  # 최신 메시지 시간을 기준으로 내림차순 정렬
+    
+    # 각 채팅방의 최신 메시지를 가져오기
+    chat_room_data = []
+    for room in chat_rooms:
+        latest_message = Message.objects.filter(chatroom=room).order_by('-timestamp').first()
+        if latest_message:
+            chat_room_data.append({
+                'chat_room': room,
+                'latest_message': latest_message.content,
+                'timestamp': latest_message.timestamp,
+            })
+
+    # 상대방 정보 가져오기
+    if chat_room.receiver == user:
+        opponent = chat_room.starter
+    else:
+        opponent = chat_room.receiver
+
+    opponent_user = User.objects.get(pk=opponent.pk)
+
+
+    # post의 상태 확인 및 처리
+    if chat_room.post is None:
+        seller = None
+        post = None
+    else:
+        seller = chat_room.post.author
+        post = chat_room.post
+
+    return render(request, 'community/chat_room.html', {
+        'chat_room': chat_room,
+        'chat_room_data': chat_room_data,
+        'room_name': chat_room.pk,
+        'seller': seller,
+        'post': post,
+        'opponent': opponent_user,
+    })
+
+
+# 채팅방 생성 또는 참여
+def create_or_join_chat(request, pk):
+    post = get_object_or_404(BlogPost, pk=pk)
+    user = request.user
+    chat_room = None
+    created = False
+    post_user = User.objects.get(nickname = post.author)
+    print(post_user)
+    print(user)
+    # 채팅방이 이미 존재하는지 확인
+    chat_rooms = ChatRoom.objects.filter(
+        Q(starter=user, receiver=post_user, post=post) |
+        Q(starter=post_user, receiver=user, post=post)
+    )
+    print(chat_rooms)
+    if chat_rooms.exists():
+        chat_room = chat_rooms.first()
+    else:
+        # 채팅방이 존재하지 않는 경우, 새로운 채팅방 생성
+        chat_room = ChatRoom(starter=user, receiver=post_user, post=post)
+        chat_room.save()
+        created = True
+
+    return JsonResponse({'success': True, 'chat_room_id': chat_room.pk, 'created': created})
+
+
+# 가장 최근 채팅방 가져오기
+@login_required
+def get_latest_chat(request, pk):
+    user = request.user
+    # 1) 해당 pk인 채팅방 중 가장 최신 채팅방으로 리디렉션
+    try:
+        latest_chat_with_pk = ChatRoom.objects.filter(
+            Q(post_id=pk) &
+            (Q(receiver=user) | Q(starter=user))
+        ).latest('latest_message_time')
+        return JsonResponse({'success': True, 'chat_room_id': latest_chat_with_pk.room_number})
+    except ChatRoom.DoesNotExist:
+        pass
+
+    # 2) 위 경우가 없다면 내가 소속된 채팅방 전체 중 가장 최신 채팅방으로 리디렉션
+    try:
+        latest_chat = ChatRoom.objects.filter(
+            Q(receiver=user) | Q(starter=user)
+        ).latest('latest_message_time')
+        return JsonResponse({'success': True, 'chat_room_id': latest_chat.room_number})
+
+    # 3) 모두 없다면 현재 페이지로 리디렉션
+    except ChatRoom.DoesNotExist:
+        return JsonResponse({
+            'success': False, 
+            'alert_message': '진행중인 채팅이 없습니다.'
+        })
+
+
 def community(request,category="default", order_by="default"):
     posts = BlogPost.objects.all().order_by("-created_at")
     recent_posts=posts    
@@ -77,10 +184,10 @@ def community(request,category="default", order_by="default"):
             posts = posts.order_by('-created_at')
             tag_on = 'update'
         elif order_by == 'view':
-            posts = posts.order_by('-view')
+            posts = posts.order_by('-up')
             tag_on = 'view'
         elif order_by == 'top':
-            posts = posts.order_by('-up')
+            posts = posts.order_by('-view')
             tag_on = 'top'
 
 
@@ -101,8 +208,12 @@ def community(request,category="default", order_by="default"):
             category_tag='전략적 팀 전투'
 
         posts = posts.filter(Q(category__icontains=category_tag))
-
-    context = {'posts': posts, 'recent_posts':recent_posts,'category':category, 'tag_on':tag_on }
+    
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get('page')
+    page_posts = paginator.get_page(page_number)
+    
+    context = {'posts': posts, 'recent_posts':recent_posts,'category':category, 'tag_on':tag_on, 'page_posts': page_posts}
 
     return render(request,"community/post_list.html", context)
 
@@ -121,7 +232,7 @@ def post_write(request):
             #bs4로 파싱해서 경로 가져오기
             img_tag = BeautifulSoup(post.content,'html.parser').find('img')
             if img_tag :
-                post.thumbnail = img_tag.get('src')[6:]
+                post.thumbnail = img_tag.get('src')[7:]
 
             post.save()
             post_id = post.id
@@ -141,19 +252,35 @@ def post_write(request):
 @login_required
 def post_edit(request, post_id):        
     post = get_object_or_404(BlogPost, pk=post_id)
-
+    created_save = post.created_at
     if request.method == 'POST':
-        form = BlogPostForm(request.POST, instance=post)
-        if form.is_valid():
+        form = BlogPostForm(request.POST) 
+        if form.is_valid(): # 유효성 검사(필수과정)
+            # 현재 로그인한 사용자를 게시물의 저자로 설정
+            post = form.save(commit=False)
+            post.pk = post_id
+            post.category = request.POST['category']
+            post.created_at = created_save
+            post.updated_at = timezone.now()
+            post.author = request.user.nickname  # 사용자의 닉네임으로 설정
             #bs4로 파싱해서 경로 가져오기
-            img_tag = BeautifulSoup(form.content,'html.parser').find('img')
+            img_tag = BeautifulSoup(post.content,'html.parser').find('img')
             if img_tag :
-                post.thumbnail = img_tag.get('src')[6:]
-            form.save()
-            return redirect('gg_app:post_detail', post_id=post_id)  # 수정 후 게시물 목록 페이지로 리디렉션
+                post.thumbnail = img_tag.get('src')[7:]
+
+            post.save()
+            return redirect('gg_app:post_detail', post_id=post.id)  # 수정 후 게시물 목록 페이지로 리디렉션
     else:
+         # get요청시 
+        #에디터의 이미지경로 설정
         form = BlogPostForm(instance=post)
-    return render(request, 'community/post_write.html', {'form': form, 'category':post.category, 'post_id': post.id})
+        context = {
+            'form': form, 
+            'category':post.category, 
+            'post_id': post.id,
+            'MEDIA_URL':settings.MEDIA_URL
+        }
+    return render(request, 'community/post_edit.html',context)
 
 # 게시글 삭제
 @login_required
@@ -270,23 +397,38 @@ def summoners_info_form(request):
 
 
 def summoners_info(request, country, summoner_name):
-    matches, total_calculate, search_player_info_dict = match(country, summoner_name, 0, None)
-    context = {
-        "matches" : matches, 
-        "total_calculate": total_calculate,
-        "search_player_info_dict" : search_player_info_dict
-    }
-    return render(request, "oreumi_gg/summoners/summoners.html", context)
-
+    try:
+        matches, total_calculate, search_player_info_dict = match(country, summoner_name, 0, None)
+        context = {
+            "matches" : matches, 
+            "total_calculate": total_calculate,
+            "search_player_info_dict" : search_player_info_dict
+        }
+        return render(request, "oreumi_gg/summoners/summoners.html", context)
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 503:
+            return HttpResponseServerError("현재 서비스를 이용할 수 없습니다. 잠시 후 다시 시도해주세요.")
+        elif e.response.status_code == 429:
+            return HttpResponseServerError("너무 많은 요청을 보냈습니다. 잠시 후 다시 시도해주세요.")
+        else:
+            return HttpResponseServerError("알 수 없는 문제가 생겼습니다. 잠시 후 다시 시도해주세요.")
 
 
 def summoners_info_api(request, country, summoner_name, count, queue):
-    matches, total_calculate, search_player_info_dict = match(country, summoner_name, count, queue)
-    response_data = {
-        "matches": matches,
-        "total_calculate": total_calculate,
-    }
-    return JsonResponse(response_data)
+    try:
+        matches, total_calculate, search_player_info_dict = match(country, summoner_name, count, queue)
+        response_data = {
+            "matches": matches,
+            "total_calculate": total_calculate,
+        }
+        return JsonResponse(response_data)
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 503:
+            return HttpResponseServerError("현재 서비스를 이용할 수 없습니다. 잠시 후 다시 시도해주세요.")
+        elif e.response.status_code == 429:
+            return HttpResponseServerError("너무 많은 요청을 보냈습니다. 잠시 후 다시 시도해주세요.")
+        else:
+            return HttpResponseServerError("알 수 없는 문제가 생겼습니다. 잠시 후 다시 시도해주세요.")
   
   
 def champion_tier_list(request, position, region, tier):
@@ -432,18 +574,6 @@ def ingame_info(request,nickname):
     except IngameDataNotFoundError:
         return render(request, 'oreumi_gg/404_error.html')
     return render(request, 'oreumi_gg/ingame.html',context)
-
-# 더보기 를 위한 함수
-# def summoners_info_api(request, country, summoner_name, start):
-#     temp_matches, temp_total_calculate, temp_match_count = match(country, summoner_name, 0)
-#     match_count = temp_match_count
-#     matches, total_calculate, match_count = match(country, summoner_name, match_count)
-#     response_data = {
-#         "matches": matches,
-#         "total_calculate": total_calculate,
-#         "match_count" : match_count
-#     }
-#     return JsonResponse(response_data)
 
 
 

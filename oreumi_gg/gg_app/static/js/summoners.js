@@ -22,3 +22,18 @@ favoriteButton.addEventListener("click", function () {
         image.setAttribute("alt", "off");
     }
 });
+
+// 이전 시즌 보기 토글
+
+document.addEventListener("DOMContentLoaded", function () {
+    var tierToggleButton = document.getElementById("tier-toggle-button");
+    var moreTierList = document.getElementById("more-tier-list");
+
+    tierToggleButton.addEventListener("click", function () {
+        if (moreTierList.style.display === "none" || moreTierList.style.display === "") {
+            moreTierList.style.display = "flex"; // flex로 변경
+        } else {
+            moreTierList.style.display = "none"; // 다시 none으로 변경
+        }
+    });
+});

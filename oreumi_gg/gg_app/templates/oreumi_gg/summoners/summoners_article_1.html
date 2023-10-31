@@ -2,7 +2,7 @@
 
 <div id="content-header" class="node1">
     <div class="user-info">
-        <div class="wrapper" style="z-index: 10000000">
+        <div class="wrapper">
             <div class="header-profile-info">
                 <div class="profile-icon">
                     <img src="http://ddragon.leagueoflegends.com/cdn/13.20.1/img/profileicon/{{ search_player_info_dict.search_player_icon }}.png" style="width: 100px; height: 100px" />
@@ -14,15 +14,22 @@
                             <ul class="tier-list">
                                 <!-- 여기는 크롤링 -->
                                 <li>
-                                    <div class="" style="position: relative"><b>S2023 S1</b> silver 1</div>
+                                    <div class="tier-info" style="position: relative"><b class="tier-season">S2023 S1</b> Silver 1</div>
                                 </li>
                                 <li>
-                                    <div class="" style="position: relative"><b>S2022</b> bronze 1</div>
+                                    <div class="tier-info" style="position: relative"><b class="tier-season">S2022</b> Bronze 1</div>
                                 </li>
                                 <li>
-                                    <div class="" style="position: relative"><b>S2021</b> silver 1</div>
+                                    <div class="tier-info" style="position: relative"><b class="tier-season">S2021</b> Silver 1</div>
                                 </li>
-                                <li><button class="more-tier">More Season Tier</button></li>
+                                <li>
+                                    <button class="more-tier" id="tier-toggle-button">More Season Tier<img class="down-arrow-img" src="{% static 'img/down_arrow.png' %}" /></button>
+                                    <ul class="more-tier-list" id="more-tier-list">
+                                        <li class="list-item"><b class="tier-season">S2020</b> Gold 4</li>
+                                        <li class="list-item-divide-line"></li>
+                                        <li class="list-item"><b class="tier-season">S8</b> Gold 5</li>
+                                    </ul>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -37,7 +44,7 @@
                             <a href="" target="_blank" rel="noreferrer">래더 랭킹 <span class="ranking"> {{search_player_info_dict.search_player_ranking}} </span>위 (상위 57.6%)</a>
                         </div>
                     </div>
-                    <div class="buttons"><button class="renewal-button">전적 갱신</button><button id="summoner-header-tier-graph" class="css-6naflr enmfhxj3">티어 그래프</button></div>
+                    <div class="user-info-buttons"><button class="renewal-button">전적 갱신</button><button id="summoner-header-tier-graph" class="tier-graph-button">티어 그래프</button></div>
                     <div class="last-update">
                         <div class="" style="position: relative">최근 업데이트: 2일 전</div>
                     </div>
@@ -45,92 +52,32 @@
             </div>
         </div>
     </div>
+    <div class="divide-line"></div>
     <div class="menu-bar">
-        <h2 class="hidden">종합</h2>
         <ul>
             <li>
                 <a href="/summoners/kr/%EA%B1%B0%EB%8B%88%EB%9D%BC%EA%B5%AC">
-                    <div class="css-pa72ql e2elj901">종합</div>
+                    <div class="menu-synthesis">종합</div>
                 </a>
             </li>
             <li>
                 <a href="/summoners/kr/%EA%B1%B0%EB%8B%88%EB%9D%BC%EA%B5%AC/champions">
-                    <div class="css-tr1brb e2elj901">챔피언</div>
+                    <div class="menu-champions">챔피언</div>
                 </a>
             </li>
             <li>
-                <div class="" style="position: relative">
-                    <a href="/summoners/kr/%EA%B1%B0%EB%8B%88%EB%9D%BC%EA%B5%AC/ingame">
-                        <div class="css-jnm0r8 e2elj902">인게임 정보</div>
-                    </a>
-                </div>
+                <a href="/summoners/kr/%EA%B1%B0%EB%8B%88%EB%9D%BC%EA%B5%AC/ingame">
+                    <div class="menu-ingame">인게임 정보</div>
+                </a>
             </li>
             <li>
                 <a target="_blank" href="https://tft.op.gg/summoners/kr/거니라구?utm_source=opgg&amp;utm_medium=button&amp;utm_campaign=click_summoner_tft">
-                    <div class="css-hjxdso e2elj903">
-                        <img src="https://s-lol-web.op.gg/images/icon/icon-tft.svg?image=q_auto,f_webp,w_32&amp;v=1697786050877" width="16" alt="전략적 팀 전투" height="16" />전략적 팀 전투
+                    <div class="menu-tft">
+                        <img class="menu-tft-img" src="https://s-lol-web.op.gg/images/icon/icon-tft.svg?image=q_auto,f_webp,w_32&amp;v=1697786050877" width="16" alt="전략적 팀 전투" height="16" />
+                        <span>전략적 팀 전투</span>
                     </div>
                 </a>
             </li>
-
-            {% comment %}
-            <div class="css-vp9s1c ev85ldj0">
-                <div class="header">
-                    <div class="header-info">OP스코어로 더 정확한 내 실력을 확인해 보세요</div>
-                    <button><img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down.svg?v=1697786050877" alt="toggle" /></button>
-                </div>
-                <div class="content">
-                    <div class="main">
-                        <div class="title">OP스코어란?</div>
-                        <div class="description">역할군과 라인전, 킬/데스/데미지/시야장악/오브젝트 파괴 등의 지표를 종합해 게임 내 활약 정도를 측정하는 평점 시스템입니다.</div>
-                        <div class="detail">
-                            <div class="player">
-                                <div class="title">베스트 플레이어 선정</div>
-                                <div class="row">
-                                    <div class="badge mvp">MVP</div>
-                                    <div class="description mvp">해당 경기에서 가장 뛰어난 활약을 보여준 1명</div>
-                                </div>
-                                <div class="row">
-                                    <div class="badge ace">ACE</div>
-                                    <div class="description ace">팀은 비록 패배했지만 승리팀 못지 않은 활약을 보여준 1명</div>
-                                </div>
-                            </div>
-                            <div class="feature">
-                                <div class="feature-desc">
-                                    <div class="title">특징</div>
-                                    <div class="description">
-                                        개선된 OP스코어는 사용자들이 시간에 따른 게임 지표를 세밀하게 추적할 수 있도록 합니다. 랭크와 일반 게임에서는 매 5분마다, 칼바람 모드에서는 3분마다 OP Score가
-                                        계산되어, 플레이어의 게임 내 성과를 더욱 상세하게 분석할 수 있습니다.
-                                    </div>
-                                </div>
-                                <div class="feature-image">
-                                    <img src="https://s-lol-web.op.gg/images/summoners/op-score-graph.png?v=1697786050877" width="133" alt="Example OP Score Graph" height="92" />
-                                </div>
-                            </div>
-                            <div class="area">
-                                <div class="title">
-                                    평점 구간
-                                    <div class="" style="position: relative"><img src="https://s-lol-web.op.gg/images/icon/icon-question.svg?v=1697786050877" width="24" alt="guide" /></div>
-                                </div>
-                                <div class="graph">
-                                    <div class="bar"></div>
-                                    <div class="score">
-                                        <div>0</div>
-                                        <div>10</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="sub">
-                        <div>
-                            OP스코어는 현재 베타 테스트 기간으로, 각 게임의 특성에 따라 다소 부정확한 결과가 노출될 수 있습니다. 각각의 지표 또는 가중치를 지속적으로 조정해 가장 객관적인 지표를 찾기
-                            위해 개선해갈 예정이니 많은 관심과 의견 부탁드립니다.
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endcomment %}
         </ul>
     </div>
 </div>

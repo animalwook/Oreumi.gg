@@ -23,7 +23,7 @@ from datetime import timedelta
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -81,7 +81,10 @@ INSTALLED_APPS = [
     # 댓글
     
     
-
+    #채팅
+    "django.contrib.humanize",
+    "channels",
+    "channels_redis",
 ]
 
 SITE_ID = 1
@@ -150,6 +153,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'oreumi_gg.wsgi.application'
 
+ASGI_APPLICATION = "oreumi_gg.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -163,6 +176,7 @@ DATABASES = {
         "PORT": get_secret("DB_PORT"),
     }
 }
+INTERNAL_IPS = "127.0.0.1"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -191,8 +205,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = "pillow" 
-MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 customColorPalette = [
     {"color": "hsl(4, 90%, 58%)", "label": "Red"},
@@ -378,11 +391,13 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'oreumi_gg/gg_app/static')]
-"gg_app/templates"
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR,'gg_app\static'))
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -394,17 +409,14 @@ LOGOUT_REDIRECT_URL = 'gg_app:index'
 
 # LOGIN_URL = "user_app:login"
 
-ACCOUNT_SESSION_REMEMBER = True  # 브라우저를 닫아도 세션기록 유
-SESSION_COOKIE_AGE = 3600  # 쿠키를 한시간만 저장  
+# ACCOUNT_SESSION_REMEMBER = True  # 브라우저를 닫아도 세션기록 유
+# SESSION_COOKIE_AGE = 3600  # 쿠키를 한시간만 저장  
 # 지우는 명령어  python manage.py clearsessions
 
 
 # py manage.py runserver 180.228.166.140:443  https로 연결 / 80은 http
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS =['http://oreumi.shop','https://oreumi.shop']
-CSRF_COOKIE_SECURE = True
 
-
-
-# 소셜로그인 ==================================================================================
+CSRF_TRUSTED_ORIGINS =['http://oreumi.shop','https://oreumi.shop','http://oreumi.store','https://oreumi.store']
+CSRF_COOKIE_SECURE = False
 

@@ -12,6 +12,22 @@ section {
     height: 400px;
 }
 
+.home {
+    color: #fff;
+}
+
+.home::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    bottom: -15px;
+    left: 0;
+    transform: scaleX(1);
+    transform-origin: center;
+    background-color: #fff;
+}
+
 .banner_article {
     display: flex;
     width: 100%;
@@ -117,3 +133,25 @@ section {
 .community_new_posts li:last-child {
     border-bottom: none;
 }
+
+
+
+    /* 포스트리스트부분 */
+    .post_list {
+        display: flex;
+        height:77px;
+        align-items:center;
+        border-top:1px solid #e7e6e6
+    }
+
+    .post_list div em { 
+        font-style: normal;
+        margin-left: 5px;
+        color: #31bd6ed0;
+    }
+    .post_list span {
+        margin-right:12px
+    }
+
+
+    
