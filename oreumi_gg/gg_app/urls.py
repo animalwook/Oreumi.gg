@@ -36,7 +36,7 @@ urlpatterns = [
     path("community/search/", views.post_search, name="post_search"),
     
     
-    path("chat_index", views.index, name='index'),  
+    # path("chat_index", views.index, name='index'),  
     path('chat_index/<int:pk>/', views.chat_room, name='chat_room'),
     path('create_or_join_chat/<int:pk>/', views.create_or_join_chat, name='create_or_join_chat'),
     path('get_latest_chat/<int:pk>/', views.get_latest_chat, name='get_latest_chat'),

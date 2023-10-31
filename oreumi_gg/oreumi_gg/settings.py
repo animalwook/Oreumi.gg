@@ -413,5 +413,5 @@ LOGOUT_REDIRECT_URL = 'gg_app:index'
 
 # py manage.py runserver 180.228.166.140:443  https로 연결 / 80은 http
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS =['http://oreumi.shop','https://oreumi.shop']
-CSRF_COOKIE_SECURE = True
+CSRF_TRUSTED_ORIGINS =['http://oreumi.shop','https://oreumi.shop','http://oreumi.store','https://oreumi.store']
+CSRF_COOKIE_SECURE = False
