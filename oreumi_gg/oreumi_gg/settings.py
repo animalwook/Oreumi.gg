@@ -50,8 +50,6 @@ API_KEY = get_secret("LOL_API")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -68,7 +66,6 @@ INSTALLED_APPS = [
     'gg_app',
     'user_app',
     'django_ckeditor_5',
-
 
     # social api
     'allauth',

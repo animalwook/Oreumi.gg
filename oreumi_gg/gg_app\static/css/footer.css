@@ -1,0 +1,117 @@
+footer {
+    display: flex;
+    flex-direction: column;
+    min-width: 100%;
+    width: auto;
+    height: 200px;
+    background-color: inherit;
+    margin: 800px 100px 100px 0px;
+}
+
+.footer_container {
+    width: 100%;
+    display: inline-flex;
+    margin-left: 27px;
+    margin-right: 27px;
+}
+
+.developed_text {
+    color: #fff;
+}
+
+/* 리스트 */
+
+/* 링크 컨테이너 */
+
+.link_container {
+    min-width: 250px;
+    width: 250px;
+    height: 400px;
+
+    margin-right: auto;
+}
+
+/* 리스트 컨테이너 */
+
+.list_container {
+    display: inline-flex;
+}
+
+.developers_container {
+    min-width: 250px;
+    width: 250px;
+    height: 400px;
+}
+
+.stacks_container {
+    min-width: 250px;
+    width: 250px;
+    height: 400px;
+}
+
+/* .developers_container ul {
+}
+
+.stacks_container ul {
+} */
+
+footer ul li {
+    color: #fff;
+    line-height: 1.5;
+}
+
+footer ul li a {
+    color: #fff;
+}
+
+footer ul li a:hover {
+    text-decoration: underline;
+    color: #fff;
+}
+
+.list_title {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.tech_icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+}
+
+.github_icon {
+    width: 16px;
+    height: 16px;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+/* 경계선 */
+
+.divide_line {
+    border-bottom: 1px solid #fff;
+    margin: 14px 27px 14px 27px;
+}
+
+/* 로고 */
+
+.footer_logo {
+    display: flex;
+    width: 200px;
+    height: 25px;
+    align-items: center;
+    justify-content: center;
+    background-color: inherit;
+    margin-bottom: 356px;
+}
+
+.footer_logo_gray {
+    display: flex;
+    width: 200px;
+    height: 25px;
+    align-items: center;
+    justify-content: center;
+    background-color: inherit;
+    margin-bottom: 356px;
+}

@@ -1,0 +1,157 @@
+body {
+    background-color: #5383e8;
+    overflow-x: hidden;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 400px;
+}
+
+.home {
+    color: #fff;
+}
+
+.home::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    bottom: -15px;
+    left: 0;
+    transform: scaleX(1);
+    transform-origin: center;
+    background-color: #fff;
+}
+
+.banner_article {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #5383e8;
+}
+
+.search_form {
+    display: flex;
+    justify-content: center;
+}
+
+.banner_img {
+    width: 600px;
+    height: 300px;
+}
+
+/* 검색창 */
+
+.input_group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 670px;
+    height: 45px;
+    background-color: #fff;
+    border-radius: 30px;
+}
+
+.select_region {
+    border: none;
+    width: 170px;
+    height: 31.99px;
+    cursor: pointer;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.select_region:focus {
+    outline: none;
+}
+
+.summoner_search {
+    border: none;
+    width: 420px;
+    height: 30px;
+}
+
+.summoner_search:focus {
+    outline: none;
+}
+
+.search_button {
+    border: none;
+    cursor: pointer;
+    width: 55px;
+    height: 31.99px;
+    background-color: #fff;
+}
+
+.search_logo {
+    width: 40px;
+    height: 18px;
+}
+
+/* 커뮤니티 최신 게시글 */
+
+.community_container {
+    margin-top: 200px;
+    width: 900px;
+    height: 600px;
+    border: 1px solid #fff;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.community_title {
+    padding: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #000;
+}
+
+.community_new_posts {
+    display: flex;
+    flex-direction: column;
+}
+
+.community_new_posts ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.community_new_posts li {
+    padding: 5%;
+    border-bottom: 1px solid #ebeef1;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.community_new_posts li:last-child {
+    border-bottom: none;
+}
+
+
+
+    /* 포스트리스트부분 */
+    .post_list {
+        display: flex;
+        height:77px;
+        align-items:center;
+        border-top:1px solid #e7e6e6
+    }
+
+    .post_list div em { 
+        font-style: normal;
+        margin-left: 5px;
+        color: #31bd6ed0;
+    }
+    .post_list span {
+        margin-right:12px
+    }
+
+
+    
