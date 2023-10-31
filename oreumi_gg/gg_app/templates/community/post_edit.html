@@ -1,60 +1,49 @@
+<!-- 커뮤니티 첫 페이지 -->
+{% extends 'community/base_community.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
+{% block content %}
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>write</title>
-</head>
-
-<body>
-    {% include 'oreumi_gg/header.html' %} 
-    {% include 'oreumi_gg/nav.html' %}
-    <aside></aside>
+<article class="box post post-excerpt">
+    <header>
     <div>
-        <main>
-            <h1>게시글 작성</h1>
+            <h1>게시글 수정</h1>
             <form method="POST" action="{% url 'gg_app:post_edit' post_id %}" enctype="multipart/form-data">
-               
                 {% csrf_token %}
-                {% comment %} <select>
-                    <option value="">채널 선택</option>
-                    <option value="user_news">유저 뉴스</option>
-                    <option value="tip">팁과 노하우</option>
-                    <option value="free">자유</option>
-                    <option value="humor">유머</option>
-                    <option value="video">영상</option>
-                    <option value="lfg">유저 찾기</option>
-                    <option value="issues">사건 사고</option>
-                    <option value="fan_art">팬 아트</option>
-                </select><br /> {% endcomment %}
                 {{form.media}}
+                <label for="category" >게시글 선택 ▼</label>
+                <select class="write_category" name="category" style="width:140px;margin-bottom: 15px;">
+                    <option value="자유게시판" {% if category == "자유게시판"%} selected {%endif%}>자유게시판</option>
+                    <option value="팬 아트" {% if category == "팬 아트"%} selected {%endif%}>팬 아트</option>
+                    <option value="팁과 노하우" {% if category == "팁과 노하우"%} selected {%endif%}>팁과 노하우</option>
+                    <option value="소환사의 협곡" {% if category == "소환사의 협곡"%} selected {%endif%}>소환사의 협곡</option>
+                    <option value="칼바람 나락" {% if category == "칼바람 나락"%} selected {%endif%}>칼바람 나락</option>
+                    <option value="전략적 팀 전투" {% if category == "전략적 팀 전투"%} selected {%endif%}>전략적 팀 전투</option>
+                </select>
                 {{form.as_p}}
-                <div>
-                    <ul>
-                        <li><button data-selected="true">챔피언</button></li>
-                        <li><button data-selected="true">아이템</button></li>
-                        <li><button data-selected="true">스킬</button></li>
-                    </ul>
-                    <input placeholder="검색" name="search" type="text" class="" value />
-                </div>
-                <div>{% comment %} 챔피언, 아이템, 스킬 이미지 {% endcomment %}</div>
-                <div>
-                    <label><input type="checkbox" name="" value="이미지 미리보기 허용" /></label>
-                </div>
-                <div>
-                    <img />
+
+
+                <div style="display: flex;">
+                    <img src="{%static 'img/community/wall.png'%}" alt="" width="50" height="50">
                     <span>"불법촬영물등을 게재할 경우 전기통신사업법 제22조의5제1항에 따라 삭제·접속차단 등의 조치가 취해질 수 있으며 관련 법률에 따라 처벌받을 수 있습니다."</span>
                 </div>
-                <div>
-                    {% comment %} <button type="submit" class="">취소</button> {% endcomment %}
-                    <button type="submit" class="">수정하기</button>
+                <div style="display:flex; justify-content:space-between;">
+                    <a href="{%url 'gg_app:community'%}" 
+                    style="
+                        background-color:#f6f7f8; 
+                        color:rgb(115, 114, 114); 
+                        border-color: rgb(105, 103, 103);  
+                        width:150px; 
+                        height:50px; 
+                        text-align:center;
+                        font-size: 1.00em;
+                        padding: 0.75em 0 0.75em 0;
+                        margin: 0.5em 0 0.5em 0;" 
+                    >취소하기</a>
+                    <button type="submit" class="" style="width:150px; height:50px;">작성완료</button>
+                    <!-- <button type="submit" class="">작성취소</button> -->
                 </div>
             </form>
-            {% include 'oreumi_gg/footer.html' %}
-        </main>
     </div>
-</body>
-
-</html>
+</header>
+</article>
+{% endblock %}

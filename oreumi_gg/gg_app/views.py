@@ -19,7 +19,7 @@ from bs4 import BeautifulSoup
 import json
 from oreumi_gg.settings import get_secret, champion_file
 # Create your views here.
-
+from django.utils import timezone
 
 def index(request):
     posts=BlogPost.objects.all().order_by('-created_at')
@@ -128,7 +128,7 @@ def post_write(request):
             #bs4로 파싱해서 경로 가져오기
             img_tag = BeautifulSoup(post.content,'html.parser').find('img')
             if img_tag :
-                post.thumbnail = img_tag.get('src')[6:]
+                post.thumbnail = img_tag.get('src')[7:]
 
             post.save()
             post_id = post.id
@@ -148,19 +148,35 @@ def post_write(request):
 @login_required
 def post_edit(request, post_id):        
     post = get_object_or_404(BlogPost, pk=post_id)
-
+    created_save = post.created_at
     if request.method == 'POST':
-        form = BlogPostForm(request.POST, instance=post)
-        if form.is_valid():
+        form = BlogPostForm(request.POST) 
+        if form.is_valid(): # 유효성 검사(필수과정)
+            # 현재 로그인한 사용자를 게시물의 저자로 설정
+            post = form.save(commit=False)
+            post.pk = post_id
+            post.category = request.POST['category']
+            post.created_at = created_save
+            post.updated_at = timezone.now()
+            post.author = request.user.nickname  # 사용자의 닉네임으로 설정
             #bs4로 파싱해서 경로 가져오기
-            img_tag = BeautifulSoup(form.content,'html.parser').find('img')
+            img_tag = BeautifulSoup(post.content,'html.parser').find('img')
             if img_tag :
-                post.thumbnail = img_tag.get('src')[6:]
-            form.save()
-            return redirect('gg_app:post_detail', post_id=post_id)  # 수정 후 게시물 목록 페이지로 리디렉션
+                post.thumbnail = img_tag.get('src')[7:]
+
+            post.save()
+            return redirect('gg_app:post_detail', post_id=post.id)  # 수정 후 게시물 목록 페이지로 리디렉션
     else:
+         # get요청시 
+        #에디터의 이미지경로 설정
         form = BlogPostForm(instance=post)
-    return render(request, 'community/post_write.html', {'form': form, 'category':post.category, 'post_id': post.id})
+        context = {
+            'form': form, 
+            'category':post.category, 
+            'post_id': post.id,
+            'MEDIA_URL':settings.MEDIA_URL
+        }
+    return render(request, 'community/post_edit.html',context)
 
 # 게시글 삭제
 @login_required
