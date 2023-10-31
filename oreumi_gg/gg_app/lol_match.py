@@ -120,8 +120,8 @@ def summoner_info(country, myinfo):
     ]
     """
     # 크롤링에서 db로 전향 필요
-    search_player_tear_by_season = "크롤링필요"
-    my_summoner_ranking = "크롤링필요",
+    search_player_tear_by_season = "DB추가예정"
+    my_summoner_ranking = "DB추가예정",
     
     # 랭크 여부 확인
     if len(my_league_info) == 0 : # 랭크를 하지 않음
