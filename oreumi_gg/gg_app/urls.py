@@ -34,7 +34,12 @@ urlpatterns = [
     path('community/post/<int:post_id>/like/', views.post_like, name='post_like'),            #추천 비추천
     path('community/post/<int:post_id>/dislike/', views.post_dislike, name='post_dislike'),
     path("community/search/", views.post_search, name="post_search"),
-
+    
+    
+    path("chat_index", views.index, name='index'),  
+    path('chat_index/<int:pk>/', views.chat_room, name='chat_room'),
+    path('create_or_join_chat/<int:pk>/', views.create_or_join_chat, name='create_or_join_chat'),
+    path('get_latest_chat/<int:pk>/', views.get_latest_chat, name='get_latest_chat'),
     
     #챔피언 티어 및 로테이션 정보
     path('champions/', views.champions, name='champions'),

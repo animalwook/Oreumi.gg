@@ -79,7 +79,10 @@ INSTALLED_APPS = [
     # 댓글
     
     
-
+    #채팅
+    "django.contrib.humanize",
+    "channels",
+    "channels_redis",
 ]
 
 SITE_ID = 1
@@ -147,6 +150,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'oreumi_gg.wsgi.application'
 
+ASGI_APPLICATION = "oreumi_gg.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -160,6 +173,7 @@ DATABASES = {
         "PORT": get_secret("DB_PORT"),
     }
 }
+INTERNAL_IPS = "127.0.0.1"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
