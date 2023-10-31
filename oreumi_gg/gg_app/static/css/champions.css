@@ -2,6 +2,21 @@ body {
     background-color: #ebeef1;
 }
 
+.champions {
+    color: #fff;
+}
+
+.champions::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    bottom: -15px;
+    left: 0;
+    transform: scaleX(1);
+    transform-origin: center;
+    background-color: #fff;
+}
 
 /* 버튼 */
 
