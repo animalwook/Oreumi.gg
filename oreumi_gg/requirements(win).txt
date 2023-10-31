@@ -7,9 +7,9 @@ Automat==22.10.0
 beautifulsoup4==4.12.2
 certifi==2023.7.22
 cffi==1.16.0
-daphne==4.0.0
 channels-redis==2.4.2
 channels==3.0.4
+daphne==4.0.0
 charset-normalizer==3.3.1
 constantly==23.10.4
 cryptography==41.0.5
