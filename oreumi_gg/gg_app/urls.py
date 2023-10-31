@@ -1,12 +1,18 @@
-from django.urls import path
+from django.urls import path,include
 from . import views
 from django.contrib.auth import views as auth_views
+
+
 
 app_name = 'gg_app' 
  
 urlpatterns = [
     path('', views.index, name='index'),
     path('modes/', views.modes, name='modes'),
+
+    # 소셜로그인 
+    
+    path('accounts/', include('allauth.urls')),
 
 
     # 통계

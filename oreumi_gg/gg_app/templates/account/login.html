@@ -1,58 +1,81 @@
 {% load static %}
 
+{% static 'img\social\kakao_login.png' as kakao_button %}
+{% static 'img\social\naver_login.png' as naver_login %}
+{% static 'img\social\kakao_login_ov.png' as kakao_button_hover %}
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로그인</title>
-    <link rel="stylesheet" href="{% static 'css/account/login.css' %}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로그인</title>
+  <link rel="stylesheet" href="{% static 'css/account/login.css' %}">
 </head>
+
 <body>
 
   <form class="login" method="POST" action="{% url 'account_login' %}">
-        <div class="wrap">
-            <div class=""><a class="" href="{% url 'gg_app:community' %}"> <img src="{% static 'img\logo_with_avatar.png' %}" style="width:245px; height:125px;"></a>
-            </div>
-            <h2>Log-in</h2>
-            <div class="login_sns">
-              <li><a href=""><img src="{% static 'img\social\google.png' %}" style="width:50px; height:50px; border-radius: 50%;"></i></a></li>
-              <li><a href=""><img src="{% static 'img\social\fb.png' %}" style="width:50px; height:50px; border-radius: 50%;"></i></a></li>
-              <li><a href=""><img src="{% static 'img\social\kakao.png' %}" style="width:50px; height:50px; border-radius: 50%;"></i></a></li>
-              <li><a href=""><img src="{% static 'img\social\naver.png' %}" style="width:50px; height:50px; border-radius: 50%;"></i></a></li>
-            </div>
-            {% csrf_token %}
-            {{form.non_field_errors}}
-            <div class="login_id">
-              <h4>E-mail</h4>
-              <input class="login_input"  type="email" name="login" placeholder="Email" autocomplete="email" maxlength="320" required="" id="id_login">
-            </div>
-            <div class="login_pw">
-              <h4>Password</h4>
-              <input class="login_input" type="password" name="password" placeholder="Password" autocomplete="current-password" required="" id="id_password">
-            </div>
-            {% if redirect_field_value %}
-            <input class="login_input" type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-            {% endif %}
-
-            <div class="login_etc">
-                <div class="checkbox">
-                <input type="checkbox" name="" id=""> 아이디 기억하기
-                </div>
-                <div class="forgot_pw">
-                <a href="{% url 'account_reset_password' %}" class="return-atag" >비밀번호 찾기</a>
-                </div>
-            </div>
-
-            <div class="submit">
-                <input type="submit" value="로그인" style="cursor: pointer;">
-            </div>
-            <div class="login_etc2">
-              <a href="{% url 'account_signup' %}" class="return-atag">아직 회원이 아니신가요?</a>
-            </div>
+    <div class="wrap">
+      <div class=""><a class="" href="{% url 'gg_app:community' %}"> <img src="{% static 'img\logo_with_avatar.png' %}"
+            style="width:245px; height:125px;"></a>
+      </div>
+      <h3>Log-in</h3>
+      <div class="social_login">
+        {% load socialaccount %}
+        <!-- <li><a href=""><img src="{% static 'img\social\google.png' %}"
+              style="width:50px; height:50px; border-radius: 50%;"></i></a></li>
+        <li><a href=""><img src="{% static 'img\social\fb.png' %}"
+              style="width:50px; height:50px; border-radius: 50%;"></i></a></li> -->
+        <div><a href="{% provider_login_url 'kakao' method='oauth2' %}"><img src="{{ kakao_button }}"
+              onmouseover="this.src='{{ kakao_button_hover }}'" onmouseleave="this.src='{{ kakao_button }}'"
+              style="width:222px; height: 49px;">
+          </a>
         </div>
+        <!-- <div>
+          <a href="#" onclick="naverLogin()"><img src="{{naver_login}}" style="width:222px; height: 49px;">
+        </div> -->
+      </div>
+      {% csrf_token %}
+      {{form.non_field_errors}}
+      <div class="login_id">
+        <h4>E-mail</h4>
+        <input class="login_input" type="email" name="login" placeholder="Email" autocomplete="email" maxlength="320"
+          required="" id="id_login">
+      </div>
+      <div class="login_pw">
+        <h4>Password</h4>
+        <input class="login_input" type="password" name="password" placeholder="Password"
+          autocomplete="current-password" required="" id="id_password">
+      </div>
+      {% if redirect_field_value %}
+      <input class="login_input" type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+      {% endif %}
+
+      <div class="login_etc">
+        <div class="checkbox">
+          <input type="checkbox" name="" id=""> 아이디 기억하기
+        </div>
+        <div class="forgot_pw">
+          <a href="{% url 'account_reset_password' %}" class="return-atag">비밀번호 찾기</a>
+        </div>
+      </div>
+
+      <div class="submit">
+        <input type="submit" value="로그인" style="cursor: pointer;">
+      </div>
+      <div class="login_etc2">
+        <a href="{% url 'account_signup' %}" class="return-atag">아직 회원이 아니신가요?</a>
+      </div>
+
+
+      <!-- <a href="{% provider_login_url 'kakao' method='oauth2' %}">
+        카카오톡 회원가입
+      </a> -->
+    </div>
   </form>
-
+  <script src="{% static 'oreumi_gg\gg_app\static\js\social_login.js' %}"></script>
 </body>
-</html>
 
+</html>

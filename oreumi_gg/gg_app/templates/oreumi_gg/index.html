@@ -2,23 +2,26 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="{% static 'css/header.css' %}">
-        <link rel="stylesheet" href="{% static 'css/nav.css' %}">
-        <link rel="stylesheet" href="{% static 'css/index.css' %}">
-        <link rel="stylesheet" href="{% static 'css/footer.css' %}">
-        <link rel="icon" href="{%static 'img\oreumi_gg\favicon.ico'%}">
-        <title>Oreumi.gg</title>
-    </head>
-    <body>
-        {% include 'oreumi_gg/header.html' %}
-        {% include 'oreumi_gg/nav.html' %}
 
-        <section>
-            <article class ="banner_article">
-            <div class="index_banner"><img class="banner_img" src="static\img\oreumi_banner.png" alt="oreumi.gg banner" /></div>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="icon" href="{%static 'img\oreumi_gg\favicon.ico'%}">
+    <title>Oreumi.gg</title>
+</head>
+
+<body>
+    {% include 'oreumi_gg/header.html' %}
+    {% include 'oreumi_gg/nav.html' %}
+
+    <section>
+        <article class="banner_article">
+            <div class="index_banner"><img class="banner_img" src="static\img\oreumi_banner.png"
+                    alt="oreumi.gg banner" /></div>
             <!-- 소환사 검색 -->
             <form method="POST" name="search_form" action="{% url 'gg_app:summoners_info_form' %}">
                 {% csrf_token %}
@@ -44,41 +47,48 @@
                     </select>
                     <input type="text" class="summoner_search" placeholder="소환사명" name="search_text">
                     <span class="input_group_button">
-                        <button class="search_button" type="submit"><img class="search_logo" src="static\img\oreumi_gg\search_logo.png" alt="search_button" /></button>
+                        <button class="search_button" type="submit"><img class="search_logo"
+                                src="static\img\oreumi_gg\search_logo.png" alt="search_button" /></button>
                     </span>
                 </div>
             </form>
 
-            </article>
-            <article>
-                <div class="community_container">
-                    <div class="community_title">Oreumi 최신 게시글</div>
-                    <div class="community_new_posts">
-                        <ul>
-                            <!-- 최신 게시물부터 5개 불러오기 -->
-                            {% for post in posts|slice:":5" %}
-                            <li class="post_list">
-                                <span style="width:44px"><img src="{% static 'img/community/tri.png' %}" alt="" width="16"><span>{{post.net_count}}</span></span>
-                                
-                                <div class="">
-                                    <a href="{% url 'gg_app:post_detail' post.id %}"><span>{{post.title}}</span></a><em>[{{post.comment_count}}]</em>
-                                    <div class="css-puqfyf ev5eu1p8">
-                                        <span>{{post.category}}</span>
-                                        <span style="position:relative" class="">{{post.updated_at}}</span>
-                                        <span><a href=""><em style="position:relative" class="levelTooltip"><img src="" alt="" height="24"></em>
-                                        <span class="post_nickname">{{post.author}}</span></a></span>
-                                    </div>
+        </article>
+        <article>
+            <div class="community_container">
+                <div class="community_title">Oreumi 최신 게시글</div>
+                <div class="community_new_posts">
+                    <ul>
+                        <!-- 최신 게시물부터 5개 불러오기 -->
+                        {% for post in posts|slice:":5" %}
+                        <li class="post_list">
+                            <span style="width:44px"><img src="{% static 'img/community/tri.png' %}" alt=""
+                                    width="16"><span>{{post.net_count}}</span></span>
+
+                            <div class="">
+                                <a href="{% url 'gg_app:post_detail' post.id %}">
+                                    <span class="post-counter">{{forloop.counter}}</span>
+                                    <span class="post-title">{{post.title}}</span>
+                                </a><em>[{{post.comment_count}}]</em>
+                                <div class="css-puqfyf ev5eu1p8">
+                                    <span>{{post.category}}</span>
+                                    <span style="position:relative" class="">{{post.updated_at}}</span>
+                                    <span><a href=""><em style="position:relative" class="levelTooltip"><img src=""
+                                                    alt="" height="24"></em>
+                                            <span class="post_nickname">{{post.author}}</span></a></span>
                                 </div>
-                            </li>
-                            {%endfor%}
-                          </ul>
-                    </div>
+                            </div>
+                        </li>
+                        {%endfor%}
+                    </ul>
                 </div>
-            </article>
             </div>
-        </section>
-        {% include 'oreumi_gg/footer.html' %}
-    </body>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6588731435864915"
-     crossorigin="anonymous"></script>
+        </article>
+        </div>
+    </section>
+    {% include 'oreumi_gg/footer.html' %}
+</body>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6588731435864915"
+    crossorigin="anonymous"></script>
+
 </html>
