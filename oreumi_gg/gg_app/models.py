@@ -57,6 +57,11 @@ class Message(models.Model):
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
+    #확인을 위해서 넣음
+    receiver = models.IntegerField()
+    sent_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
     def __str__(self):
         return f'Message: {self.author.username} at {self.timestamp}'
 
@@ -68,3 +73,45 @@ class Message(models.Model):
         # 새 메시지가 저장될 때마다 chatroom의 latest_message_time을 업데이트
         self.chatroom.latest_message_time = self.timestamp
         self.chatroom.save()
+
+
+
+
+#소환사정보
+class SoloRankList(models.Model):
+    rank = models.PositiveIntegerField() 
+    summoners = models.CharField(max_length=255, null=True, blank=True)
+    tier = models.CharField(max_length=80, null=True, blank=True)
+    LP = models.PositiveIntegerField()
+    level = models.PositiveIntegerField()
+    win = models.PositiveIntegerField() 
+    lose = models.PositiveIntegerField() 
+    most1 = models.CharField(max_length=80, null=True, blank=True)
+    most2 = models.CharField(max_length=80, null=True, blank=True)
+    most3 = models.CharField(max_length=80, null=True, blank=True)
+    
+class summoner(models.Model):
+    summoners = models.CharField(max_length=255)
+    level = models.PositiveIntegerField()
+    ladderLank = models.PositiveIntegerField()
+    updated_at = models.DateTimeField(auto_now=True)
+    is_read = models.BooleanField(default=False)
+
+    
+    solo_tear = models.CharField(max_length=80, null=True, blank=True)
+    solo_rank = models.PositiveIntegerField(null=True, blank=True)
+    solo_points = models.PositiveIntegerField(null=True, blank=True)
+    solo_wins = models.PositiveIntegerField(null=True, blank=True)
+    solo_losses = models.PositiveIntegerField(null=True, blank=True)
+    flex_tear = models.CharField(max_length=80, null=True, blank=True)
+    flex_rank = models.PositiveIntegerField(null=True, blank=True)
+    flex_points = models.PositiveIntegerField(null=True, blank=True)
+    flex_wins = models.PositiveIntegerField(null=True, blank=True)
+    flex_losses = models.PositiveIntegerField(null=True, blank=True)
+    most1 = models.CharField(max_length=80, null=True, blank=True)
+    most2 = models.CharField(max_length=80, null=True, blank=True)
+    most3 = models.CharField(max_length=80, null=True, blank=True)
+
+
+class match(models.Model):
+    matchId = models.CharField(max_length=255)

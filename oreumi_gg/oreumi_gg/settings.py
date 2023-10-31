@@ -88,7 +88,6 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
-LOGIN_REDIRECT_URL = '/'
 
 AUTHENTICATION_BACKENDS = [
     # allauth와 상관없는 관리자 로그인

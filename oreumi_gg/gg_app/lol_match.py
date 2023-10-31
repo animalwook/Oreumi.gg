@@ -427,6 +427,11 @@ def match(country, summonername, start, queue):
                     "total_death" : total_death, "total_assist" : total_assist,
                     "total_match_count" : total_match_count,
                     "total_kda" : total_kda, "total_kill_part" : total_kill_part // 20}    
+    print(result_match)
+    print(111111111111111)
+    print(total_calculate)
+    print(222222222222222)
+    print(search_player_info_dict)
     return result_match, total_calculate, search_player_info_dict
 
         
