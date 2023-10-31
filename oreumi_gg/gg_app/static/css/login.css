@@ -45,27 +45,9 @@ h2 {
     color: #2f5ec0;
     font-size: 2em;
 }
-.login_sns {
-    padding: 10px;
-    display: flex;
-}
 
-.login_sns li {
-    padding: 0px 15px;
-}
 
-.login_sns a {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    border-radius: 50px;
-    background: white;
-    font-size: 20px;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4), -3px -3px 5px rgba(0, 0, 0, 0.1);
-}
+
 
 .login_id {
     margin-top: 10px;
@@ -106,6 +88,7 @@ h2 {
     align-items: center;
     font-weight: bold;
 }
+
 .login_etc2 {
     padding: 5px;
     width: 80%;
@@ -115,10 +98,12 @@ h2 {
     align-items: center;
     font-weight: bold;
 }
+
 .submit {
     margin-top: 5px;
     width: 80%;
 }
+
 .submit input {
     width: 100%;
     height: 50px;

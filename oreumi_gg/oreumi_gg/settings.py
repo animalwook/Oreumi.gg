@@ -18,6 +18,8 @@ json 시크릿 설정
 import os, json
 from django.core.exceptions import ImproperlyConfigured
 
+# jwt 소셜로그인
+from datetime import timedelta
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -86,6 +88,7 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
 
 AUTHENTICATION_BACKENDS = [
     # allauth와 상관없는 관리자 로그인
@@ -413,5 +416,7 @@ LOGOUT_REDIRECT_URL = 'gg_app:index'
 
 # py manage.py runserver 180.228.166.140:443  https로 연결 / 80은 http
 ALLOWED_HOSTS = ['*']
+
 CSRF_TRUSTED_ORIGINS =['http://oreumi.shop','https://oreumi.shop','http://oreumi.store','https://oreumi.store']
 CSRF_COOKIE_SECURE = False
+
