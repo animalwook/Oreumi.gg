@@ -32,7 +32,7 @@
               onmouseover="this.src='{{ kakao_button_hover }}'" onmouseleave="this.src='{{ kakao_button }}'"
               style="width:222px; height: 49px;">
           </a>
-        </div>
+        </div> 
         <!-- <div>
           <a href="#" onclick="naverLogin()"><img src="{{naver_login}}" style="width:222px; height: 49px;">
         </div> -->
@@ -70,9 +70,9 @@
       </div>
 
 
-      <!-- <a href="{% provider_login_url 'kakao' method='oauth2' %}">
+      {% comment %} <a href="{% provider_login_url 'kakao' method='oauth2' %}">
         카카오톡 회원가입
-      </a> -->
+      </a>  {% endcomment %}
     </div>
   </form>
   <script src="{% static 'oreumi_gg\gg_app\static\js\social_login.js' %}"></script>
