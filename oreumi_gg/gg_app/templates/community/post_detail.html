@@ -1,6 +1,6 @@
 <!-- 커뮤니티 첫 페이지 -->
 {% extends 'community/base_community.html' %}
-{% load static %}
+{% load static %}{% load humanize %}
 
 
 {% block content %}
@@ -52,6 +52,11 @@
     {% if post.author == user.nickname %}
     <a class="edit" href="{% url 'gg_app:post_edit' post.id %}" style="border: 1px solid #ef2222ee; color:#ef2222ee; padding:0 5px;">수정</a>
     <a class="del" href="#" onclick="openModal()" style="border: 1px solid #dbcccc; color:#dbcccc; padding:0 5px;">삭제</a>
+    <button id="chat_view_button" class="orange">채팅보기</button>
+    {% else %}
+    <div class="button-box">
+      <button id="chat_button" class="orange">채팅하기</button>
+    </div>
     {%endif%}
     <div class="ck ck-content" style="border-top:1px solid #e7e6e6;">{{ post.content | safe }}</div>
 
@@ -141,6 +146,73 @@
           modal.style.display = "none";
       }
   }
+
+  document.addEventListener("DOMContentLoaded", function () {
+
+    // 채팅버튼 눌렀을 때
+    let chatButton = document.getElementById("chat_button");
+    if(chatButton !== null){
+      chatButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        // 현재 페이지 URL에서 pk 가져오기
+        let currentUrl = window.location.href;
+        let parts = currentUrl.split('/');
+        let pk = parts[parts.length - 2];
+        pk = parseInt(pk, 10);
+
+        // 채팅방을 생성하거나 기존방에 참여한 후, 생성된 채팅방의 ID를 반환
+        // 채팅방으로 리디렉션
+        fetch(`/create_or_join_chat/${pk}/`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              window.location.href = `/chat_index/${data.chat_room_id}/`;
+            } else {
+              alert("다시 시도해주세요");
+            }
+          })
+          .catch(error => {
+            console.error("Error:", error);
+          });
+      });
+    }
+    
+
+
+     // 채팅보기 버튼 클릭 이벤트
+    let viewChatButton = document.getElementById("chat_view_button");
+    viewChatButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        // 현재 페이지 URL에서 pk 가져오기
+        let currentUrl = window.location.href;
+        let parts = currentUrl.split('/');
+        let pk = parts[parts.length - 2];
+        pk = parseInt(pk, 10);
+
+        // 서버로 pk 전송 후 채팅방 정보 가져오기
+        fetch(`/get_latest_chat/${pk}/`)
+          .then(response => 
+              response.text().then(text => {
+                  try {
+                      return JSON.parse(text);
+                  } catch {
+                      console.error("Returned HTML:", text);
+                      throw new Error("Server did not return JSON. See logged HTML for details.");
+                  }
+              })
+          )
+          .then(data => {
+              if (data.success) {
+                  window.location.href = `/chat_index/${data.chat_room_id}/`;
+              } else {
+                alert(data.alert_message);
+              }
+          })
+          .catch(error => {
+              console.error("Error:", error);
+          });
+    });
+  });
   </script>
   
 {% endblock %}
