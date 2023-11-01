@@ -5,6 +5,8 @@ from django.http import JsonResponse, HttpResponseServerError, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.db.models import Q
+from django.forms.models import model_to_dict
+
 from user_app.models import User
 from .models import BlogPost, Comment,Message,ChatRoom,SummonerModel,MatchInfoForSearchPlayer,MatchInfoDetail
 from .forms import BlogPostForm, CommentForm
@@ -433,14 +435,23 @@ def summoners_info(request, country, summoner_name):
             #해당 경기의 상세정보를 불러옴
             match_info_details = MatchInfoDetail.objects.filter(matchId =  recent_match.matchId).order_by('playernumber')
             for match_info_detail in match_info_details:
-                result_match_details[num] = match_info_detail
+                result_match_details[num] = [model_to_dict(match_info_detail)]
                 num+=1
-            result_match_details['match'] = recent_match
+        
+            # 아이템 문자열을 리스트로
+            recent_match_dict = model_to_dict(recent_match)
+            search_player_item_list = recent_match_dict['search_player_item'].replace(" ", "")[1:-1].split(",")
 
-            result_match_details['item'] = recent_match.search_player_item[1:-1].replace(" " , "").split(',')
+            recent_match_dict['search_player_item'] = search_player_item_list
+            result_match_details.update(recent_match_dict)
+            
             # 위에서 종합된 경기를 하나씩 담아냄
             result_match.append(result_match_details)
             match_numbering +=1
+ 
+
+        # print(result_match)
+
 
         search_player_info_dict= summoner
         total_calculate = {
@@ -456,7 +467,7 @@ def summoners_info(request, country, summoner_name):
             }
 
         context = {
-            "result_matchs" : result_match, # 매치 별 정보
+            "matches" : result_match, # 매치 별 정보
             "total_calculate": total_calculate, # 통계
             "search_player_info_dict" : search_player_info_dict # 소환사 정보
         }

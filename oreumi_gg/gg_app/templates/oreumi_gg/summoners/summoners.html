@@ -20,7 +20,7 @@
         {% include 'oreumi_gg/summoners/summoners_article_1.html' %}
         <section class="summoner_section">
             {% include 'oreumi_gg/summoners/summoners_rank.html' %}
-            {% if result_matchs %}
+            {% if matches %}
                 <div class='main-info'>
                     <div class="game-queue">
                         <ul>
@@ -70,47 +70,47 @@
                         <div class="positions"></div>
                     </div>
                     <div class="match_20">
-                        {% for matchId in result_matchs %}
+                        {% for match in matches %}
                             <li class="game-item">
-                                <div result="{{ matchId.match.win_or_not_eng }}" class="game-match result">
+                                <div result="{{ match.win_or_not_eng }}" class="game-match result">
                                     <div class="content">
                                         <div class="game-content">
                                             <div class="game">
-                                                <div class="type">{{ matchId.match.game_type }}</div>
+                                                <div class="type">{{ match.game_type }}</div>
                                                 <div class="time-stamp">
-                                                    <div class style="position: relative;">{{ matchId.match.game_time }}</div>
+                                                    <div class style="position: relative;">{{ match.game_time }}</div>
                                                 </div>
-                                                <div class="result">{{ matchId.match.win_or_not }}</div>
-                                                <div class="length">{{ matchId.match.game_playtime }}</div>
+                                                <div class="result">{{ match.win_or_not }}</div>
+                                                <div class="length">{{ match.game_playtime }}</div>
                                             </div>
                                             <div class="info">
                                                 <div>
                                                     <div class="champion">
                                                         <div class="icon">
                                                             <a href="" rel="noreferrer">
-                                                                {% with champ_image="img/champion_square_test/"|add:matchId.match.search_player_champ|add:".webp" %}
+                                                                {% with champ_image="img/champion_square_test/"|add:match.search_player_champ|add:".webp" %}
                                                                     <img src="{% static champ_image %}" width="48" height="48">
-                                                                {% endwith %} 
-                                                                <span class="champion-level">{{ matchId.match.search_player_champlevel }}</span>
+                                                                {% endwith %}
+                                                                <span class="champion-level">{{ match.search_player_champlevel }}</span>
                                                             </a>  
                                                         </div>
                                                         <div class="spells">
                                                             <div class="spell">
                                                                 <div class style="position: relative;">
-                                                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{ matchId.match.search_player_summonerspell1 }}.png" width="22" height="22">
+                                                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{ match.search_player_summonerspell1 }}.png" width="22" height="22">
                                                                 </div>
                                                             </div>
                                                             <div class="spell">
                                                                 <div class style="position: relative;">
-                                                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{ matchId.match.search_player_summonerspell2 }}.png" width="22" height="22">
+                                                                    <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{ match.search_player_summonerspell2 }}.png" width="22" height="22">
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="runes">
                                                             <div class="rune">
-                                                                {% if matchId.match.search_player_main_rune %} 
+                                                                {% if match.search_player_main_rune %} 
                                                                     <div class style="position: relative;">
-                                                                        {% with search_player_main_rune="img/"|add:matchId.match.search_player_main_rune|add:".webp" %}
+                                                                        {% with search_player_main_rune="img/"|add:match.search_player_main_rune|add:".webp" %}
                                                                             <img src="{% static search_player_main_rune %}" width="22" height="22">
                                                                         {% endwith %}
                                                                     </div>
@@ -119,9 +119,9 @@
                                                                 {% endif %} 
                                                             </div>
                                                             <div class="rune">
-                                                                {% if matchId.match.search_player_sub_rune %}
+                                                                {% if match.search_player_sub_rune %}
                                                                     <div class style="position: relative;">
-                                                                        <img src="https://ddragon.canisback.com/img/perk-images/Styles/{{ matchId.match.search_player_sub_rune }}.png" width="22" height="22">
+                                                                        <img src="https://ddragon.canisback.com/img/perk-images/Styles/{{ match.search_player_sub_rune }}.png" width="22" height="22">
                                                                     </div>
                                                                 {% else %}
                                                                     <div class="augment augment--empty"></div>
@@ -132,26 +132,26 @@
                                                     </div>
                                                     <div class="kill_death_assist">
                                                         <div class="k-d-a">
-                                                            <span>{{ matchId.match.search_player_kill }}</span>
+                                                            <span>{{ match.search_player_kill }}</span>
                                                             <span> / </span>
-                                                            <span class="d">{{ matchId.match.search_player_death }}</span>
+                                                            <span class="d">{{ match.search_player_death }}</span>
                                                             <span> / </span>
-                                                            <span>{{ matchId.match.search_player_assist }}</span>
+                                                            <span>{{ match.search_player_assist }}</span>
                                                         </div>
                                                         <div class="ratio">
-                                                            <span>{{ matchId.match.search_player_kda }}:1</span>
+                                                            <span>{{ match.search_player_kda }}:1</span>
                                                         </div>
                                                     </div>   
                                                     <div class="stats">
                                                         <div class="p-kill">
                                                             <div class style="position: relative;">
-                                                                킬관여 {{ matchId.match.search_player_killpart }}%
+                                                                킬관여 {{ match.search_player_killpart }}%
                                                             </div>
                                                         </div>
-                                                        <div class="controlward">제어 와드 {{ matchId.match.search_player_visionWardsBoughtInGame }}</div>
+                                                        <div class="controlward">제어 와드 {{ match.search_player_visionWardsBoughtInGame }}</div>
                                                         <div class="cs">
                                                             <div class style="position: relative;">
-                                                                CS {{ matchId.match.search_player_totalminions_kill }} ({{ matchId.match.search_player_minperminions }})
+                                                                CS {{ match.search_player_totalminions_kill }} ({{ match.search_player_minperminions }})
                                                             </div>
                                                         </div>
                                                         <div class="average-tier"><div class style="position: relative;"></div></div>
@@ -160,12 +160,8 @@
                                                 <div>
                                                     <div class="items">
                                                         <ul>
-                                                            {% for player_item in matchId.item %}
-                                                                {% if player_item == '0' %}
-                                                                    <li style="list-style-type: none;">
-
-                                                                    </li>
-                                                                {% elif player_item %}    
+                                                            {% for player_item in match.search_player_item %}
+                                                                {% if player_item %}
                                                                     <li style="list-style-type: none;">
                                                                         <div class style="position: relative;">
                                                                             <img src="/static/img/item/{{player_item}}.webp" width="22" height="22">
@@ -181,17 +177,17 @@
                                             </div>
                                             <div class="participants">
                                                 <ul>
-                                                    {% for key, value in matchId.items %}
+                                                    {% for key, value in match.items %}
                                                         {% if forloop.counter <= 5 %}
                                                             <li class="team_outer" style="list-style-type: none;">
                                                                 <div class="team_icon" style="position: relative;">
-                                                                    {% with champ_image="img/champion_square_test/"|add:value.championname|add:".webp" %}
+                                                                    {% with champ_image="img/champion_square_test/"|add:value.0.championname|add:".webp" %}
                                                                         <img src="{% static champ_image %}" width="16" height="16">
                                                                     {% endwith %}
                                                                 </div>
                                                                 <div class="name">
-                                                                    <a href="/summoners/kr/{{ value.summonername }}" rel="noreferrer">
-                                                                        {{ value.summonername }}
+                                                                    <a href="/summoners/kr/{{ value.0.summonername }}" rel="noreferrer">
+                                                                        {{ value.0.summonername }}
                                                                     </a>
                                                                 </div>
                                                             </li>
@@ -199,18 +195,18 @@
                                                     {% endfor %}
                                                 </ul>
                                                 <ul>
-                                                    {% for key, value in matchId.items %}
+                                                    {% for key, value in match.items %}
                                                         {% if 5 < forloop.counter and forloop.counter <= 10 %}
-                                                            {% if value.championname %}
+                                                            {% if value.0.championname %}
                                                                 <li class="team_outer" style="list-style-type: none;">
                                                                     <div class="team_icon" style="position: relative;">
-                                                                        {% with champ_image="img/champion_square_test/"|add:value.championname|add:".webp" %}
+                                                                        {% with champ_image="img/champion_square_test/"|add:value.0.championname|add:".webp" %}
                                                                             <img src="{% static champ_image %}" width="16" height="16">
                                                                         {% endwith %}
                                                                     </div>
                                                                     <div class="name">
-                                                                        <a href="/summoners/kr/{{ value.summonername }}" rel="noreferrer">
-                                                                            {{ value.summonername }}
+                                                                        <a href="/summoners/kr/{{ value.0.summonername }}" rel="noreferrer">
+                                                                            {{ value.0.summonername }}
                                                                         </a>
                                                                     </div>
                                                                 </li>
@@ -221,17 +217,17 @@
                                             </div>
                                         </div>
                                     </div>
-                                      <div class="action">
-                                        <button class="detail" data-match-info="{{ matchId|getvalue }}" match-result="{{ matchId.match.win_or_not_eng }}" status="open">
-                                            {% if matchId.match.win_or_not_eng == "defeat" %}
+                                    <div class="action">
+                                        <button class="detail" data-match-info="{{ match|getvalue }}" match-result="{{ match.win_or_not_eng }}" status="open">
+                                            {% if match.win_or_not_eng == "defeat" %}
                                                 <img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down-red.svg?v=1697786050877" width="24" alt="More" height="24">
-                                            {% elif matchId.match.win_or_not_eng == "repeat" %}
+                                            {% elif match.win_or_not_eng == "repeat" %}
                                                 <img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down.svg?v=1697786050877" width="24" alt="More" height="24">
                                             {% else %}
                                                 <img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down-blue.svg?v=1697786050877" width="24" alt="More" height="24">
                                             {% endif %}
                                         </button>
-                                    </div>  
+                                    </div>
                                 </div>
                             </li>
                         {% endfor %}
@@ -275,7 +271,6 @@
         </section>
         {% include 'oreumi_gg/footer.html' %}
     </body>
-    <script id="dict-id" type="application/json">{"name1": "\uac15\ubbfc\uc131", "name2": "\ud64d\uae38\ub3d9"}</script>
     <script src="{% static "js/matches.js" %}?{% now 'U' %}"></script>
     <script src="{% static "js/detail_match.js" %}?{% now 'U' %}"></script>
     <script src="{% static "js/tap_match.js" %}?{% now 'U' %}"></script>
