@@ -20,6 +20,8 @@ h3{
     margin: 48px 0 0 0 ;
     align-items: stretch;
     height: 580px;
+    display: flex;
+    flex-direction: row;
 }
 
 .post-box img{
@@ -94,10 +96,13 @@ hr{
     color: #000;
 }
 
+
+
 .chat-select-container{
     width: 30%;
     background-color: #fff;
     border-right: 1px solid #e2e2e2;
+    
 }
 
 .temp{
@@ -231,7 +236,7 @@ hr{
 }
 
 .from-me div{
-    background-color: #fa6616;
+    background-color: #3498db;
     color: #fff;
 }
 

@@ -482,6 +482,9 @@ def champion_tier_list(request, position, region, tier):
     
 
 def statistics_champions_list(request, position, region, tier, period, mode):
+    champion_json_file = champion_file
+    with open(champion_json_file, 'r',encoding='utf-8') as json_file:
+        parsed_data = json.load(json_file)  # JSON 파일을 파싱해서 파이썬 딕셔너리로 읽음
     #OP.gg URL 생성
     opgg_url = "https://www.op.gg/champions?region="+region+"&tier="+tier+"&position="+position+"&period="+period+"&mode="+mode
     print(opgg_url)
@@ -502,7 +505,6 @@ def statistics_champions_list(request, position, region, tier, period, mode):
             rank = columns[0].find('span').text.strip()
             champion_img = columns[1].find('img')['src']
             champion_name = columns[1].find('strong').text.strip()
-            print(champion_name)
             num_of_plays = columns[2].text.strip()
             rating = columns[3].find('span').text.strip()
             win_rate = columns[4].text.strip()
