@@ -24,22 +24,27 @@
 
                 <div style="display: flex;">
                     <img src="{%static 'img/community/wall.png'%}" alt="" width="50" height="50">
-                    <span>"불법촬영물등을 게재할 경우 전기통신사업법 제22조의5제1항에 따라 삭제·접속차단 등의 조치가 취해질 수 있으며 관련 법률에 따라 처벌받을 수 있습니다."</span>
+                    <span style="width:550px;">"불법촬영물등을 게재할 경우 전기통신사업법 제22조의5제1항에 따라 삭제·접속차단 등의 조치가 취해질 수 있으며 관련 법률에 따라 처벌받을 수 있습니다."</span>
                 </div>
-                <div style="display:flex; justify-content:space-between;">
+                <div style="display:flex; justify-content:space-between; align-items: center;">
                     <a href="{%url 'gg_app:community'%}" 
                     style="
+                        display: flex;
                         background-color:#f6f7f8; 
-                        color:rgb(115, 114, 114); 
-                        border-color: rgb(105, 103, 103);  
+                        color:rgb(115, 114, 114);
+                        border-radius: 5px;
                         width:150px; 
-                        height:50px; 
+                        height:50px;
+                        justify-content: center;
+                        align-items: center;
                         text-align:center;
                         font-size: 1.00em;
                         padding: 0.75em 0 0.75em 0;
-                        margin: 0.5em 0 0.5em 0;" 
+                        margin: 0.5em 0 0.5em 0;
+                        font-size: 11pt;
+                        font-weight:700;"
                     >취소하기</a>
-                    <button type="submit" class="" style="width:150px; height:50px;">작성완료</button>
+                    <button type="submit" class="" style="width:150px; height:50px; border: inherit; margin:0;">작성완료</button>
                     <!-- <button type="submit" class="">작성취소</button> -->
                 </div>
             </form>
