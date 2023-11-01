@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="summoner-name-container">
-                        <h1 class="summoner-name">{{search_player_info_dict.search_player_name}}</h1>
+                        <h1 class="summoner-name">{{ search_player_info_dict.search_player_name }}</h1>
                         <button class="favorite-icon" id="favorite-button">
                             <img class="favorite-icon-image" src="/static/img/favorite_icon_false.png" alt="off" />
                         </button>
@@ -44,9 +44,9 @@
                             <a href="" target="_blank" rel="noreferrer">래더 랭킹 <span class="ranking"> {{search_player_info_dict.search_player_ranking}} </span>위 (상위 57.6%)</a>
                         </div>
                     </div>
-                    <div class="user-info-buttons"><button class="renewal-button">전적 갱신</button><button id="summoner-header-tier-graph" class="tier-graph-button">티어 그래프</button></div>
+                    <div class="user-info-buttons"><button class="renewal-button">전적 갱신</button></div>
                     <div class="last-update">
-                        <div class="" style="position: relative">최근 업데이트: 2일 전</div>
+                        <div class="" style="position: relative">최근 업데이트: 방금 전</div>
                     </div>
                 </div>
             </div>
@@ -56,22 +56,17 @@
     <div class="menu-bar">
         <ul>
             <li>
-                <a href="/summoners/kr/%EA%B1%B0%EB%8B%88%EB%9D%BC%EA%B5%AC">
+                <a href="/summoners/kr/{{ search_player_info_dict.search_player_name }}">
                     <div class="menu-synthesis">종합</div>
                 </a>
             </li>
             <li>
-                <a href="/summoners/kr/%EA%B1%B0%EB%8B%88%EB%9D%BC%EA%B5%AC/champions">
-                    <div class="menu-champions">챔피언</div>
-                </a>
-            </li>
-            <li>
-                <a href="/summoners/kr/%EA%B1%B0%EB%8B%88%EB%9D%BC%EA%B5%AC/ingame">
+                <a href="/ingame/{{ search_player_info_dict.search_player_name }}">
                     <div class="menu-ingame">인게임 정보</div>
                 </a>
             </li>
             <li>
-                <a target="_blank" href="https://tft.op.gg/summoners/kr/거니라구?utm_source=opgg&amp;utm_medium=button&amp;utm_campaign=click_summoner_tft">
+                <a target="_blank" href="https://tft.op.gg/summoners/kr/{{ search_player_info_dict.search_player_name }}?utm_source=opgg&amp;utm_medium=button&amp;utm_campaign=click_summoner_tft">
                     <div class="menu-tft">
                         <img class="menu-tft-img" src="https://s-lol-web.op.gg/images/icon/icon-tft.svg?image=q_auto,f_webp,w_32&amp;v=1697786050877" width="16" alt="전략적 팀 전투" height="16" />
                         <span>전략적 팀 전투</span>

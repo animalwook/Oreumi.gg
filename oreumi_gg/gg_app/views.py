@@ -400,16 +400,23 @@ def summoners_info(request, country, summoner_name):
     try:
         matches, total_calculate, search_player_info_dict = match(country, summoner_name, 0, None)
         context = {
-            "matches" : matches, 
+            "matches": matches, 
             "total_calculate": total_calculate,
-            "search_player_info_dict" : search_player_info_dict
+            "search_player_info_dict": search_player_info_dict
         }
         return render(request, "oreumi_gg/summoners/summoners.html", context)
     except requests.exceptions.HTTPError as e:
-        if e.response.status_code == 503:
-            return HttpResponseServerError("현재 서비스를 이용할 수 없습니다. 잠시 후 다시 시도해주세요.")
-        elif e.response.status_code == 429:
-            return HttpResponseServerError("너무 많은 요청을 보냈습니다. 잠시 후 다시 시도해주세요.")
+        if e.response is not None:
+            status_code = e.response.status_code
+            content = e.response.content
+            if status_code == 503:
+                return HttpResponseServerError("현재 서비스를 이용할 수 없습니다. 잠시 후 다시 시도해주세요.")
+            elif status_code == 429:
+                return HttpResponseServerError("너무 많은 요청을 보냈습니다. 잠시 후 다시 시도해주세요.")
+            elif status_code == 403:
+                return HttpResponseServerError("서버 관리자에게 문의 바랍니다.")
+            elif status_code == 401:
+                return HttpResponseServerError("서버 관리자에게 문의 바랍니다.")
         else:
             return HttpResponseServerError("알 수 없는 문제가 생겼습니다. 잠시 후 다시 시도해주세요.")
 
