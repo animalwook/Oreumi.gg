@@ -161,7 +161,11 @@
                                                     <div class="items">
                                                         <ul>
                                                             {% for player_item in match.search_player_item %}
-                                                                {% if player_item %}
+                                                                
+                                                            
+                                                                {% if player_item == '0' %}
+                                                                    <li></li>
+                                                                {% elif player_item %}
                                                                     <li style="list-style-type: none;">
                                                                         <div class style="position: relative;">
                                                                             <img src="/static/img/item/{{player_item}}.webp" width="22" height="22">

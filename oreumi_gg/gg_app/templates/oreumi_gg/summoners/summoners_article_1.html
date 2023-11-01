@@ -13,23 +13,18 @@
                         <div class="prev-tier">
                             <ul class="tier-list">
                                 <!-- 여기는 크롤링 -->
+                                {% if search_player_info_dict.search_player_solo_rank == None %}
                                 <li>
-                                    <div class="tier-info" style="position: relative"><b class="tier-season">S2023 S1</b> Silver 1</div>
+                                    <div class="tier-info" style="position: relative"><b class="tier-season">S2023 S2</b>Unranked</div>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <div class="tier-info" style="position: relative"><b class="tier-season">S2023 S2</b> {{search_player_info_dict.search_player_solo_tear}} {{search_player_info_dict.search_player_solo_rank}}</div>
                                 </li>
                                 <li>
-                                    <div class="tier-info" style="position: relative"><b class="tier-season">S2022</b> Bronze 1</div>
+                                    <div class="tier-info" style="position: relative">이전 기록은  riot정책 변경으로 <b class="tier-season">확인</b> 할 수 없습니다.</div>
                                 </li>
-                                <li>
-                                    <div class="tier-info" style="position: relative"><b class="tier-season">S2021</b> Silver 1</div>
-                                </li>
-                                <li>
-                                    <button class="more-tier" id="tier-toggle-button">More Season Tier<img class="down-arrow-img" src="{% static 'img/down_arrow.png' %}" /></button>
-                                    <ul class="more-tier-list" id="more-tier-list">
-                                        <li class="list-item"><b class="tier-season">S2020</b> Gold 4</li>
-                                        <li class="list-item-divide-line"></li>
-                                        <li class="list-item"><b class="tier-season">S8</b> Gold 5</li>
-                                    </ul>
-                                </li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
@@ -41,10 +36,10 @@
                     </div>
                     <div class="team-and-rank">
                         <div class="rank">
-                            <a href="" target="_blank" rel="noreferrer">래더 랭킹 <span class="ranking"> {{search_player_info_dict.search_player_ranking}} </span>위 (상위 57.6%)</a>
+                            <a href="" target="_blank" rel="noreferrer">래더 랭킹 <span class="ranking"> {{search_player_info_dict.search_player_ranking}} </span>위</a>
                         </div>
                     </div>
-                    <div class="user-info-buttons"><button class="renewal-button">전적 갱신</button><button id="summoner-header-tier-graph" class="tier-graph-button">티어 그래프</button></div>
+                    <div class="user-info-buttons"><button class="renewal-button">전적 갱신</button></div>
                     <div class="last-update">
                         <div class="" style="position: relative">최근 업데이트: 2일 전</div>
                     </div>

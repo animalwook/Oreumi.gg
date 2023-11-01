@@ -79,9 +79,10 @@ class Message(models.Model):
 
 #소환사정보
 class SoloRankList(models.Model):
-    rank = models.PositiveIntegerField() 
+    ranking = models.PositiveIntegerField() 
     summoners = models.CharField(max_length=20, null=True, blank=True)
     tier = models.CharField(max_length=10, null=True, blank=True)
+    rank = models.CharField(max_length=10, null=True, blank=True)
     LP = models.PositiveIntegerField()
     level = models.PositiveIntegerField()
     win = models.PositiveIntegerField() 
@@ -91,9 +92,11 @@ class SoloRankList(models.Model):
     most3 = models.CharField(max_length=80, null=True, blank=True)
     
 class SummonerModel(models.Model):
+    puuid = models.CharField(max_length=200)
     search_player_tear_by_season = models.CharField(max_length=200)
     search_player_ranking = models.PositiveIntegerField()
-    search_player_name = models.CharField(max_length=20)
+    search_player_name = models.CharField(max_length=40)
+    search_player_name_strip = models.CharField(max_length=40)
     search_player_icon = models.CharField(max_length=200)
     search_player_level = models.PositiveIntegerField()
     search_player_updated_at = models.DateTimeField(auto_now=True)
@@ -132,7 +135,7 @@ class MatchInfoForSearchPlayer(models.Model):
     search_player_assist = models.PositiveIntegerField(null=True,blank=True)
     game_time = models.CharField(max_length=20,null=True,blank=True)
     search_player_champ = models.CharField(max_length=20,null=True,blank=True)
-    search_player_kda = models.FloatField(null=True,blank=True)
+    search_player_kda = models.CharField(max_length=20,null=True,blank=True)
     search_player_killpart = models.PositiveIntegerField(null=True,blank=True)
     search_player_main_rune = models.CharField(max_length=100,null=True,blank=True)
     search_player_sub_rune = models.CharField(max_length=20,null=True,blank=True)
@@ -170,7 +173,7 @@ class MatchInfoDetail(models.Model):
     visionWardsBoughtInGame = models.PositiveIntegerField(null=True,blank=True)
     summonerspell1 = models.CharField(max_length=20,null=True,blank=True)
     summonerspell2 = models.CharField(max_length=20,null=True,blank=True)
-    kda = models.FloatField(null=True,blank=True)
+    kda = models.CharField(max_length=20,null=True,blank=True)
     killparticipation = models.PositiveIntegerField(null=True,blank=True)
     totalDamageDealtToChampions = models.PositiveIntegerField(null=True,blank=True)
     totalDamageTaken = models.PositiveIntegerField(null=True,blank=True)

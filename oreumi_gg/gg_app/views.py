@@ -10,7 +10,7 @@ from django.forms.models import model_to_dict
 from user_app.models import User
 from .models import BlogPost, Comment,Message,ChatRoom,SummonerModel,MatchInfoForSearchPlayer,MatchInfoDetail
 from .forms import BlogPostForm, CommentForm
-from .lol_match import match
+from .lol_match import match, roundup,roundup2,capitalize_first_letter,calculateminperminion,timecalculate
 from .ingame_data import find_id, find_league_info, find_spectator_info, IngameDataNotFoundError
 import requests
 
@@ -420,65 +420,90 @@ def summoners_info_form(request):
 #             return HttpResponseServerError("알 수 없는 문제가 생겼습니다. 잠시 후 다시 시도해주세요.")
 
 def summoners_info(request, country, summoner_name):
-    try :
-        summoner = SummonerModel.objects.get(search_player_name = summoner_name)
-        result_match = []
-        #최근 20경기를 불러옴
-        recent_matchs = MatchInfoForSearchPlayer.objects.filter(summonername = summoner_name).order_by('id')[:20]
-    
+    print("검색 소환사명 : "+summoner_name)
+    summoner_name = summoner_name.strip() # 양끝 공백 제거
+    summoner_name_strip = summoner_name.replace(" ", "") # 띄어쓰기 제거
+    try:
+        # 존재여부를 확인하는데 api는 띄어쓰기를 구분하는데 DB는 구분을 못해서 구분 속성을 만들어서 확인
+        # 대문자여부 확인은 __iexact로 가능
+        if SummonerModel.objects.filter(search_player_name_strip__iexact= summoner_name_strip).exists():
+            summoner_name = summoner_name_strip
+        if SummonerModel.objects.filter(search_player_name__iexact= summoner_name).exists():
+            print("db에 존재")
 
-        match_numbering = 1
-        for recent_match in recent_matchs:
-            num=1 # 총 10명
-            # 20경기에서 하나씩 정보를 담아냄
-            result_match_details = {}
-            #해당 경기의 상세정보를 불러옴
-            match_info_details = MatchInfoDetail.objects.filter(matchId =  recent_match.matchId).order_by('playernumber')
-            for match_info_detail in match_info_details:
-                result_match_details[num] = [model_to_dict(match_info_detail)]
-                num+=1
-        
-            # 아이템 문자열을 리스트로
-            recent_match_dict = model_to_dict(recent_match)
-            search_player_item_list = recent_match_dict['search_player_item'].replace(" ", "")[1:-1].split(",")
+            search_player_info_dict = SummonerModel.objects.get(search_player_name__iexact = summoner_name) 
+            matches = []
+            #최근 20경기를 불러옴
+            recent_matchs = MatchInfoForSearchPlayer.objects.filter(summonername = summoner_name).order_by('id')[:20]
 
-            recent_match_dict['search_player_item'] = search_player_item_list
-            result_match_details.update(recent_match_dict)
+            win_count=0
+            lose_count=0
+            win_rate=0
+            total_kill=0
+            total_death=0
+            total_assist=0
+            total_match_count=0
+            total_kda=0,
+            total_kill_part=0
+
+            match_numbering = 1
+            for recent_match in recent_matchs:
+                num=1 # 총 10명
+                # 20경기에서 하나씩 정보를 담아냄
+                result_match_details = {}
+                #해당 경기의 상세정보를 불러옴
+                match_info_details = MatchInfoDetail.objects.filter(matchId =  recent_match.matchId).order_by('playernumber')
+                for match_info_detail in match_info_details:
+                    result_match_details[num] = [model_to_dict(match_info_detail)]
+                    num+=1
             
-            # 위에서 종합된 경기를 하나씩 담아냄
-            result_match.append(result_match_details)
-            match_numbering +=1
- 
+                #
+                if recent_match.win_or_not_eng == "victory":
+                    win_count +=1
+                    total_match_count+=1
+                if recent_match.win_or_not_eng == "defeat":
+                    lose_count+=0
+                    total_match_count+=1
 
-        # print(result_match)
+                total_kill += recent_match.search_player_kill
+                total_death += recent_match.search_player_death
+                total_assist += recent_match.search_player_assist
+                total_kill_part += recent_match.search_player_killpart
+                
+                # 아이템 문자열을 리스트로
+                recent_match_dict = model_to_dict(recent_match)
+                search_player_item_list = recent_match_dict['search_player_item'].replace(" ", "")[1:-1].split(",")
+
+                recent_match_dict['search_player_item'] = search_player_item_list
+                result_match_details.update(recent_match_dict)
+                
+                # 위에서 종합된 경기를 하나씩 담아냄
+                matches.append(result_match_details)
+                match_numbering +=1
+
+            if (win_count + lose_count != 0):
+                win_rate = int(roundup2(win_count / (win_count + lose_count)) * 100)
+            total_kill = roundup(total_kill / 20)
+            total_death = roundup(total_death / 20)
+            total_assist = roundup(total_assist / 20)
+            if (total_death != 0) :
+                total_kda = roundup2((total_kill + total_assist) / total_death)
 
 
-        search_player_info_dict= summoner
-        total_calculate = {
-            "win_count":10,
-            "lose_count":10,
-            "win_rate":50,
-            "total_kill":7.8,
-            "total_death":8.0,
-            "total_assist":13.1,
-            "total_match_count":20,
-            "total_kda":2.61,
-            "total_kill_part":52
-            }
-
-        context = {
-            "matches" : result_match, # 매치 별 정보
-            "total_calculate": total_calculate, # 통계
-            "search_player_info_dict" : search_player_info_dict # 소환사 정보
-        }
-
-
-        return render(request, "oreumi_gg/summoners/summoners.html", context)
-    
-    # 처음 검색하면 검색요청을 한다.
-    except SummonerModel.DoesNotExist:               
-        try:
-            print("에러처리완료")
+            total_calculate = {
+                "win_count":10,
+                "lose_count":10,
+                "win_rate":50,
+                "total_kill":7.8,
+                "total_death":8.0,
+                "total_assist":13.1,
+                "total_match_count":20,
+                "total_kda":2.61,
+                "total_kill_part":52
+                }
+        else:
+        # 처음 검색하면 검색요청을 한다
+            print("처음검색")
 
             matches, total_calculate, search_player_info_dict = match(country, summoner_name, 0, None)
             context = {
@@ -487,14 +512,24 @@ def summoners_info(request, country, summoner_name):
                 "search_player_info_dict" : search_player_info_dict
             }
             print("처음 검색")
-            return render(request, "oreumi_gg/summoners/summoners.html", context)
-        except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 503:
-                return HttpResponseServerError("현재 서비스를 이용할 수 없습니다. 잠시 후 다시 시도해주세요.")
-            elif e.response.status_code == 429:
-                return HttpResponseServerError("너무 많은 요청을 보냈습니다. 잠시 후 다시 시도해주세요.")
-            else:
-                return HttpResponseServerError("알 수 없는 문제가 생겼습니다. 잠시 후 다시 시도해주세요.")
+
+
+        context = {
+            "matches" : matches, # 매치 별 정보
+            "total_calculate": total_calculate, # 통계
+            "search_player_info_dict" : search_player_info_dict # 소환사 정보
+        }
+
+
+        return render(request, "oreumi_gg/summoners/summoners.html", context)
+        
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 503:
+            return HttpResponseServerError("현재 서비스를 이용할 수 없습니다. 잠시 후 다시 시도해주세요.")
+        elif e.response.status_code == 429:
+            return HttpResponseServerError("너무 많은 요청을 보냈습니다. 잠시 후 다시 시도해주세요.")
+        else:
+            return HttpResponseServerError("알 수 없는 문제가 생겼습니다. 잠시 후 다시 시도해주세요.")
 
 
 def summoners_info_api(request, country, summoner_name, count, queue):

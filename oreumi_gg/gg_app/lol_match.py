@@ -98,7 +98,7 @@ def timecalculate(time):
 api_key = getattr(settings, 'API_KEY')
 watcher = LolWatcher(api_key)
 
-def summoner_info(country, myinfo,summonername):
+def summoner_info(country, myinfo,summonername,puuid):
     
     # 크로링에서 db로 전향 필요
     my_league_info = watcher.league.by_summoner(country, myinfo['id'])
@@ -190,9 +190,11 @@ def summoner_info(country, myinfo,summonername):
     }
 
     search_player_info_dict = {
+        'puuid':puuid,
         'search_player_tear_by_season' : search_player_tear_by_season ,
         'search_player_ranking' : my_summoner_ranking,
         'search_player_name' :  myinfo['name'],
+        'search_player_name_strip' :  myinfo['name'].replace(" ", ""), # 공백제거 확인
         'search_player_icon' :  myinfo['profileIconId'],
         'search_player_level' :  myinfo['summonerLevel'],
         'search_player_updated_at' :  timezone.now(),
@@ -213,11 +215,11 @@ def match(country, summonername, start, queue):
     lower_summoner_name = summonername.lower().replace(' ', '')
     myinfo = watcher.summoner.by_name(my_region, lower_summoner_name)
 
-    # 최상단에 들어가는 소환사 정보
-    search_player_info_dict = summoner_info(country,myinfo,summonername)
-
     puuid = myinfo['puuid']
     summonerid = myinfo['id']
+
+    # 최상단에 들어가는 소환사 정보, 소환사 db에 저장
+    search_player_info_dict = summoner_info(country,myinfo,summonername,puuid)
     # 사용자 puuid와 country를 이용하여 최근 20경기 정보를 가져옴
     if queue == 9999:
         match_20 = watcher.match.matchlist_by_puuid(country, puuid, start)
@@ -225,11 +227,11 @@ def match(country, summonername, start, queue):
         match_20 = watcher.match.matchlist_by_puuid(country, puuid, start, 20, queue)
     result_match = []
     win_count = 0
-    total_match_count = 0
     lose_count = 0
     total_kill = 0
     total_death = 0
     total_assist = 0
+    total_match_count = 0
     total_kill_part = 0
 
     for onematch in match_20:
@@ -391,7 +393,7 @@ def match(country, summonername, start, queue):
                 else:
                     kda = roundup2((player_info["kills"] + player_info["assists"]) / player_info["deaths"])
             # 각 플레이어마다 해당 정보 저장
-            player_dict = {"kills" : player_info["kills"], "assists" : player_info["assists"], 
+            player_dict = [{"kills" : player_info["kills"], "assists" : player_info["assists"], 
                             "deaths" : player_info["deaths"], "summonername" : player_info["summonerName"], 
                             "championname" : capitalize_first_letter(player_info["championName"]), "teamposition" : player_info["teamPosition"], 
                             "teamid" : player_info["teamId"], "item0" : player_info["item0"],
@@ -405,8 +407,8 @@ def match(country, summonername, start, queue):
                         "totalDamageTaken" : player_info["totalDamageTaken"], "champlevel" : player_info["champLevel"], 
                         "main_rune" : main_rune, "sub_rune" : sub_rune, "minperminions" : minperminions, "placement": placement,
                         "goldearned" : player_info["goldEarned"], "win":player_info["win"], "dragon_kills" : player_info["dragonKills"],
-                        "turret_kills" : player_info["turretKills"], "baron_kills" : player_info["baronKills"]}
-            result[num] = [player_dict]
+                        "turret_kills" : player_info["turretKills"], "baron_kills" : player_info["baronKills"]}]
+            result[num] = player_dict
 
             # model에 생성
             
@@ -431,7 +433,7 @@ def match(country, summonername, start, queue):
                     )
             num += 1
 
-        matchInfoForSearchPlayer_dict = {"game_playtime" : game_playtime, "game_type" : game_type, "win_or_not" : win_or_not, "win_or_not_eng" : win_or_not_eng,
+        result.update({"game_playtime" : game_playtime, "game_type" : game_type, "win_or_not" : win_or_not, "win_or_not_eng" : win_or_not_eng,
                     "search_player_kill" : search_player_kill, 
                     "search_player_death" : search_player_death, 
                     "search_player_assist" : search_player_assist, 
@@ -447,11 +449,9 @@ def match(country, summonername, start, queue):
                     "search_player_champlevel" : search_player_champlevel,
                     "search_player_totalminions_kill" : search_player_totalminions_kill,
                     "search_player_visionWardsBoughtInGame" : search_player_visionWardsBoughtInGame,
-                    "search_player_minperminions" : search_player_minperminions,
-                    "summonername" : summonername,
-                    "game_type" : game_type
-    
-        }
+                    "search_player_minperminions" : search_player_minperminions
+        }) 
+        result_match.append(result)
         
         matchInfoForSearchPlayer = models.MatchInfoForSearchPlayer.objects.create(
             matchId = match_obj,
@@ -478,9 +478,6 @@ def match(country, summonername, start, queue):
             search_player_visionWardsBoughtInGame = search_player_visionWardsBoughtInGame,
             search_player_minperminions = search_player_minperminions
         )
-
-        result_match.append(matchInfoForSearchPlayer)
-        print(result_match)
 
     win_rate = 0
     if (win_count + lose_count != 0):
