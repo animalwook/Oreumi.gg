@@ -87,17 +87,34 @@
 <div class="pagination">
     <span class="pages">
         {% if page_posts.has_previous %}
-            <a href="?page=1" style="color: black;">&laquo;</a>
+            {% if search_data %}
+                <a href="?search_post={{ search_data }}&page=1" style="color: black;">&laquo;</a>
+            {% else %}
+                <a href="?page=1" style="color: black;">&laquo;</a>
+            {% endif %}
         {% endif %}
         {% for i in page_posts.paginator.page_range %}
             {% if i == page_posts.number %}
-                <a class="active" href="?page={{ i }}">{{ i }}</a>
+                {% if search_data %}
+                    <a class="active" href="?search_post={{ search_data }}&page={{ i }}">{{ i }}</a>
+                {% else %}
+                    <a class="active" href="?page={{ i }}">{{ i }}</a>
+                {% endif %}
             {% else %}
-                <a style="color : black" href="?page={{ i }}">{{ i }}</a>
+                {% if search_data %}
+                    <a style="color : black" href="?search_post={{ search_data }}&page={{ i }}">{{ i }}</a>
+                {% else %}
+                    <a style="color : black" href="?page={{ i }}">{{ i }}</a>
+                {% endif %}
             {% endif %}
         {% endfor %}
         {% if page_posts.has_next %}
-            <a href="?page={{ page_posts.paginator.num_pages }}" style="color: black;">&raquo;</a>
+            {% if search_data %}
+                <a href="?search_post={{ search_data }}&page={{ page_posts.paginator.num_pages }}" style="color: black;">&raquo;</a>
+            {% else %}
+                <a href="?page={{ page_posts.paginator.num_pages }}" style="color: black;">&raquo;</a>
+            {% endif %}
+            
         {% endif %}
     </span>
 </div>
