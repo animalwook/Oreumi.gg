@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.db.models import Q
 from user_app.models import User
-from .models import BlogPost, Comment,Message,ChatRoom
+from .models import BlogPost, Comment,Message,ChatRoom,SummonerModel,MatchInfoForSearchPlayer,MatchInfoDetail
 from .forms import BlogPostForm, CommentForm
 from .lol_match import match
 from .ingame_data import find_id, find_league_info, find_spectator_info, IngameDataNotFoundError
@@ -395,23 +395,93 @@ def summoners_info_form(request):
 
     return redirect(request,'gg_app:index')
 
+# 처음불러오는거만 넣을때
+# def summoners_info(request, country, summoner_name):          
+#     try:
+#         print("처음 검색")
+
+#         matches, total_calculate, search_player_info_dict = match(country, summoner_name, 0, None)
+#         context = {
+#             "matches" : matches, 
+#             "total_calculate": total_calculate,
+#             "search_player_info_dict" : search_player_info_dict
+#         }
+#         print("처음 검색")
+#         print(matches)
+#         return render(request, "oreumi_gg/summoners/summoners.html", context)
+#     except requests.exceptions.HTTPError as e:
+#         if e.response.status_code == 503:
+#             return HttpResponseServerError("현재 서비스를 이용할 수 없습니다. 잠시 후 다시 시도해주세요.")
+#         elif e.response.status_code == 429:
+#             return HttpResponseServerError("너무 많은 요청을 보냈습니다. 잠시 후 다시 시도해주세요.")
+#         else:
+#             return HttpResponseServerError("알 수 없는 문제가 생겼습니다. 잠시 후 다시 시도해주세요.")
 
 def summoners_info(request, country, summoner_name):
-    try:
-        matches, total_calculate, search_player_info_dict = match(country, summoner_name, 0, None)
+    try :
+        summoner = SummonerModel.objects.get(search_player_name = summoner_name)
+        result_match = []
+        #최근 20경기를 불러옴
+        recent_matchs = MatchInfoForSearchPlayer.objects.filter(summonername = summoner_name).order_by('id')[:20]
+    
+        # 20경기에서 하나씩 정보를 담아냄
+        result_match_details = {}
+        match_numbering = 1
+        for recent_match in recent_matchs:
+            num=1 # 총 10명
+            #해당 경기의 상세정보를 불러옴
+            match_info_details = MatchInfoDetail.objects.filter(matchId =  recent_match.matchId).order_by('playernumber')
+            for match_info_detail in match_info_details:
+                result_match_details[num] = match_info_detail
+                num+=1
+            result_match_details['match'] = recent_match
+            
+            # 위에서 종합된 경기를 하나씩 담아냄
+            result_match.append(result_match_details)
+            match_numbering +=1
+            
+        search_player_info_dict= summoner
+        total_calculate = {
+            "win_count":10,
+            "lose_count":10,
+            "win_rate":50,
+            "total_kill":7.8,
+            "total_death":8.0,
+            "total_assist":13.1,
+            "total_match_count":20,
+            "total_kda":2.61,
+            "total_kill_part":52
+            }
+
         context = {
-            "matches" : matches, 
-            "total_calculate": total_calculate,
-            "search_player_info_dict" : search_player_info_dict
+            "result_matchs" : result_match, # 매치 별 정보
+            "total_calculate": total_calculate, # 통계
+            "search_player_info_dict" : search_player_info_dict # 소환사 정보
         }
+
+
         return render(request, "oreumi_gg/summoners/summoners.html", context)
-    except requests.exceptions.HTTPError as e:
-        if e.response.status_code == 503:
-            return HttpResponseServerError("현재 서비스를 이용할 수 없습니다. 잠시 후 다시 시도해주세요.")
-        elif e.response.status_code == 429:
-            return HttpResponseServerError("너무 많은 요청을 보냈습니다. 잠시 후 다시 시도해주세요.")
-        else:
-            return HttpResponseServerError("알 수 없는 문제가 생겼습니다. 잠시 후 다시 시도해주세요.")
+    
+    # 처음 검색하면 검색요청을 한다.
+    except SummonerModel.DoesNotExist:               
+        try:
+            print("에러처리완료")
+
+            matches, total_calculate, search_player_info_dict = match(country, summoner_name, 0, None)
+            context = {
+                "matches" : matches, 
+                "total_calculate": total_calculate,
+                "search_player_info_dict" : search_player_info_dict
+            }
+            print("처음 검색")
+            return render(request, "oreumi_gg/summoners/summoners.html", context)
+        except requests.exceptions.HTTPError as e:
+            if e.response.status_code == 503:
+                return HttpResponseServerError("현재 서비스를 이용할 수 없습니다. 잠시 후 다시 시도해주세요.")
+            elif e.response.status_code == 429:
+                return HttpResponseServerError("너무 많은 요청을 보냈습니다. 잠시 후 다시 시도해주세요.")
+            else:
+                return HttpResponseServerError("알 수 없는 문제가 생겼습니다. 잠시 후 다시 시도해주세요.")
 
 
 def summoners_info_api(request, country, summoner_name, count, queue):
