@@ -23,6 +23,12 @@ import re
 from django.utils import timezone
 
 def index(request):
+    # 닉네임 자동등록
+    if request.user.is_authenticated:
+        if request.user.nickname==None:
+            request.user.nickname = request.user.username
+            request.user.save()
+
     posts=BlogPost.objects.all().order_by('-created_at')
     context = {
         'page_posts': posts, 
@@ -173,6 +179,9 @@ def get_latest_chat(request, pk):
 
 
 def community(request,category="default", order_by="default"):
+
+
+
     posts = BlogPost.objects.all().order_by("-created_at")
     recent_posts=posts    
     tag_on = 'default'
