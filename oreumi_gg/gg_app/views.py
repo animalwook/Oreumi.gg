@@ -346,7 +346,11 @@ def post_search(request):
     search_list = BlogPost.objects.filter(
         Q(title__icontains=search_data) | Q(content__icontains=search_data)
     )
-    context = {"posts": search_list,"category":'default',"tag_on":'default'}      
+    paginator = Paginator(search_list, 10)
+    page_number = request.GET.get('page')
+    page_posts = paginator.get_page(page_number)
+    
+    context = {"page_posts": page_posts,"category":'default',"tag_on":'default', "search_data" : search_data}      
     return render(request,"community/post_list.html",context)
 
 
