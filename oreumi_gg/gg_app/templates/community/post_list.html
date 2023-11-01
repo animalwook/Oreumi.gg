@@ -15,7 +15,7 @@
                             {% if tag_on == 'update' %}
                             <img class="tag-image" src="{% static 'img/community/sun_on.png'%}" alt="" height="24"><span class="tag-span tag-kor">추천</span></a>                            
                             {% else %}
-                            <img class="tag-image" src="{% static 'img/community/sun.png'%}" alt="" height="24"><span class="tag-span">추천</span></a>
+                            <img class="tag-image" src="{% static 'img/community/sun.png'%}" alt="" height="24"><span class="tag-span tag-kor">추천</span></a>
                             {% endif %}
                         <a class="tag-items" data-active="false" href="{% url 'gg_app:community' category 'view' %}">
                             {% if tag_on == 'view' %}
