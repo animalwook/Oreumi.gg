@@ -160,8 +160,12 @@
                                                 <div>
                                                     <div class="items">
                                                         <ul>
-                                                            {% for player_item in matchId.match.search_player_item %}
-                                                                {% if player_item %}
+                                                            {% for player_item in matchId.item %}
+                                                                {% if player_item == '0' %}
+                                                                    <li style="list-style-type: none;">
+
+                                                                    </li>
+                                                                {% elif player_item %}    
                                                                     <li style="list-style-type: none;">
                                                                         <div class style="position: relative;">
                                                                             <img src="/static/img/item/{{player_item}}.webp" width="22" height="22">
@@ -177,17 +181,17 @@
                                             </div>
                                             <div class="participants">
                                                 <ul>
-                                                    {% for key, value in matchId.match.items %}
+                                                    {% for key, value in matchId.items %}
                                                         {% if forloop.counter <= 5 %}
                                                             <li class="team_outer" style="list-style-type: none;">
                                                                 <div class="team_icon" style="position: relative;">
-                                                                    {% with champ_image="img/champion_square_test/"|add:value.0.championname|add:".webp" %}
+                                                                    {% with champ_image="img/champion_square_test/"|add:value.championname|add:".webp" %}
                                                                         <img src="{% static champ_image %}" width="16" height="16">
                                                                     {% endwith %}
                                                                 </div>
                                                                 <div class="name">
-                                                                    <a href="/summoners/kr/{{ value.0.summonername }}" rel="noreferrer">
-                                                                        {{ value.0.summonername }}
+                                                                    <a href="/summoners/kr/{{ value.summonername }}" rel="noreferrer">
+                                                                        {{ value.summonername }}
                                                                     </a>
                                                                 </div>
                                                             </li>
@@ -195,18 +199,18 @@
                                                     {% endfor %}
                                                 </ul>
                                                 <ul>
-                                                    {% for key, value in matchId.match.items %}
+                                                    {% for key, value in matchId.items %}
                                                         {% if 5 < forloop.counter and forloop.counter <= 10 %}
-                                                            {% if value.0.championname %}
+                                                            {% if value.championname %}
                                                                 <li class="team_outer" style="list-style-type: none;">
                                                                     <div class="team_icon" style="position: relative;">
-                                                                        {% with champ_image="img/champion_square_test/"|add:value.0.championname|add:".webp" %}
+                                                                        {% with champ_image="img/champion_square_test/"|add:value.championname|add:".webp" %}
                                                                             <img src="{% static champ_image %}" width="16" height="16">
                                                                         {% endwith %}
                                                                     </div>
                                                                     <div class="name">
-                                                                        <a href="/summoners/kr/{{ value.0.summonername }}" rel="noreferrer">
-                                                                            {{ value.0.summonername }}
+                                                                        <a href="/summoners/kr/{{ value.summonername }}" rel="noreferrer">
+                                                                            {{ value.summonername }}
                                                                         </a>
                                                                     </div>
                                                                 </li>
@@ -217,17 +221,17 @@
                                             </div>
                                         </div>
                                     </div>
-                                     {% comment %} <div class="action">
-                                        <button class="detail" data-match-info="{{ matches_detail|json_script:'dict-id' }}" match-result="{{ match.win_or_not_eng }}" status="open">
-                                            {% if match.win_or_not_eng == "defeat" %}
+                                      <div class="action">
+                                        <button class="detail" data-match-info="{{ matchId|getvalue }}" match-result="{{ matchId.match.win_or_not_eng }}" status="open">
+                                            {% if matchId.match.win_or_not_eng == "defeat" %}
                                                 <img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down-red.svg?v=1697786050877" width="24" alt="More" height="24">
-                                            {% elif match.win_or_not_eng == "repeat" %}
+                                            {% elif matchId.match.win_or_not_eng == "repeat" %}
                                                 <img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down.svg?v=1697786050877" width="24" alt="More" height="24">
                                             {% else %}
                                                 <img src="https://s-lol-web.op.gg/images/icon/icon-arrow-down-blue.svg?v=1697786050877" width="24" alt="More" height="24">
                                             {% endif %}
                                         </button>
-                                    </div>  {% endcomment %}
+                                    </div>  
                                 </div>
                             </li>
                         {% endfor %}

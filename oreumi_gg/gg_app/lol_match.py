@@ -489,7 +489,7 @@ def match(country, summonername, start, queue):
     total_kill = roundup(total_kill / 20)
     total_death = roundup(total_death / 20)
     total_assist = roundup(total_assist / 20)
-    total_kda = 0.recentmatch.
+    total_kda = 0
     if (total_death != 0) :
         total_kda = roundup2((total_kill + total_assist) / total_death)
         

@@ -424,22 +424,24 @@ def summoners_info(request, country, summoner_name):
         #최근 20경기를 불러옴
         recent_matchs = MatchInfoForSearchPlayer.objects.filter(summonername = summoner_name).order_by('id')[:20]
     
-        # 20경기에서 하나씩 정보를 담아냄
-        result_match_details = {}
+
         match_numbering = 1
         for recent_match in recent_matchs:
             num=1 # 총 10명
+            # 20경기에서 하나씩 정보를 담아냄
+            result_match_details = {}
             #해당 경기의 상세정보를 불러옴
             match_info_details = MatchInfoDetail.objects.filter(matchId =  recent_match.matchId).order_by('playernumber')
             for match_info_detail in match_info_details:
                 result_match_details[num] = match_info_detail
                 num+=1
             result_match_details['match'] = recent_match
-            
+
+            result_match_details['item'] = recent_match.search_player_item[1:-1].replace(" " , "").split(',')
             # 위에서 종합된 경기를 하나씩 담아냄
             result_match.append(result_match_details)
             match_numbering +=1
-            
+
         search_player_info_dict= summoner
         total_calculate = {
             "win_count":10,
