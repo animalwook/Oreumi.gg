@@ -2,9 +2,11 @@
 {% load humanize %}
 <!-- chat/templates/chat/chat_room_list.html -->
 {% for chat_room_data in chat_room_data %}
-  <a href="{% url 'gg_app:chat_room' chat_room_data.chat_room.room_number %}" class="chatroom-link">
-    <div class="flex-box chat-box between">
+  <div class="chatroom-link"
+    onclick="location.href='{% url 'gg_app:chat_room' chat_room_data.chat_room.room_number %}'" {% if room_name == chat_room_data.chat_room.room_number %} 
+    style="background-color:#3498db;" {% endif %}>
 
+    <div class="flex-box chat-box between">
       <div class="flex-box column" style="place-items: flex-start;">
         <div class="flex-box">
           <p class="bold">
@@ -30,5 +32,5 @@
       </div>
 
     </div>
-  </a>
+  </div>
 {% endfor %}

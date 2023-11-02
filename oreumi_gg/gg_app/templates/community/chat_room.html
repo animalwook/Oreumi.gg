@@ -10,18 +10,19 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'css/chat.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'css/nav.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'css/footer_gray.css' %}"/>
     <title>채팅하기</title>
   </head>
 
   <body class="back-ye">
+    {% include "oreumi_gg/header.html" %}
     {% include 'oreumi_gg/nav.html' %}
 
     <div class="content-box">
       <div class="container column">
         <div class="post-box flex-box">
-
           <!-- 채팅선택창 -->
           <div class="chat-select-container">
             <div class="flex-box">
@@ -148,5 +149,4 @@
           };
       });
     </script>
-
   </html>
