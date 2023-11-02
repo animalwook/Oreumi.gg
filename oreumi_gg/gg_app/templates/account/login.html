@@ -22,7 +22,6 @@
             style="width:245px; height:125px;"></a>
       </div>
       <h3>Log-in</h3>
-      {% comment %}
       <div class="social_login">
         {% load socialaccount %}
         <!-- <li><a href=""><img src="{% static 'img\social\google.png' %}"
@@ -39,7 +38,6 @@
           <a href="#" onclick="naverLogin()"><img src="{{naver_login}}" style="width:222px; height: 49px;">
         </div> -->
       </div>
-      {% endcomment %}
       {% csrf_token %}
       {{form.non_field_errors}}
       <div class="login_id">

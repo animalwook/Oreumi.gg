@@ -462,17 +462,17 @@ def summoners_info(request, country, summoner_name):
             print("실제 검색 소환사명 : "+summoner_name)
 
             #db에 있다면 가져오고 최신화시킴
-            if search_player_info_dict.search_player_is_read == False:
-                print("랭킹 확인1")
-                if SoloRankList.objects.filter(summoners__iexact=summoner_name).exists():
-                    print("랭킹 확인2")
-                    db_ranking = SoloRankList.objects.get(summoners__iexact=summoner_name)
-                    search_player_info_dict.my_summoner_ranking = db_ranking.ranking
-                    print(search_player_info_dict.my_summoner_ranking)
+            # if search_player_info_dict.search_player_is_read == False:
+            #     print("랭킹 확인1")
+            #     if SoloRankList.objects.filter(summoners__iexact=summoner_name).exists():
+            #         print("랭킹 확인2")
+            #         db_ranking = SoloRankList.objects.get(summoners__iexact=summoner_name)
+            #         search_player_info_dict.my_summoner_ranking = db_ranking.ranking
+            #         print(search_player_info_dict.my_summoner_ranking)
 
-                    search_player_info_dict.save()
-            else:
-                print("랭킹에서 검색안됨")
+            #         search_player_info_dict.save()
+            # else:
+            #     print("랭킹에서 검색안됨")
                 
             matches = []
             #최근 20경기를 불러옴
