@@ -26,6 +26,12 @@ from django.utils import timezone
 from django.contrib import messages
 
 def index(request):
+    # 닉네임 자동등록
+    if request.user.is_authenticated:
+        if request.user.nickname==None:
+            request.user.nickname = request.user.username
+            request.user.save()
+
     posts=BlogPost.objects.all().order_by('-created_at')
     context = {
         'page_posts': posts, 
@@ -186,6 +192,9 @@ def get_latest_chat(request, pk):
 
 
 def community(request,category="default", order_by="default"):
+
+
+
     posts = BlogPost.objects.all().order_by("-created_at")
     recent_posts=posts    
     tag_on = 'default'
@@ -359,7 +368,11 @@ def post_search(request):
     search_list = BlogPost.objects.filter(
         Q(title__icontains=search_data) | Q(content__icontains=search_data)
     )
-    context = {"posts": search_list,"category":'default',"tag_on":'default'}      
+    paginator = Paginator(search_list, 10)
+    page_number = request.GET.get('page')
+    page_posts = paginator.get_page(page_number)
+    
+    context = {"page_posts": page_posts,"category":'default',"tag_on":'default', "search_data" : search_data}      
     return render(request,"community/post_list.html",context)
 
 
@@ -547,16 +560,24 @@ def summoners_info(request, country, summoner_name):
             "matches" : matches, # 매치 별 정보
             "total_calculate": total_calculate, # 통계
             "search_player_info_dict" : search_player_info_dict # 소환사 정보
+
         }
 
 
         return render(request, "oreumi_gg/summoners/summoners.html", context)
         
     except requests.exceptions.HTTPError as e:
-        if e.response.status_code == 503:
-            return HttpResponseServerError("현재 서비스를 이용할 수 없습니다. 잠시 후 다시 시도해주세요.")
-        elif e.response.status_code == 429:
-            return HttpResponseServerError("너무 많은 요청을 보냈습니다. 잠시 후 다시 시도해주세요.")
+        if e.response is not None:
+            status_code = e.response.status_code
+            content = e.response.content
+            if status_code == 503:
+                return HttpResponseServerError("현재 서비스를 이용할 수 없습니다. 잠시 후 다시 시도해주세요.")
+            elif status_code == 429:
+                return HttpResponseServerError("너무 많은 요청을 보냈습니다. 잠시 후 다시 시도해주세요.")
+            elif status_code == 403:
+                return HttpResponseServerError("서버 관리자에게 문의 바랍니다.")
+            elif status_code == 401:
+                return HttpResponseServerError("서버 관리자에게 문의 바랍니다.")
         else:
             return HttpResponseServerError("알 수 없는 문제가 생겼습니다. 잠시 후 다시 시도해주세요.")
 
@@ -570,10 +591,17 @@ def summoners_info_api(request, country, summoner_name, count, queue):
         }
         return JsonResponse(response_data)
     except requests.exceptions.HTTPError as e:
-        if e.response.status_code == 503:
-            return HttpResponseServerError("현재 서비스를 이용할 수 없습니다. 잠시 후 다시 시도해주세요.")
-        elif e.response.status_code == 429:
-            return HttpResponseServerError("너무 많은 요청을 보냈습니다. 잠시 후 다시 시도해주세요.")
+        if e.response is not None:
+            status_code = e.response.status_code
+            content = e.response.content
+            if status_code == 503:
+                return HttpResponseServerError("현재 서비스를 이용할 수 없습니다. 잠시 후 다시 시도해주세요.")
+            elif status_code == 429:
+                return HttpResponseServerError("너무 많은 요청을 보냈습니다. 잠시 후 다시 시도해주세요.")
+            elif status_code == 403:
+                return HttpResponseServerError("서버 관리자에게 문의 바랍니다.")
+            elif status_code == 401:
+                return HttpResponseServerError("서버 관리자에게 문의 바랍니다.")
         else:
             return HttpResponseServerError("알 수 없는 문제가 생겼습니다. 잠시 후 다시 시도해주세요.")
 
@@ -631,6 +659,9 @@ def champion_tier_list(request, position, region, tier):
     
 
 def statistics_champions_list(request, position, region, tier, period, mode):
+    champion_json_file = champion_file
+    with open(champion_json_file, 'r',encoding='utf-8') as json_file:
+        parsed_data = json.load(json_file)  # JSON 파일을 파싱해서 파이썬 딕셔너리로 읽음
     #OP.gg URL 생성
     opgg_url = "https://www.op.gg/champions?region="+region+"&tier="+tier+"&position="+position+"&period="+period+"&mode="+mode
     print(opgg_url)
@@ -651,7 +682,6 @@ def statistics_champions_list(request, position, region, tier, period, mode):
             rank = columns[0].find('span').text.strip()
             champion_img = columns[1].find('img')['src']
             champion_name = columns[1].find('strong').text.strip()
-            print(champion_name)
             num_of_plays = columns[2].text.strip()
             rating = columns[3].find('span').text.strip()
             win_rate = columns[4].text.strip()

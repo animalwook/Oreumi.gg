@@ -11,33 +11,33 @@
             <div class="board_title">
                 <div class="tag-group">
                     <div class="post-tag ">
-                        <a data-active="true" href="{% url 'gg_app:community' category 'update' %}">
+                        <a class="tag-items" data-active="true" href="{% url 'gg_app:community' category 'update' %}">
                             {% if tag_on == 'update' %}
-                            <img src="{% static 'img/community/sun_on.png'%}" alt="" height="24">최신</a>                            
+                            <img class="tag-image" src="{% static 'img/community/sun_on.png'%}" alt="" height="24"><span class="tag-span tag-kor">추천</span></a>                            
                             {% else %}
-                            <img src="{% static 'img/community/sun.png'%}" alt="" height="24">최신</a>
+                            <img class="tag-image" src="{% static 'img/community/sun.png'%}" alt="" height="24"><span class="tag-span">추천</span></a>
                             {% endif %}
-                        <a data-active="false" href="{% url 'gg_app:community' category 'view' %}">
+                        <a class="tag-items" data-active="false" href="{% url 'gg_app:community' category 'view' %}">
                             {% if tag_on == 'view' %}
-                            <img src="{% static 'img/community/fire_on.png'%}" alt="" height="24">인기</a>
+                            <img class="tag-image" src="{% static 'img/community/fire_on.png'%}" alt="" height="20"><span class="tag-span tag-kor">인기</span></a>
                             {% else %}
-                            <img src="{% static 'img/community/fire.png'%}" alt="" height="24">인기</a>
+                            <img class="tag-image" src="{% static 'img/community/fire.png'%}" alt="" height="20"><span class="tag-span tag-kor">인기</span></a>
                             {% endif %}
-                        <div class="top_tag">
-                            <a data-active="false" href="{% url 'gg_app:community' category 'top' %}">
+                            <a class="tag-items" data-active="false" href="{% url 'gg_app:community' category 'top' %}">
                             {% if tag_on == 'top' %}
-                            <img src="{% static 'img/community/top_on.png'%}" alt="" height="24">TOP</a>
+                            <img class="tag-image" src="{% static 'img/community/top_on.png'%}" alt="" height="24"><span class="tag-span">TOP</span></a>
                             {% else %}
-                            <img src="{% static 'img/community/top.png'%}" alt="" height="24">TOP</a>
+                            <img class="tag-image" src="{% static 'img/community/top.png'%}" alt="" height="24"><span class="tag-span">TOP</span></a>
                             {% endif %}
-
+                            <div class="top-tag">
                             <select data-active="false" class="post-top-option">
                                 <option value="top-day">지난 1일</option>
                                 <option value="top-week">지난 1주</option>
                                 <option value="top-month" selected="">지난 1개월</option>
                                 <option value="top-year">지난 1년</option>
                                 <option value="top">전체</option>
-                            </select></div>
+                            </select>
+                        </div>
                     </div>
 
                     <form class="post_search_form" method="GET" action="{% url 'gg_app:post_search' %}" >
@@ -60,15 +60,17 @@
         <div class="board_list_wrap">
             {% for post in page_posts %} <!-- views 에서 넘겨 받은 변수 -->
             <li class="post_list">
-                <span style="width:44px"><img src="{% static 'img/community/tri.png' %}" alt="" width="16"><span>{{post.net_count}}</span></span>
+                <span class="post_header"><img class="post_arrow" src="{% static 'img/community/tri.png' %}" alt="" width="16px"><span>{{post.net_count}}</span></span>
                 
                 <div class="">
                     <a href="{% url 'gg_app:post_detail' post.id %}"><span>{{post.title}}</span></a><em>[{{post.comment_count}}]</em>
-                    <div class="css-puqfyf ev5eu1p8">
-                        <span>{{post.category}}</span>
-                        <span style="position:relative" class="">{{post.updated_at}}</span>
-                        <span><a href=""><em style="position:relative" class="levelTooltip"><img src="" alt="" height="24"></em>
-                        <span class="post_nickname">{{post.author}}</span></a></span>
+                    <div class="post-info">
+                        <span class="post-category">{{post.category}}</span>
+                        <span class="post-updated">{{post.updated_at}}</span>
+                        <span class="post-author">
+                            <a href=""><em class="levelTooltip"><img src="" alt="" height="24"></em>
+                            <span class="post-nickname">{{post.author}}</span></a>
+                        </span>
                     </div>
                 </div>
                 {% if post.thumbnail != "" %}
@@ -83,20 +85,36 @@
 </article>
 <!-- 나중에 if문으로 포스트 갯수가 11개 이상이면 표시하도록 작성 -->
 <div class="pagination">
-
     <span class="pages">
         {% if page_posts.has_previous %}
-            <a href="?page=1" style="color: black;">&laquo;</a>
+            {% if search_data %}
+                <a href="?search_post={{ search_data }}&page=1" style="color: black;">&laquo;</a>
+            {% else %}
+                <a href="?page=1" style="color: black;">&laquo;</a>
+            {% endif %}
         {% endif %}
         {% for i in page_posts.paginator.page_range %}
             {% if i == page_posts.number %}
-                <a class="active" href="?page={{ i }}">{{ i }}</a>
+                {% if search_data %}
+                    <a class="active" href="?search_post={{ search_data }}&page={{ i }}">{{ i }}</a>
+                {% else %}
+                    <a class="active" href="?page={{ i }}">{{ i }}</a>
+                {% endif %}
             {% else %}
-                <a style="color : black" href="?page={{ i }}">{{ i }}</a>
+                {% if search_data %}
+                    <a style="color : black" href="?search_post={{ search_data }}&page={{ i }}">{{ i }}</a>
+                {% else %}
+                    <a style="color : black" href="?page={{ i }}">{{ i }}</a>
+                {% endif %}
             {% endif %}
         {% endfor %}
         {% if page_posts.has_next %}
-            <a href="?page={{ page_posts.paginator.num_pages }}" style="color: black;">&raquo;</a>
+            {% if search_data %}
+                <a href="?search_post={{ search_data }}&page={{ page_posts.paginator.num_pages }}" style="color: black;">&raquo;</a>
+            {% else %}
+                <a href="?page={{ page_posts.paginator.num_pages }}" style="color: black;">&raquo;</a>
+            {% endif %}
+            
         {% endif %}
     </span>
 </div>

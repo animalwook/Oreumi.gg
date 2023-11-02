@@ -5,11 +5,7 @@
     margin-bottom: 8px;
 }
 
-
 .post-tag {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
     gap: 16px;
     overflow-x: auto;
@@ -17,12 +13,25 @@
     overflow: hidden;
     text-size-adjust: auto;
     white-space: nowrap;
+    align-items: center;
+    padding-bottom: 14px;
+}
+
+.tag-items {
+    display: inline-flex;
+    align-items: center;
+}
+
+.tag-image {
+    margin-right: 1px;
 }
 
 .post-top-option {
+    display: inline-flex;
+    cursor: pointer;
     margin-left: 4px;
     padding-left: 8px;
-    padding-right: 26px;
+    padding-right: 8px;
     background: #fdefefd0;
     min-width: 24px;
     height: 24px;
@@ -35,77 +44,246 @@
     -moz-appearance: none;
     -ms-appearance: none;
     appearance: none;
-    background-image: linear-gradient(45deg,transparent 50%,var(--gray700) 50%),linear-gradient(135deg,var(--gray700) 50%,transparent 50%);
-    -webkit-background-position: calc(100% - 15px) calc(8px + 2px),calc(100% - 10px) calc(8px + 2px);
-    background-position: calc(100% - 15px) calc(8px + 2px),calc(100% - 10px) calc(8px + 2px);
-    -webkit-background-size: 5px 5px,5px 5px;
-    background-size: 5px 5px,5px 5px;
+    background-image: linear-gradient(45deg, transparent 50%, var(--gray700) 50%), linear-gradient(135deg, var(--gray700) 50%, transparent 50%);
+    background-position: calc(100% - 15px) calc(8px + 2px), calc(100% - 10px) calc(8px + 2px);
+    background-size: 5px 5px, 5px 5px;
     background-repeat: no-repeat;
     outline: none;
     text-align: center;
-    }
-    .css-8uf9d {
-        display: flex;
-    }
+}
+.css-8uf9d {
+    display: flex;
+}
 
-    .search_form {
+.search_form {
+    display: flex;
+    justify-content: center;
+}
+
+/* 검색창 */
+
+.input_group {
+    display: flex;
+    align-items: center;
+    height: 45px;
+    background-color: #fff;
+    border-radius: 30px;
+}
+
+.post_search {
+    border: none;
+    margin-right: 5px;
+    width: 240px;
+    height: 30px;
+}
+
+.post_search:focus {
+    outline: none;
+}
+
+.input_group_button {
+    width: 100px;
+}
+.search_post {
+    border: none;
+    cursor: pointer;
+    width: 43px;
+    height: 31.99px;
+    background-color: #fff;
+}
+
+.search_logo {
+    width: 30px;
+    height: 30px;
+}
+
+/* 포스트리스트부분 */
+.post_list {
+    display: flex;
+    height: 77px;
+    align-items: center;
+    border-top: 1px solid #e7e6e6;
+}
+
+.post_header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.post_arrow {
+    margin-right: 3px;
+}
+
+/* .post_container {
+    display: inline-flex;
+} */
+
+.post_list div em {
+    font-style: normal;
+    margin-left: 5px;
+    color: #31bd6ed0;
+}
+.post_list span {
+    margin-right: 12px;
+}
+
+@media screen and (min-width: 1000px) {
+    .post-tag {
         display: flex;
-        justify-content: center;
-    }
-    
-    /* 검색창 */
-    
-    .input_group {
-        display: flex;
+        gap: 16px;
+        overflow-x: auto;
+        height: 55px;
+        overflow: hidden;
+        text-size-adjust: auto;
+        white-space: nowrap;
         align-items: center;
-        height: 45px;
-        background-color: #fff;
-        border-radius: 30px;
+        padding-bottom: 8px;
     }
 
-    .post_search {
-        border: none;
-        margin-right: 5px;
-        width: 240px;
+    .search_logo {
+        margin-bottom: 16px;
+        width: 30px;
         height: 30px;
     }
-    
-    .post_search:focus {
-        outline: none;
-    }
-    
-    .input_group_button{
-        width:100px;
-    }
-    .search_post {
-        border: none;
-        cursor: pointer;
-        width: 43px;
-        height: 31.99px;
-        background-color: #fff;
-    }
-    
-    .search_logo {
-        width: 30px;
-        height: 18px;
 
+    .post-category {
+        display: inline-block;
+        width: 120px;
     }
-    
 
+    .post-updated {
+        display: inline-block;
+        width: 200px;
+    }
 
-    /* 포스트리스트부분 */
-    .post_list {
+    .post-nickname {
+        width: 45px;
+        display: inline-block;
+    }
+}
+
+@media screen and (min-width: 737px) and (max-width: 1199px) {
+    .post-tag {
         display: flex;
-        height:77px;
-        align-items:center;
-        border-top:1px solid #e7e6e6
+        gap: 16px;
+        overflow-x: auto;
+        height: 55px;
+        overflow: hidden;
+        text-size-adjust: auto;
+        white-space: nowrap;
+        align-items: center;
+        padding-bottom: 6px;
     }
 
-    .post_list div em { 
-        font-style: normal;
-        margin-left: 5px;
-        color: #31bd6ed0;
+    .search_logo {
+        margin-bottom: 12px;
+        width: 30px;
+        height: 30px;
     }
-    .post_list span {
-        margin-right:12px
+
+    .tag-kor {
+        margin-top: 4px;
+        font-size: 16px;
     }
+}
+
+@media screen and (min-width: 1200px) {
+    .post-tag {
+        display: flex;
+        gap: 16px;
+        overflow-x: auto;
+        height: 55px;
+        overflow: hidden;
+        text-size-adjust: auto;
+        white-space: nowrap;
+        align-items: center;
+    }
+
+    .search_logo {
+        margin-bottom: 12px;
+        width: 30px;
+        height: 30px;
+    }
+
+    .tag-kor {
+        margin-top: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .post-category {
+        display: inline-block;
+        width: 120px;
+    }
+
+    .post-updated {
+        display: inline-block;
+        width: 200px;
+    }
+
+    .post-nickname {
+        width: 45px;
+        display: inline-block;
+    }
+}
+
+@media screen and (max-width: 736px) {
+    .search_logo {
+        position: absolute;
+        top: 8px;
+        right: 34px;
+        width: 30px;
+        height: 30px;
+    }
+
+    .post-category {
+        display: inline-block;
+        width: 120px;
+    }
+
+    .post-updated {
+        display: inline-block;
+        width: 200px;
+    }
+
+    .post-nickname {
+        width: 45px;
+        display: inline-block;
+    }
+}
+
+@media screen and (max-width: 999px) {
+    .post-category {
+        display: inline-block;
+        width: 120px;
+    }
+
+    .post-updated {
+        display: inline-flex;
+        width: 230px;
+    }
+
+    .post-nickname {
+        width: 45px;
+        display: inline-block;
+    }
+}
+
+@media screen and (max-width: 637px) {
+    .post-category {
+        display: inline-block;
+        width: 80px;
+    }
+
+    .post-updated {
+        display: inline-flex;
+        width: 180px;
+    }
+
+    .post-nickname {
+        width: 50px;
+        display: inline-block;
+    }
+}

@@ -6,7 +6,7 @@
             <div class="header-profile-info">
                 <div class="profile-icon">
                     <img src="http://ddragon.leagueoflegends.com/cdn/13.20.1/img/profileicon/{{ search_player_info_dict.search_player_icon }}.png" style="width: 100px; height: 100px" />
-                    <div class="level"><span class="level">{{search_player_info_dict.search_player_level}}</span></div>
+                    <div class="player-level"><span class="player-level">{{search_player_info_dict.search_player_level}}</span></div>
                 </div>
                 <div class="info">
                     <div class="tier-and-cover-img">
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="summoner-name-container">
-                        <h1 class="summoner-name">{{search_player_info_dict.search_player_name}}</h1>
+                        <h1 class="summoner-name">{{ search_player_info_dict.search_player_name }}</h1>
                         <button class="favorite-icon" id="favorite-button">
                             <img class="favorite-icon-image" src="/static/img/favorite_icon_false.png" alt="off" />
                         </button>
@@ -41,7 +41,7 @@
                     </div>
                     <div class="user-info-buttons"><button class="renewal-button">전적 갱신</button></div>
                     <div class="last-update">
-                        <div class="" style="position: relative">최근 업데이트: 2일 전</div>
+                        <div class="" style="position: relative">최근 업데이트: 방금 전</div>
                     </div>
                 </div>
             </div>
@@ -62,11 +62,12 @@
             </li> -->
             <li>
                 <a href="{% url 'gg_app:ingame_info' search_player_info_dict.search_player_name %}">
+
                     <div class="menu-ingame">인게임 정보</div>
                 </a>
             </li>
             <li>
-                <a target="_blank" href="https://tft.op.gg/summoners/kr/거니라구?utm_source=opgg&amp;utm_medium=button&amp;utm_campaign=click_summoner_tft">
+                <a target="_blank" href="https://tft.op.gg/summoners/kr/{{ search_player_info_dict.search_player_name }}?utm_source=opgg&amp;utm_medium=button&amp;utm_campaign=click_summoner_tft">
                     <div class="menu-tft">
                         <img class="menu-tft-img" src="https://s-lol-web.op.gg/images/icon/icon-tft.svg?image=q_auto,f_webp,w_32&amp;v=1697786050877" width="16" alt="전략적 팀 전투" height="16" />
                         <span>전략적 팀 전투</span>
