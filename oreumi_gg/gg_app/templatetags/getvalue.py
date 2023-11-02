@@ -8,6 +8,18 @@ register = template.Library()
 def getvalue(value):
     return json.dumps(value)
 
+
+@register.filter
+def convert_str (v, ) :
+    try :
+        if str(v, )[0]=="/":
+           return True
+        else:
+           return False
+    except ValueError :
+     return v
+
+
 # @register.filter
 # def getvalue(value):
 #     for i in range(1,11):

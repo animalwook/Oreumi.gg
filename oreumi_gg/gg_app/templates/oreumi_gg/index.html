@@ -1,4 +1,6 @@
 {% load static %}
+{% load getvalue %}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +65,11 @@
                                 <li class="post_list">
                                     {% if post.thumbnail != "" %}
                                     <span style="width: 60px; height: 60px;   margin-right: 35px;">
+                                        {% if post.thumbnail|convert_str %}
+                                        <a href="{% url 'gg_app:post_detail' post.id %}"><img src="https:/{{post.thumbnail}}" alt="" style="width: 60px; height: 60px; object-fit: cover; object-position: center;"></a>
+                                        {% else %}
                                         <a href="{% url 'gg_app:post_detail' post.id %}"><img src="/media/{{post.thumbnail}}" alt="" style="width: 60px; height: 60px; object-fit: cover; object-position: center;"></a>
+                                        {% endif %}
                                     </span>
                                     {% else %}
                                     <span style="width: 60px; height: 60px;   margin-right: 35px;">

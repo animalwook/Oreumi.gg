@@ -234,7 +234,6 @@ def community(request,category="default", order_by="default"):
     paginator = Paginator(posts, 10)
     page_number = request.GET.get('page')
     page_posts = paginator.get_page(page_number)
-    
     context = {'posts': posts, 'recent_posts':recent_posts,'category':category, 'tag_on':tag_on, 'page_posts': page_posts}
 
     return render(request,"community/post_list.html", context)
