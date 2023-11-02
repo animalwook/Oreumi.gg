@@ -2,11 +2,11 @@ body {
     background-color: #ebeef1;
 }
 
-.champions {
+.leaderboards {
     color: #fff;
 }
 
-.champions::after {
+.leaderboards::after {
     content: "";
     position: absolute;
     width: 100%;
