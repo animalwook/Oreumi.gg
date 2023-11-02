@@ -20,7 +20,7 @@ urlpatterns = [
     path('statistics_tier/', views.statistics_tier, name='statistics_tier'),
 
     # 랭킹
-    path('leaderboards/', views.leaderboards, name='leaderboards'),
+    path('leaderboards/<int:page>', views.leaderboards, name='leaderboards'),
     path('type_champions/', views.type_champions, name='type_champions'),
     path('type_ladder_flex/', views.type_ladder_flex, name='type_ladder_flex'),
     path('type_ladder/', views.type_ladder, name='type_ladder'),
@@ -55,6 +55,8 @@ urlpatterns = [
 
     #인게임 정보
     path('ingame/', views.ingame, name='ingame'),
+    path('ingame/ingame_search', views.ingame_search, name='ingame_search'),
+
     path('ingame/<str:nickname>', views.ingame_info, name='ingame_info'),
     
     # 전적 검색

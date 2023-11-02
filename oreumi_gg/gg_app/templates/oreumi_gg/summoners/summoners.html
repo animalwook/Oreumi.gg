@@ -8,9 +8,9 @@
         <link rel="stylesheet" href="{% static 'css/header.css' %}">
         <link rel="stylesheet" href="{% static 'css/nav.css' %}">
         <link rel="stylesheet" href="{% static 'css/footer_gray.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static "css/reset.css" %}?{% now 'U' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
         <link rel="stylesheet" href="{% static 'css/summoners.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static "css/matches.css" %}?{% now 'U' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/matches.css' %}">
         <link rel="icon" href="{%static 'img\oreumi_gg\favicon.ico'%}">
         <title>소환사 정보</title>
     </head>
@@ -161,7 +161,11 @@
                                                     <div class="items">
                                                         <ul>
                                                             {% for player_item in match.search_player_item %}
-                                                                {% if player_item %}
+                                                                
+                                                            
+                                                                {% if player_item == '0' %}
+                                                                    <li></li>
+                                                                {% elif player_item %}
                                                                     <li style="list-style-type: none;">
                                                                         <div class style="position: relative;">
                                                                             <img src="/static/img/item/{{player_item}}.webp" width="22" height="22">

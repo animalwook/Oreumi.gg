@@ -1,9 +1,11 @@
 from django.conf import settings
 from riotwatcher import LolWatcher, ApiError
 from datetime import datetime
+from .  import models
 import requests
 import math
 import decimal
+from django.utils import timezone
 
 
 summonerSpells = {21 : "SummonerBarrier", 1 : "SummonerBoost", 14 : "SummonerDot", 
@@ -96,108 +98,121 @@ def timecalculate(time):
 api_key = getattr(settings, 'API_KEY')
 watcher = LolWatcher(api_key)
 
-def summoner_info(country, myinfo):
+def summoner_info(country, myinfo,summonername,puuid):
     
-    # 크로링에서 db로 전향 필요
-    my_league_info = watcher.league.by_summoner(country, myinfo['id'])
-    """
-    [
-    {
-        "leagueId": "548cecb1-3868-4916-96c2-3625202e8e05",
-        "queueType": "RANKED_SOLO_5x5",
-        "tier": "SILVER",
-        "rank": "II",
-        "summonerId": "EE2eARX3pTxgPB8AV1jbfjR8N0IrTRRrULzJxKDwX0rPeNo",
-        "summonerName": "거니라구",
-        "leaguePoints": 51,
-        "wins": 4,
-        "losses": 5,
-        "veteran": false,
-        "inactive": false,
-        "freshBlood": false,
-        "hotStreak": false
-    }
-    ]
-    """
-    # 크롤링에서 db로 전향 필요
-    search_player_tear_by_season = "DB추가예정"
-    my_summoner_ranking = "DB추가예정",
-    
-    # 랭크 여부 확인
-    if len(my_league_info) == 0 : # 랭크를 하지 않음
-            search_player_solo_tear = None
-            search_player_solo_rank = None
-            search_player_solo_points = None
-            search_player_solo_wins = None
-            search_player_solo_losses = None
-            search_player_flex_tear = None
-            search_player_flex_rank = None
-            search_player_flex_points = None
-            search_player_flex_wins = None
-            search_player_flex_losses = None
-    elif len(my_league_info) == 1 : # 솔로인지 자유랭인지 확인
+    if models.SummonerModel.objects.filter(search_player_name=summonername).exists():
+        search_player_info_dict = models.SummonerModel.objects.get(search_player_name=summonername)
+        
+        return search_player_info_dict
+    else:
+        # 크로링에서 db로 전향 필요
+        my_league_info = watcher.league.by_summoner(country, myinfo['id'])
+        """
+        [
+        {
+            "leagueId": "548cecb1-3868-4916-96c2-3625202e8e05",
+            "queueType": "RANKED_SOLO_5x5",
+            "tier": "SILVER",
+            "rank": "II",
+            "summonerId": "EE2eARX3pTxgPB8AV1jbfjR8N0IrTRRrULzJxKDwX0rPeNo",
+            "summonerName": "거니라구",
+            "leaguePoints": 51,
+            "wins": 4,
+            "losses": 5,
+            "veteran": false,
+            "inactive": false,
+            "freshBlood": false,
+            "hotStreak": false
+        }
+        ]
+        """
+        # 크롤링에서 db로 전향 필요
+        search_player_tear_by_season = "DB추가예정"
+        my_summoner_ranking = 0000
+        
+        # 랭크 여부 확인
+        if len(my_league_info) == 0 : # 랭크를 하지 않음
+                search_player_solo_tear = None
+                search_player_solo_rank = None
+                search_player_solo_points = None
+                search_player_solo_wins = None
+                search_player_solo_losses = None
+                search_player_flex_tear = None
+                search_player_flex_rank = None
+                search_player_flex_points = None
+                search_player_flex_wins = None
+                search_player_flex_losses = None
+        elif len(my_league_info) == 1 : # 솔로인지 자유랭인지 확인
 
-        if my_league_info[0].get('queueType') == "RANKED_SOLO_5x5":
+            if my_league_info[0].get('queueType') == "RANKED_SOLO_5x5":
+                search_player_solo_tear = my_league_info[0].get('tier')
+                search_player_solo_rank = my_league_info[0].get('rank')
+                search_player_solo_points = my_league_info[0].get('leaguePoints')
+                search_player_solo_wins = my_league_info[0].get('wins')
+                search_player_solo_losses = my_league_info[0].get('losses')
+                search_player_flex_tear = None
+                search_player_flex_rank = None
+                search_player_flex_points = None
+                search_player_flex_wins = None
+                search_player_flex_losses = None
+            else :
+                search_player_solo_tear = None
+                search_player_solo_rank = None
+                search_player_solo_points = None
+                search_player_solo_wins = None
+                search_player_solo_losses = None
+                search_player_flex_tear = my_league_info[0].get('tier')
+                search_player_flex_rank = my_league_info[0].get('rank')
+                search_player_flex_points = my_league_info[0].get('leaguePoints')
+                search_player_flex_wins = my_league_info[0].get('wins')
+                search_player_flex_losses = my_league_info[0].get('losses')
+
+        elif len(my_league_info) == 2 : # 솔랭/자유랭크 있음
             search_player_solo_tear = my_league_info[0].get('tier')
             search_player_solo_rank = my_league_info[0].get('rank')
             search_player_solo_points = my_league_info[0].get('leaguePoints')
             search_player_solo_wins = my_league_info[0].get('wins')
             search_player_solo_losses = my_league_info[0].get('losses')
-            search_player_flex_tear = None
-            search_player_flex_rank = None
-            search_player_flex_points = None
-            search_player_flex_wins = None
-            search_player_flex_losses = None
-        else :
-            search_player_solo_tear = None
-            search_player_solo_rank = None
-            search_player_solo_points = None
-            search_player_solo_wins = None
-            search_player_solo_losses = None
-            search_player_flex_tear = my_league_info[0].get('tier')
-            search_player_flex_rank = my_league_info[0].get('rank')
-            search_player_flex_points = my_league_info[0].get('leaguePoints')
-            search_player_flex_wins = my_league_info[0].get('wins')
-            search_player_flex_losses = my_league_info[0].get('losses')
+            search_player_flex_tear = my_league_info[1].get('tier')
+            search_player_flex_rank = my_league_info[1].get('rank')
+            search_player_flex_points = my_league_info[1].get('leaguePoints')
+            search_player_flex_wins = my_league_info[1].get('wins')
+            search_player_flex_losses = my_league_info[1].get('losses')
 
-    elif len(my_league_info) == 2 : # 솔랭/자유랭크 있음
-        search_player_solo_tear = my_league_info[0].get('tier')
-        search_player_solo_rank = my_league_info[0].get('rank')
-        search_player_solo_points = my_league_info[0].get('leaguePoints')
-        search_player_solo_wins = my_league_info[0].get('wins')
-        search_player_solo_losses = my_league_info[0].get('losses')
-        search_player_flex_tear = my_league_info[1].get('tier')
-        search_player_flex_rank = my_league_info[1].get('rank')
-        search_player_flex_points = my_league_info[1].get('leaguePoints')
-        search_player_flex_wins = my_league_info[1].get('wins')
-        search_player_flex_losses = my_league_info[1].get('losses')
+        search_player_solo = {
+            'search_player_solo_tear' : search_player_solo_tear,
+            'search_player_solo_rank' : search_player_solo_rank,
+            'search_player_solo_points' : search_player_solo_points,
+            'search_player_solo_wins': search_player_solo_wins,
+            'search_player_solo_losses': search_player_solo_losses,
+        }
+        search_player_flex = {
+            'search_player_flex_tear' : search_player_flex_tear,
+            'search_player_flex_rank' : search_player_flex_rank,
+            'search_player_flex_points' : search_player_flex_points,
+            'search_player_flex_wins': search_player_flex_wins,
+            'search_player_flex_losses': search_player_flex_losses,
+        }
 
-    search_player_solo = {
-        'search_player_solo_tear' : search_player_solo_tear,
-        'search_player_solo_rank' : search_player_solo_rank,
-        'search_player_solo_points' : search_player_solo_points,
-        'search_player_solo_wins': search_player_solo_wins,
-        'search_player_solo_losses': search_player_solo_losses,
-    }
-    search_player_flex = {
-        'search_player_flex_tear' : search_player_flex_tear,
-        'search_player_flex_rank' : search_player_flex_rank,
-        'search_player_flex_points' : search_player_flex_points,
-        'search_player_flex_wins': search_player_flex_wins,
-        'search_player_flex_losses': search_player_flex_losses,
-    }
+        search_player_info_dict = {
+            'puuid':puuid,
+            'search_player_tear_by_season' : search_player_tear_by_season ,
+            'search_player_ranking' : my_summoner_ranking,
+            'search_player_name' :  myinfo['name'],
+            'search_player_name_strip' :  myinfo['name'].replace(" ", ""), # 공백제거 확인
+            'search_player_icon' :  myinfo['profileIconId'],
+            'search_player_level' :  myinfo['summonerLevel'],
+            'search_player_updated_at' :  timezone.now(),
+            'search_player_is_read': False,
+        }
+        search_player_info_dict.update(search_player_solo)
+        search_player_info_dict.update(search_player_flex)
 
-    search_player_info_dict = {
-        'search_player_tear_by_season' : search_player_tear_by_season ,
-        'search_player_ranking' : my_summoner_ranking,
-        'search_player_name' :  myinfo['name'],
-        'search_player_icon' :  myinfo['profileIconId'],
-        'search_player_level' :  myinfo['summonerLevel'],
-    }
-    search_player_info_dict.update(search_player_solo)
-    search_player_info_dict.update(search_player_flex)
-
-    return search_player_info_dict
+        # 객체가 이미 존재하는 경우 update 하고 없는 경우 create
+        
+        models.SummonerModel.objects.update_or_create(search_player_name=summonername,defaults=search_player_info_dict)
+        
+        return search_player_info_dict
 
 
 def match(country, summonername, start, queue):
@@ -205,11 +220,11 @@ def match(country, summonername, start, queue):
     lower_summoner_name = summonername.lower().replace(' ', '')
     myinfo = watcher.summoner.by_name(my_region, lower_summoner_name)
 
-    # 최상단에 들어가는 소환사 정보
-    search_player_info_dict = summoner_info(country,myinfo)
-
     puuid = myinfo['puuid']
     summonerid = myinfo['id']
+
+    # 최상단에 들어가는 소환사 정보, 소환사 db에 저장
+    search_player_info_dict = summoner_info(country,myinfo,summonername,puuid)
     # 사용자 puuid와 country를 이용하여 최근 20경기 정보를 가져옴
     if queue == 9999:
         match_20 = watcher.match.matchlist_by_puuid(country, puuid, start)
@@ -217,11 +232,11 @@ def match(country, summonername, start, queue):
         match_20 = watcher.match.matchlist_by_puuid(country, puuid, start, 20, queue)
     result_match = []
     win_count = 0
-    total_match_count = 0
     lose_count = 0
     total_kill = 0
     total_death = 0
     total_assist = 0
+    total_match_count = 0
     total_kill_part = 0
 
     for onematch in match_20:
@@ -256,7 +271,16 @@ def match(country, summonername, start, queue):
             game_type = "돌격! 넥서스"
         elif match_detail['info']['queueId'] == 1700:
             game_type = "아레나"
-            
+
+        #############################
+        # 해당 매치 모델이 있는지 확인
+        # match_obj는 있으면 만들어지고, is_match는 존재하지 않았다면 생성하고 True를 반환한다
+        #############################
+        match_obj, is_match, = models.MatchIDModel.objects.get_or_create(matchId=onematch,game_type=game_type)
+        ##############################
+
+
+
         # 한 경기당 플레이어 10명의 정보를 for문을 사용해 받아옴
         for player_info in match_detail["info"]["participants"]:
             player_dict = {}
@@ -390,7 +414,30 @@ def match(country, summonername, start, queue):
                         "goldearned" : player_info["goldEarned"], "win":player_info["win"], "dragon_kills" : player_info["dragonKills"],
                         "turret_kills" : player_info["turretKills"], "baron_kills" : player_info["baronKills"]}]
             result[num] = player_dict
+
+            # model에 생성
+            
+            if is_match :
+                matchInfodetail = models.MatchInfoDetail.objects.create(
+                        playernumber = num, matchId=match_obj,
+                        kills = player_info["kills"], assists = player_info["assists"], 
+                        deaths = player_info["deaths"], summonername = player_info["summonerName"], 
+                        championname = capitalize_first_letter(player_info["championName"]), teamposition = player_info["teamPosition"], 
+                        teamid = player_info["teamId"], item0 = player_info["item0"],
+                        item1 = player_info["item1"], item2 = player_info["item2"], 
+                        item3 = player_info["item3"], item4 = player_info["item4"],
+                        item5 = player_info["item5"], item6 = player_info["item6"],
+                        totalminions_kill = totalminions_kill, wardsKilled = player_info["wardsKilled"],
+                        wardsPlaced = player_info["wardsPlaced"], visionWardsBoughtInGame = player_info["visionWardsBoughtInGame"],
+                        summonerspell1 = summonerspell1, summonerspell2 = summonerspell2, kda = kda,
+                        killparticipation = player_kill_part, totalDamageDealtToChampions = player_info["totalDamageDealtToChampions"],
+                        totalDamageTaken = player_info["totalDamageTaken"], champlevel = player_info["champLevel"], 
+                        main_rune = main_rune, sub_rune = sub_rune, minperminions = minperminions, placement = placement,
+                        goldearned = player_info["goldEarned"], win = player_info["win"], dragon_kills = player_info["dragonKills"],
+                        turret_kills = player_info["turretKills"], baron_kills = player_info["baronKills"]
+                    )
             num += 1
+
         result.update({"game_playtime" : game_playtime, "game_type" : game_type, "win_or_not" : win_or_not, "win_or_not_eng" : win_or_not_eng,
                     "search_player_kill" : search_player_kill, 
                     "search_player_death" : search_player_death, 
@@ -410,7 +457,33 @@ def match(country, summonername, start, queue):
                     "search_player_minperminions" : search_player_minperminions
         }) 
         result_match.append(result)
-    
+        
+        matchInfoForSearchPlayer = models.MatchInfoForSearchPlayer.objects.create(
+            matchId = match_obj,
+            summonername=summonername,
+
+            game_playtime = game_playtime, 
+            game_type = game_type, 
+            win_or_not = win_or_not, 
+            win_or_not_eng = win_or_not_eng,
+            search_player_kill = search_player_kill, 
+            search_player_death = search_player_death, 
+            search_player_assist = search_player_assist, 
+            game_time = game_time,
+            search_player_champ = search_player_champ,
+            search_player_kda = search_player_kda, 
+            search_player_killpart = int(search_player_killpart),
+            search_player_main_rune = search_player_main_rune,
+            search_player_sub_rune = search_player_sub_rune,
+            search_player_summonerspell1 = search_player_summonerspell1, 
+            search_player_summonerspell2 = search_player_summonerspell2,
+            search_player_item = search_player_item,
+            search_player_champlevel = search_player_champlevel,
+            search_player_totalminions_kill = search_player_totalminions_kill,
+            search_player_visionWardsBoughtInGame = search_player_visionWardsBoughtInGame,
+            search_player_minperminions = search_player_minperminions
+        )
+
     win_rate = 0
     if (win_count + lose_count != 0):
         win_rate = int(roundup2(win_count / (win_count + lose_count)) * 100)
@@ -427,6 +500,9 @@ def match(country, summonername, start, queue):
                     "total_death" : total_death, "total_assist" : total_assist,
                     "total_match_count" : total_match_count,
                     "total_kda" : total_kda, "total_kill_part" : total_kill_part // 20}    
+
+
+    
     return result_match, total_calculate, search_player_info_dict
 
         

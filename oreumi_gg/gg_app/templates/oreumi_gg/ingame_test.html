@@ -2,6 +2,107 @@
 
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/ingame.css' %}">
+
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1;
+    }
+    
+    .modal-content {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 300px;
+        padding: 20px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+  </style>
+
+    <title>Document</title>
+</head>
+<body>
+    <form class="search_form" method="GET" action="{% url 'gg_app:ingame_search' %}" >
+        <input type="text" name="search_nickname" id="ingame" placeholder="여기에 닉네임을 입력하세요">
+        <button class="search_post" type="submit" stytle="padding:'0em';"><img class="search_logo" src="{% static 'img/community/search.png'%}" alt="search_button" /></button>
+    </form>    
+    {% for message in messages %}
+    <div class="alert {{ message.tags }} alert-auto-dismissible alert-dismissible notification-container text-center" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
+    </div>
+{% endfor %}
+<a class="del" href="#" onclick="openModal()" style="border: 1px solid #dbcccc; color:#dbcccc; padding:0 5px;">삭제</a>
+
+<!-- 인게임 정보 나오는 부분 -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <h1>게시물 삭제</h1>
+        <p>정말로 삭제하시겠습니까?</p>
+        
+        {% include 'oreumi_gg/ingame.html'%}
+        <span><a href="">예</a></span><span onclick="closeModal()" style="float: right; cursor: pointer;">아니요</span>
+
+        
+    </div>
+</div>
+
+
+</body>
+<script>
+    document.getElementById("ingame-button").addEventListener("click", function() {
+        const nickname = document.getElementById("nickname").value;
+        const url = `/ingame/${nickname}`;
+        window.location.href = url;
+    });
+
+    window.setTimeout(function() {
+    $(".alert-auto-dismissible").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove();
+    });
+}, 4000);
+
+
+  // 팝업 열기 함수
+  function openModal() {
+      document.getElementById("myModal").style.display = "block";
+  }
+  
+  // 팝업 닫기 함수
+  function closeModal() {
+      document.getElementById("myModal").style.display = "none";
+  }
+  
+  // 팝업 외부 클릭 시 닫기
+  window.onclick = function(event) {
+      var modal = document.getElementById("myModal");
+      if (event.target == modal) {
+          modal.style.display = "none";
+      }
+  }
+
+
+</script>
+</html>
+=======
+
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -28,3 +129,4 @@
         });
     </script>
 </html>
+
