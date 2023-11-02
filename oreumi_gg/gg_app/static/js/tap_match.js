@@ -273,7 +273,17 @@ function changematch_display(data) {
     }
 }
 
+const renewalbutton = document.querySelector('.renewal-button');
 
+renewalbutton.addEventListener('click', () => {
+    count = 20;
+    changematch(9999, function() {
+
+    });
+    match_20_info.innerHTML = '';
+    totalmatch.innerHTML = '<img src="/static/img/oreumi_gg/loading.gif" width="22" height="22" style="margin-left: 320px;">';
+    fetchButton.style.display="none";
+});
 
 
 const buttons = document.querySelectorAll('.game-type button');
