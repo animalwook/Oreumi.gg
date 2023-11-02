@@ -1,7 +1,7 @@
 <!-- 커뮤니티 첫 페이지 -->
 {% extends 'community/base_community.html' %}
 {% load static %}
-
+{% load getvalue %}
 {% block content %}
 <!-- 포스 위쪽 정렬 메뉴 -->
 
@@ -74,8 +74,12 @@
                     </div>
                 </div>
                 {% if post.thumbnail != "" %}
-                <span style="width: 60px; height: 60px;   margin-left: auto;">
+                <span style="width: 60px; height: 60px;   margin-right: 35px;">
+                    {% if post.thumbnail|convert_str %}
+                    <a href="{% url 'gg_app:post_detail' post.id %}"><img src="https:/{{post.thumbnail}}" alt="" style="width: 60px; height: 60px; object-fit: cover; object-position: center;"></a>
+                    {% else %}
                     <a href="{% url 'gg_app:post_detail' post.id %}"><img src="/media/{{post.thumbnail}}" alt="" style="width: 60px; height: 60px; object-fit: cover; object-position: center;"></a>
+                    {% endif %}
                 </span>
                 {% endif %}
             </li>
