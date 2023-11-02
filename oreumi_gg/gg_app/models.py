@@ -4,8 +4,6 @@ from user_app.models import User
 from django.conf import settings
 # Create your models here.
 
-
-
 class BlogPost(models.Model):
     title = models.CharField(max_length=200) 
     content = CKEditor5Field('Text', config_name='extends') # 에디터로 바뀔예정
@@ -57,10 +55,6 @@ class Message(models.Model):
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
-    #확인을 위해서 넣음
-    receiver = models.IntegerField()
-    sent_at = models.DateTimeField(auto_now_add=True)
-    is_read = models.BooleanField(default=False)
 
     def __str__(self):
         return f'Message: {self.author.username} at {self.timestamp}'
