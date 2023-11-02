@@ -1,0 +1,181 @@
+{% load static %}
+{% load getvalue %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="{% static 'css/header.css' %}">
+        <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+        <link rel="stylesheet" href="{% static 'css/footer_gray.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+        <link rel="stylesheet" href="{% static 'css/summoners.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/matches.css' %}">
+        <link rel="icon" href="{%static 'img\oreumi_gg\favicon.ico'%}">
+        <title>소환사 정보</title>
+    </head>
+    <body>
+        {% include 'oreumi_gg/header.html' %}
+        {% include 'oreumi_gg/nav.html' %}
+        {% include 'oreumi_gg/summoners/summoners_article_1.html' %}
+
+
+        {% if is_game %}
+
+        <div class="match_20">
+            <div result="${result}" class="match_detail">
+                <div class="totalteam">
+                    <table class="teamblue">
+                        <colgroup>
+                            <col width="44">
+                            <col width="18">
+                            <col width="18">
+                            <col width="98">
+                            <col width="98">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="4"><span>블루팀</span></th>
+                                <th>S2023</th>
+                                <th>랭크 승률</th>
+                                <th>밴</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user_spectator_info, banned_champion in blue_data %}
+                                <tr class="overview-player">
+                                    <td class="champion">
+                                        <a rel="noreferrer">
+                                            <div class style="position: relative;">
+                                                <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{user_spectator_info.champion_eng_name}}.png" width="32">
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <td class="spells">
+                                        <div class style="position: relative;">
+                                            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{user_spectator_info.spell1Id}}.png">
+                                        </div>
+                                        <div class style="position: relative;">
+                                            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{user_spectator_info.spell2Id}}.png">
+                                        </div>
+                                    </td>
+                                    <td class="runes">
+                                        <div class style="position: relative;">
+                                            <img src="https://ddragon.canisback.com/img/{{user_spectator_info.perkStyle}}" width="22" height="22">
+                                        </div>
+                                        <div class style="position: relative;">
+                                            <img src="https://ddragon.canisback.com/img/perk-images/Styles/{{user_spectator_info.perkSubStyle}}.png" width="22" height="22">
+                                        </div>
+                                    </td>
+                                    <td class="name">
+                                        <a href="/summoners/kr/{{ user_spectator_info.nickname }}">{{ user_spectator_info.nickname }}</a>
+                                    </td>
+                                    <td class = "tier">
+                                        <p>{{ user_spectator_info.tier }}</p>
+                                        <p>{{ user_spectator_info.rank }}</p>
+                                    </td>
+                                    <td class = "rank_odds">
+                                        <p>{{ user_spectator_info.rank_odds }}</p>
+                                    </td>
+                                    <td class = "banned_champion">
+                                        <img src="{% static 'img/champion_square/' %}{{ banned_champion }}.png" alt="{{ banned_champion }}" width="24" style="display: block; margin: 0 auto;">
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="summary">
+                        <div class="team"></div>
+                        <div class="summary-graph"></div>
+                        <div class="team"></div>
+                    </div>
+                    <table class="teamred">
+                        <colgroup>
+                            <col width="44">
+                            <col width="18">
+                            <col width="18">
+                            <col width="98">
+                            <col width="98">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="4"><span class="result">레드팀</span></th>
+                                <th>S2023</th>
+                                <th>랭크 승률</th>
+                                <th>밴</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user_spectator_info, banned_champion in red_data %}
+                                <tr class="overview-player">
+                                    <td class="champion">
+                                        <a rel="noreferrer">
+                                            <div class style="position: relative;">
+                                                <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/champion/{{user_spectator_info.champion_eng_name}}.png" width="32">
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <td class="spells">
+                                        <div class style="position: relative;">
+                                            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{user_spectator_info.spell1Id}}.png">
+                                        </div>
+                                        <div class style="position: relative;">
+                                            <img src="https://ddragon.leagueoflegends.com/cdn/13.20.1/img/spell/{{user_spectator_info.spell2Id}}.png">
+                                        </div>
+                                    </td>
+                                    <td class="runes">
+                                        <div class style="position: relative;">
+                                            <img src="https://ddragon.canisback.com/img/{{user_spectator_info.perkStyle}}" width="22" height="22">
+                                        </div>
+                                        <div class style="position: relative;">
+                                            <img src="https://ddragon.canisback.com/img/perk-images/Styles/{{user_spectator_info.perkSubStyle}}.png" width="22" height="22">
+                                        </div>
+                                    </td>
+                                    <td class="name">
+                                        <a href="/summoners/kr/{{ user_spectator_info.nickname }}">{{ user_spectator_info.nickname }}</a>
+                                    </td>
+                                    <td class = "tier">
+                                        <p>{{ user_spectator_info.tier }}</p>
+                                        <p>{{ user_spectator_info.rank }}</p>
+                                    </td>
+                                    <td class = "rank_odds">
+                                        <p>{{ user_spectator_info.rank_odds }}</p>
+                                    </td>
+                                    <td class = "banned_champion">
+                                        <img src="{% static 'img/champion_square/' %}{{ banned_champion }}.png" alt="{{ banned_champion }}" width="24" style="display: block; margin: 0 auto;">
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {% else %}
+        <section class="summoner_section">
+            {% include 'oreumi_gg/summoners/summoners_rank.html' %}
+                <div class='main-info'>
+                    <div class="match" style="
+                    text-align: center;     background-color: #fff;    border-bottom-left-radius: 4px;
+                    border-bottom-right-radius: 4px;
+                    padding: 8px 12px;
+                    box-sizing: border-box;
+                    ">
+                                    <div id="total_kda" style="font-weight: bolder; color: black; font-size: 30px;">'{{search_player_info_dict.search_player_name}}'님은 게임중이 아닙니다.</div>
+                                    <div id="total_killpart"><br></div>
+                                    <div id="total_killpart" style="font-size: 20px;">현재 게임중이라면 다시 시도해주세요.</div>
+                                    <div id="total_killpart"><br></div>
+                                    <div id="total_killpart">('Bot'은 RiotAPI에서 인게임 정보를 가져올 수 없습니다.)</div>
+                    </div>
+                </div>
+        </section>
+        {%endif%}
+        {% include 'oreumi_gg/footer.html' %}
+    </body>
+    <script src="{% static "js/matches.js" %}?{% now 'U' %}"></script>
+    <script src="{% static "js/detail_match.js" %}?{% now 'U' %}"></script>
+    <script src="{% static "js/tap_match.js" %}?{% now 'U' %}"></script>
+    <script src="{% static "js/summoners.js" %}"></script>
+    
+</html>

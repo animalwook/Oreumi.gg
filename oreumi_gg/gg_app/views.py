@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.forms.models import model_to_dict
 
 from user_app.models import User
-from .models import BlogPost, Comment,Message,ChatRoom,SummonerModel,MatchInfoForSearchPlayer,MatchInfoDetail
+from .models import BlogPost, Comment,Message,ChatRoom,SummonerModel,MatchInfoForSearchPlayer,MatchInfoDetail,SoloRankList
 from .forms import BlogPostForm, CommentForm
 from .lol_match import match, roundup,roundup2,capitalize_first_letter,calculateminperminion,timecalculate
 from .ingame_data import find_id, find_league_info, find_spectator_info, IngameDataNotFoundError
@@ -23,6 +23,7 @@ from oreumi_gg.settings import get_secret, champion_file
 import re
 # Create your views here.
 from django.utils import timezone
+from django.contrib import messages
 
 def index(request):
     posts=BlogPost.objects.all().order_by('-created_at')
@@ -46,9 +47,19 @@ def statistics_tier(request):
     return render(request, "oreumi_gg/statistics/statistics_tier.html")
 
 # 랭킹
+def leaderboards(request,page):
 
-def leaderboards(request):
-    return render(request, "oreumi_gg/leaderboards/leaderboards.html")
+    # 등수*100-99  < <  등수*100
+    rankings = SoloRankList.objects.all().order_by("id")[page*100-100:page*100]
+    
+    # request.GET.get('ranking')
+
+    # db가 많으니까 너무 오래 걸림
+    # paginator = Paginator(rankings, 100)
+    # rankings_number = request.GET.get('page')
+    # rankings_posts = paginator.get_page(rankings_number)
+    context = {'rankings': rankings, 'page':page, 'start_page':(page//10)}
+    return render(request, "oreumi_gg/leaderboards/leaderboards.html",context)
 
 def type_champions(request):
     return render(request, "oreumi_gg/leaderboards/type_champions.html")
@@ -420,18 +431,36 @@ def summoners_info_form(request):
 #             return HttpResponseServerError("알 수 없는 문제가 생겼습니다. 잠시 후 다시 시도해주세요.")
 
 def summoners_info(request, country, summoner_name):
-    print("검색 소환사명 : "+summoner_name)
     summoner_name = summoner_name.strip() # 양끝 공백 제거
+    print("검색 소환사명 : "+summoner_name)
     summoner_name_strip = summoner_name.replace(" ", "") # 띄어쓰기 제거
+    print("공백제거 : "+summoner_name_strip)
+
     try:
         # 존재여부를 확인하는데 api는 띄어쓰기를 구분하는데 DB는 구분을 못해서 구분 속성을 만들어서 확인
         # 대문자여부 확인은 __iexact로 가능
-        if SummonerModel.objects.filter(search_player_name_strip__iexact= summoner_name_strip).exists():
+        if SummonerModel.objects.filter(search_player_name_strip__iexact=summoner_name_strip).exists():
             summoner_name = summoner_name_strip
-        if SummonerModel.objects.filter(search_player_name__iexact= summoner_name).exists():
-            print("db에 존재")
+            print("db에서 확인")
+        # if SummonerModel.objects.filter(search_player_name__iexact= summoner_name).exists():
 
-            search_player_info_dict = SummonerModel.objects.get(search_player_name__iexact = summoner_name) 
+            search_player_info_dict = SummonerModel.objects.get(search_player_name_strip__iexact = summoner_name_strip) 
+            summoner_name = search_player_info_dict.search_player_name
+            print("실제 검색 소환사명 : "+summoner_name)
+
+            #db에 있다면 가져오고 최신화시킴
+            if search_player_info_dict.search_player_is_read == False:
+                print("랭킹 확인1")
+                if SoloRankList.objects.filter(summoners__iexact=summoner_name).exists():
+                    print("랭킹 확인2")
+                    db_ranking = SoloRankList.objects.get(summoners__iexact=summoner_name)
+                    search_player_info_dict.my_summoner_ranking = db_ranking.ranking
+                    print(search_player_info_dict.my_summoner_ranking)
+
+                    search_player_info_dict.save()
+            else:
+                print("랭킹에서 검색안됨")
+                
             matches = []
             #최근 20경기를 불러옴
             recent_matchs = MatchInfoForSearchPlayer.objects.filter(summonername = summoner_name).order_by('id')[:20]
@@ -462,7 +491,7 @@ def summoners_info(request, country, summoner_name):
                     win_count +=1
                     total_match_count+=1
                 if recent_match.win_or_not_eng == "defeat":
-                    lose_count+=0
+                    lose_count+=1
                     total_match_count+=1
 
                 total_kill += recent_match.search_player_kill
@@ -491,15 +520,15 @@ def summoners_info(request, country, summoner_name):
 
 
             total_calculate = {
-                "win_count":10,
-                "lose_count":10,
-                "win_rate":50,
-                "total_kill":7.8,
-                "total_death":8.0,
-                "total_assist":13.1,
-                "total_match_count":20,
-                "total_kda":2.61,
-                "total_kill_part":52
+                "win_count":win_count,
+                "lose_count":lose_count,
+                "win_rate":win_rate,
+                "total_kill":total_kill,
+                "total_death":total_death,
+                "total_assist":total_assist,
+                "total_match_count":total_match_count,
+                "total_kda":total_kda,
+                "total_kill_part":total_kill_part
                 }
         else:
         # 처음 검색하면 검색요청을 한다
@@ -547,7 +576,9 @@ def summoners_info_api(request, country, summoner_name, count, queue):
             return HttpResponseServerError("너무 많은 요청을 보냈습니다. 잠시 후 다시 시도해주세요.")
         else:
             return HttpResponseServerError("알 수 없는 문제가 생겼습니다. 잠시 후 다시 시도해주세요.")
-  
+
+
+
   
 def champion_tier_list(request, position, region, tier):
 # Op.gg URL 생성
@@ -675,9 +706,108 @@ def lotation_list(request):
         return render(request, 'oreumi_gg/champions.html',{'error': '페이지를 불러올 수 없습니다.'})
 
 def ingame(request):
+
     return render(request, "oreumi_gg/ingame_test.html")
 
+def ingame_search(request):
+    search_data = request.GET.get("search_nickname")
+
+    try:
+        user_id = find_id(search_data)
+        user_spectator_info_arr, banned_champion_names = find_spectator_info(user_id)
+        blue_data = list(zip(user_spectator_info_arr[:5], banned_champion_names[:5]))
+        red_data = list(zip(user_spectator_info_arr[5:], banned_champion_names[5:]))
+        # print(banned_champion_names[:5])
+        # print(banned_champion_names[5:])
+        context = {
+            'blue_data': blue_data,
+            'red_data': red_data,
+        }
+        return render(request, "oreumi_gg/ingame_test.html",context)
+
+    except IngameDataNotFoundError:
+        messages.warning(request, "현재 게임을 하고 있지 않습니다.")
+        return render(request, 'oreumi_gg/ingame_test.html')
+
+
+
 def ingame_info(request,nickname):
+    summoner_name = nickname
+    print("검색 소환사명 : "+summoner_name)
+    summoner_name = summoner_name.strip() # 양끝 공백 제거
+    summoner_name_strip = summoner_name.replace(" ", "") # 띄어쓰기 제거
+
+    search_player_info_dict = SummonerModel.objects.get(search_player_name__iexact = summoner_name) 
+    matches = []
+    #최근 20경기를 불러옴
+    recent_matchs = MatchInfoForSearchPlayer.objects.filter(summonername = summoner_name).order_by('id')[:20]
+
+    win_count=0
+    lose_count=0
+    win_rate=0
+    total_kill=0
+    total_death=0
+    total_assist=0
+    total_match_count=0
+    total_kda=0,
+    total_kill_part=0
+
+    match_numbering = 1
+    for recent_match in recent_matchs:
+        num=1 # 총 10명
+        # 20경기에서 하나씩 정보를 담아냄
+        result_match_details = {}
+        #해당 경기의 상세정보를 불러옴
+        match_info_details = MatchInfoDetail.objects.filter(matchId =  recent_match.matchId).order_by('playernumber')
+        for match_info_detail in match_info_details:
+            result_match_details[num] = [model_to_dict(match_info_detail)]
+            num+=1
+    
+        #
+        if recent_match.win_or_not_eng == "victory":
+            win_count +=1
+            total_match_count+=1
+        if recent_match.win_or_not_eng == "defeat":
+            lose_count+=1
+            total_match_count+=1
+
+        total_kill += recent_match.search_player_kill
+        total_death += recent_match.search_player_death
+        total_assist += recent_match.search_player_assist
+        total_kill_part += recent_match.search_player_killpart
+        
+        # 아이템 문자열을 리스트로
+        recent_match_dict = model_to_dict(recent_match)
+        search_player_item_list = recent_match_dict['search_player_item'].replace(" ", "")[1:-1].split(",")
+
+        recent_match_dict['search_player_item'] = search_player_item_list
+        result_match_details.update(recent_match_dict)
+        
+        # 위에서 종합된 경기를 하나씩 담아냄
+        matches.append(result_match_details)
+        match_numbering +=1
+
+    if (win_count + lose_count != 0):
+        win_rate = int(roundup2(win_count / (win_count + lose_count)) * 100)
+    total_kill = roundup(total_kill / 20)
+    total_death = roundup(total_death / 20)
+    total_assist = roundup(total_assist / 20)
+    if (total_death != 0) :
+        total_kda = roundup2((total_kill + total_assist) / total_death)
+
+
+    total_calculate = {
+        "win_count":win_count,
+        "lose_count":lose_count,
+        "win_rate":win_rate,
+        "total_kill":total_kill,
+        "total_death":total_death,
+        "total_assist":total_assist,
+        "total_match_count":total_match_count,
+        "total_kda":total_kda,
+        "total_kill_part":total_kill_part
+        }
+
     try:
         user_id = find_id(nickname)
         user_spectator_info_arr, banned_champion_names = find_spectator_info(user_id)
@@ -688,10 +818,22 @@ def ingame_info(request,nickname):
         context = {
             'blue_data': blue_data,
             'red_data': red_data,
-        }
+            'is_game' : True,
+            "matches" : matches, # 매치 별 정보
+            "total_calculate": total_calculate, # 통계
+            "search_player_info_dict" : search_player_info_dict # 소환사 정보
+            }
+        return render(request, 'oreumi_gg/summoners/summoners_ingame.html',context)
+
     except IngameDataNotFoundError:
-        return render(request, 'oreumi_gg/404_error.html')
-    return render(request, 'oreumi_gg/ingame.html',context)
+        messages.warning(request, "현재 게임을 하고 있지 않습니다.")
+        context = {
+            'is_game' : False,
+            "matches" : matches, # 매치 별 정보
+            "total_calculate": total_calculate, # 통계
+            "search_player_info_dict" : search_player_info_dict # 소환사 정보
+            }
+        return render(request, 'oreumi_gg/summoners/summoners_ingame.html',context)
 
 
 

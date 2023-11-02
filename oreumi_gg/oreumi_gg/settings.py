@@ -20,6 +20,7 @@ from django.core.exceptions import ImproperlyConfigured
 
 # jwt 소셜로그인
 from datetime import timedelta
+from django.contrib import messages
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -419,3 +420,10 @@ ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS =['http://oreumi.shop','https://oreumi.shop','http://oreumi.store','https://oreumi.store']
 CSRF_COOKIE_SECURE = False
 
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}

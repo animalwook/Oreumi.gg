@@ -9,23 +9,19 @@
         <link rel="stylesheet" href="{% static 'css/header.css' %}" />
         <link rel="stylesheet" href="{% static 'css/nav.css' %}" />
         <link rel="stylesheet" href="{% static 'css/leaderboards.css' %}" />
+
         <link rel="stylesheet" href="{% static 'css/footer_gray.css' %}" />
         <link rel="icon" href="{% static 'img\oreumi_gg\favicon.ico' %}" />
-        <title>Oreumi.gg/champions</title>
+        <title>롤 랭킹</title>
     </head>
     <body>
         {% include 'oreumi_gg/header.html' %} {% include 'oreumi_gg/nav.html' %}
 
         <section class="leaderboards_container">
             <article class="select_article">
-                <div class="type_btn">
-                    <button class="type_ladder" onclick="showType('type_ladder')">솔로랭크</button>
-                    <button class="type_ladder_flex" onclick="showType('type_ladder_flex')">자유랭크</button>
-                    <button class="type_champions" onclick="showType('type_champions')">챔피언</button>
-                    <button class="type_level" onclick="showType('type_level')">레벨</button>
-                </div>
+              <!-- 
                 <div class="select_container" id="selectContainer">
-                    <!--티어 선택후 높은 점수순으로 정렬-->
+
                     <select name="select_tier" id="selectTier">
                         <option value="All">All</option>
                         <option value="challenger">Challenger</option>
@@ -39,7 +35,8 @@
                         <option value="bronze">Bronze</option>
                         <option value="iron">Iron</option>
                     </select>
-                </div>
+                </div> 
+              -->
                 <div class="summoner_search" id="summonerSearch">
                     <form method="POST" name="search_form" action="{% url 'gg_app:summoners_info_form' %}">
                         {% csrf_token %}
@@ -55,31 +52,55 @@
             <article class="summoners_article">
                 <div class="summoners_container">
                     <!-- 소환사들의 랭킹 표시 -->
-                    <thead class="summoners_info_char">
-                        <tr>
-                            <th>#</th>
-                            <th>소환사</th>
-                            <th>티어</th>
-                            <th>LP</th>
-                            <th>모스트 챔피언</th>
-                            <th>레벨</th>
-                            <th>승률</th>
-                        </tr>
-                    </thead>
-                    <tbody class="summoners_info_display">
-                        {% block leaderboards_content %} {% if selected_type == "type_ladder" %}
-                        <!-- 솔로랭크 -->
-                        {% include "oreumi_gg/leaderboards/type_ladder.html" %} {% elif selected_type == "type_ladder_flex" %}
-                        <!-- 자유랭크 -->
-                        {% include "oreumi_gg/leaderboards/type_ladder_flex.html" %} {% elif selected_type == "type_champions" %}
-                        <!-- 챔피언 -->
-                        {% include "oreumi_gg/leaderboards/type_champions.html" %} {% elif selected_type == "type_level" %}
-                        <!-- 레벨 -->
-                        {% include "oreumi_gg/leaderboards/type_level.html" %} {% else %} {% include "oreumi_gg/leaderboards/type_ladder.html" %} {% endif %} {% endblock %}
-                    </tbody>
+                    <div class="table_container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>랭킹</th>
+                                    <th>소환사</th>
+                                    <th>티어</th>
+                                    <th>포인트</th>
+                                    <th>레벨</th>
+                                    <th>승</th>
+                                    <th>패</th>
+                                    <th>승률</th>   
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for ranking in rankings%}
+                                <tr>
+                                  <th>{{ranking.ranking}}</th>
+                                  <th>{{ranking.summoners}}</th>
+                                  {% if ranking.rank %}
+                                  <th>{{ranking.tier}} {{ranking.rank}}</th>
+                                  {% else %}
+                                  <th>{{ranking.tier}}</th>
+                                  {% endif %}
+                                  <th>{{ranking.LP}}</th>
+                                  <th>{{ranking.level}}</th>
+                                  <th>{{ranking.win}}</th>
+                                  <th>{{ranking.lose}}</th>
+                                  <th>{{ranking.winlate}}%</th>                                  
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                      </table>   
+                    <!-- Pagination -->
+                    </div>
+                    <div class="Pagination">
+                        #{{page|add:'-1'}}01 ~ #{{page}}00
+                        <br>
+                        <br>
+                        <br>
+                            <div class="pages">
+                                {% if page != 1%}<a href="{% url 'gg_app:leaderboards' page|add:'-1' %}" >이전</a>{% endif %}
+                                <a href="{% url 'gg_app:leaderboards' page|add:'1' %}" >다음</a>
+                            </div>
+                    </div>
                 </div>
             </article>
         </section>
+        {% include 'oreumi_gg/footer.html' %}
     </body>
     <script src="{% static 'js/leaderboards.js' %}"></script>
 </html>

@@ -79,17 +79,15 @@ class Message(models.Model):
 
 #소환사정보
 class SoloRankList(models.Model):
-    ranking = models.PositiveIntegerField() 
-    summoners = models.CharField(max_length=20, null=True, blank=True)
-    tier = models.CharField(max_length=10, null=True, blank=True)
+    ranking = models.PositiveIntegerField(null=True, blank=True) 
+    summoners = models.CharField(max_length=40, null=True, blank=True)
+    tier = models.CharField(max_length=80, null=True, blank=True)
     rank = models.CharField(max_length=10, null=True, blank=True)
-    LP = models.PositiveIntegerField()
-    level = models.PositiveIntegerField()
-    win = models.PositiveIntegerField() 
-    lose = models.PositiveIntegerField() 
-    most1 = models.CharField(max_length=80, null=True, blank=True)
-    most2 = models.CharField(max_length=80, null=True, blank=True)
-    most3 = models.CharField(max_length=80, null=True, blank=True)
+    LP = models.PositiveIntegerField(null=True, blank=True)
+    level = models.PositiveIntegerField(null=True, blank=True)
+    win = models.PositiveIntegerField(null=True, blank=True) 
+    lose = models.PositiveIntegerField(null=True, blank=True) 
+    winlate = models.PositiveIntegerField(null=True, blank=True)
     
 class SummonerModel(models.Model):
     puuid = models.CharField(max_length=200)
@@ -100,7 +98,7 @@ class SummonerModel(models.Model):
     search_player_icon = models.CharField(max_length=200)
     search_player_level = models.PositiveIntegerField()
     search_player_updated_at = models.DateTimeField(auto_now=True)
-    search_player_is_read = models.BooleanField(default=False) #없어도 되는데 임시로 넣음
+    search_player_is_read = models.BooleanField(default=False) #랭킹체크
 
     search_player_solo_tear = models.CharField(max_length=80, null=True, blank=True)
     search_player_solo_rank = models.CharField(max_length=10, null=True, blank=True)
@@ -156,7 +154,7 @@ class MatchInfoDetail(models.Model):
     kills = models.PositiveIntegerField(null=True,blank=True)
     assists = models.PositiveIntegerField(null=True,blank=True)
     deaths = models.PositiveIntegerField(null=True,blank=True)
-    summonername = models.CharField(max_length=20,null=True,blank=True)
+    summonername = models.CharField(max_length=40,null=True,blank=True)
     championname = models.CharField(max_length=20,null=True,blank=True)
     teamposition = models.CharField(max_length=10,null=True,blank=True)
     teamid = models.PositiveIntegerField(null=True,blank=True)
@@ -171,9 +169,9 @@ class MatchInfoDetail(models.Model):
     wardsKilled = models.PositiveIntegerField(null=True,blank=True)
     wardsPlaced = models.PositiveIntegerField(null=True,blank=True)
     visionWardsBoughtInGame = models.PositiveIntegerField(null=True,blank=True)
-    summonerspell1 = models.CharField(max_length=20,null=True,blank=True)
-    summonerspell2 = models.CharField(max_length=20,null=True,blank=True)
-    kda = models.CharField(max_length=20,null=True,blank=True)
+    summonerspell1 = models.CharField(max_length=30,null=True,blank=True)
+    summonerspell2 = models.CharField(max_length=30,null=True,blank=True)
+    kda = models.CharField(max_length=30,null=True,blank=True)
     killparticipation = models.PositiveIntegerField(null=True,blank=True)
     totalDamageDealtToChampions = models.PositiveIntegerField(null=True,blank=True)
     totalDamageTaken = models.PositiveIntegerField(null=True,blank=True)

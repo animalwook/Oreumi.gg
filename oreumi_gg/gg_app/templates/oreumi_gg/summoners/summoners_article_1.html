@@ -51,17 +51,17 @@
     <div class="menu-bar">
         <ul>
             <li>
-                <a href="/summoners/kr/%EA%B1%B0%EB%8B%88%EB%9D%BC%EA%B5%AC">
+                <a href="/summoners/kr/{{search_player_info_dict.search_player_name}}">
                     <div class="menu-synthesis">종합</div>
                 </a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="/summoners/kr/%EA%B1%B0%EB%8B%88%EB%9D%BC%EA%B5%AC/champions">
                     <div class="menu-champions">챔피언</div>
                 </a>
-            </li>
+            </li> -->
             <li>
-                <a href="/summoners/kr/%EA%B1%B0%EB%8B%88%EB%9D%BC%EA%B5%AC/ingame">
+                <a href="{% url 'gg_app:ingame_info' search_player_info_dict.search_player_name %}">
                     <div class="menu-ingame">인게임 정보</div>
                 </a>
             </li>
