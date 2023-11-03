@@ -35,6 +35,8 @@ readme.file ERD 작성
 
 
 
+![제목 없는 다이어그램](https://github.com/animalwook/Oreumi.gg/assets/31812111/75c462b9-e76c-47e4-b635-da32042e912e)
+![oremiggg](https://github.com/animalwook/Oreumi.gg/assets/31812111/5c9b2fef-3fe1-4b48-9c50-42084a1d5786)
 
 
 
