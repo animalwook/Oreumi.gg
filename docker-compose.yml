@@ -22,3 +22,5 @@ services:
         volumes:
           - ./oreumi_gg:/srv/oreumi_gg:z
           - ./oreumi_gg:/var/log/uwsgi:z
+
+          
