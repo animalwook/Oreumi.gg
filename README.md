@@ -14,7 +14,7 @@
   - [로그인 Email 전송 / social 로그인](#3-Email-전송/social-로그인)
   - [챔피언분석](#4-챔피언분석)
   - [커뮤니티](#5-커뮤니티)
-  - [AWS and git action 배포](#6-AWS-and-git-action-배포)
+  - [AWS and git action 배포](#6-AWS-and-git-배포)
 
 
 - 🚀 [배포](#-배포)
@@ -61,7 +61,7 @@
 ### **3. 로그인 Email 전송 / social 로그인**
 ### **4. 챔피언분석**
 ### **5. 커뮤니티**
-### **6. AWS and git action 배포**
+### **6. AWS 배포**
 
 
 ## **🚀 배포**
